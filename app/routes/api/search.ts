@@ -1,7 +1,7 @@
 import { LoaderFunction } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 
-import { MALQuery } from '~/lib/mal-service.server';
+import { malService } from '~/lib/mal-service.server';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -9,12 +9,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   const q = url.searchParams.get('q');
   invariant(typeof q === 'string');
 
-  console.log(q);
-
-  return MALQuery({
-    type: 'search',
+  return malService({
+    type: 'list',
     query: {
       q,
+      limit: 20,
     },
   });
 };
