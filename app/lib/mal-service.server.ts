@@ -1,5 +1,3 @@
-import { Error } from '~/contracts/mal';
-
 const BASE_PATH = 'https://api.myanimelist.net/v2';
 
 const clientId = process.env.MAL_CLIENT_ID as string;
