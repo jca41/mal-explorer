@@ -80,3 +80,8 @@ export type ResultList = {
 };
 
 export type Result = Node;
+
+export type Error = {
+  error: string;
+  message: string;
+};
