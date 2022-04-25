@@ -1,32 +1,15 @@
+import { useFetcher } from '@remix-run/react';
+
 export default function Index() {
+  const fetcher = useFetcher();
+
   return (
-    <div className="bg-red-200">
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div className="flex flex-col space-y-10">
+      <fetcher.Form method="get" action="/api/search" className="flex flex-row justify-center space-x-2">
+        <input type="text" name="q" placeholder="Search..." required className="rounded-lg h-12 w-full max-w-xs"></input>
+      </fetcher.Form>
+
+      <div>{JSON.stringify(fetcher.data)}</div>
     </div>
   );
 }
