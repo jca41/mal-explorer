@@ -70,6 +70,7 @@ export type Node = {
 };
 
 export type Paging = {
+  previous?: string;
   next?: string;
 };
 
