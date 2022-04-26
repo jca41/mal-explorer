@@ -1,3 +1,5 @@
+const { gridTemplateColumns } = require('tailwindcss/defaultTheme');
+
 module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
@@ -7,6 +9,11 @@ module.exports = {
     "./app/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+          gridTemplateColumns: {
+      'image-content': 'min-content auto',
+    },
+    },
+
   }
 }

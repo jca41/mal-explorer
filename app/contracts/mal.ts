@@ -74,12 +74,10 @@ export type Paging = {
   next?: string;
 };
 
-export type ResultList = {
+export type NodeList = {
   data?: { node: Node }[];
   paging?: Paging;
 };
-
-export type Result = Node;
 
 export type Error = {
   error: string;
