@@ -1,4 +1,4 @@
-export type MediaType = 'movie' | 'tv' | 'special' | 'ova' | 'ona';
+export type MediaType = 'movie' | 'tv' | 'special' | 'ova' | 'ona' | 'music';
 export type Status = 'finished_airing' | 'not_yet_aired';
 export type Rating = 'pg_13';
 export type Picture = {
@@ -59,7 +59,7 @@ export type Node = {
   status: Status;
   genres: { id: number; name: string }[];
   num_episodes: number;
-  start_season: {
+  start_season?: {
     year: number;
     season: string;
   };

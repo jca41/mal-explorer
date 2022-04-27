@@ -375,7 +375,7 @@ export default function Index() {
       </fetcher.Form>
       <SearchList>
         {/* fetcher?.data */}
-        {(fetcher?.data?.data ?? []).map(({ node }) => (
+        {(MOCK_DATA.data ?? []).map(({ node }) => (
           <SearchListItem key={node.id} {...node} />
         ))}
       </SearchList>
