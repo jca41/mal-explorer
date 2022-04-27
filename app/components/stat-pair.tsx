@@ -7,10 +7,11 @@ type StatPairProps = {
 
 export function StatPair({ icon: Icon, value }: StatPairProps) {
   if (!value) return null;
+
   return (
     <div className="flex flex-row space-x-1 items-center">
-      <Icon className="w-4" />
-      <span className="text-sm tracking-tight">{value}</span>
+      <Icon className="w-4 fill-blue-800" />
+      <span className="text-sm text-blue-900 tracking-tight">{value}</span>
     </div>
   );
 }

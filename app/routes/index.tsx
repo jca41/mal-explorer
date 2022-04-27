@@ -3,6 +3,7 @@ import { useFetcher } from '@remix-run/react';
 import { SearchList, SearchListItem } from '~/components/search-list';
 import { NodeList } from '~/contracts/mal';
 
+// TODO: remove me
 const MOCK_DATA = {
   data: [
     {

@@ -5,7 +5,7 @@ const STATUS_MAP: Record<Status, string> = {
   not_yet_aired: 'Not Aired',
 };
 export function formatStatus(status: Status) {
-  return STATUS_MAP[status];
+  return STATUS_MAP[status] ?? 'misisng';
 }
 
 const MEDIA_TYPE_MAP: Record<MediaType, string> = {
@@ -15,5 +15,9 @@ const MEDIA_TYPE_MAP: Record<MediaType, string> = {
   special: 'Special',
 };
 export function formatMediaType(mediaType: MediaType) {
-  return MEDIA_TYPE_MAP[mediaType];
+  return MEDIA_TYPE_MAP[mediaType] ?? 'missing';
+}
+
+export function formatRank(rank: number) {
+  return rank ? `#${rank}` : '';
 }
