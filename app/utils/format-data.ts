@@ -12,6 +12,7 @@ const MEDIA_TYPE_MAP: Record<MediaType, string> = {
   movie: 'Movie',
   tv: 'TV',
   ova: 'OVA',
+  ona: 'ONA',
   special: 'Special',
 };
 export function formatMediaType(mediaType: MediaType) {

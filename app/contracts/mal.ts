@@ -1,4 +1,4 @@
-export type MediaType = 'movie' | 'tv' | 'special' | 'ova';
+export type MediaType = 'movie' | 'tv' | 'special' | 'ova' | 'ona';
 export type Status = 'finished_airing' | 'not_yet_aired';
 export type Rating = 'pg_13';
 export type Picture = {
@@ -24,6 +24,15 @@ export type Statistics = {
     plan_to_watch: string;
   };
   num_list_users: number;
+};
+
+export type Video = {
+  id: number;
+  title: string;
+  url: string;
+  created_at: number;
+  updated_at: number;
+  thumbnail: string;
 };
 
 export type Node = {
@@ -67,6 +76,7 @@ export type Node = {
   related_anime: RelatedAnime[];
   recommendations: Recommendation[];
   statistics: Statistics;
+  videos: Video[];
 };
 
 export type Paging = {
