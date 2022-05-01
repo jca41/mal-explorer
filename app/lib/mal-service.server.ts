@@ -4,6 +4,7 @@ const clientId = process.env.MAL_CLIENT_ID as string;
 
 const QUERY_TYPES = {
   list: '/anime',
+  detail: ({ id }: DetailParams) => `/anime/${id}`,
 } as const;
 
 const FIELD_TYPES = {
@@ -19,9 +20,13 @@ type ListQuery = {
 };
 type Query = ListQuery;
 
+type DetailParams = { id: string };
+type Params = DetailParams;
+
 type Service = {
   type: keyof typeof QUERY_TYPES;
   query?: Query;
+  params?: Params;
 };
 
 function normaliseQuery(query: Query = {} as Query) {
@@ -31,11 +36,13 @@ function normaliseQuery(query: Query = {} as Query) {
   }, {});
 }
 
-export async function malService<Result = unknown>({ type, query }: Service): Promise<Result> {
-  const path = `${BASE_PATH}${QUERY_TYPES[type]}`;
+export async function malService<Result = unknown>({ type, query, params }: Service): Promise<Result> {
+  const queryBuilder = QUERY_TYPES[type];
+
+  const path = typeof queryBuilder === 'function' ? queryBuilder(params as Params) : queryBuilder;
   const fields = FIELD_TYPES[type];
 
-  const url = `${path}?${new URLSearchParams({ fields, ...normaliseQuery(query) }).toString()}`;
+  const url = `${BASE_PATH}${path}?${new URLSearchParams({ fields, ...normaliseQuery(query) }).toString()}`;
 
   const response = await fetch(url, {
     method: 'GET',
