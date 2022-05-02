@@ -7,13 +7,13 @@ type StatPairProps = {
   textClassName?: string;
 };
 
-export function StatPair({ icon: Icon, iconClassname = '', value, textClassName = '' }: StatPairProps) {
+export function StatPair({ icon: Icon, iconClassname = 'w-4', value, textClassName = 'text-sm tracking-tight' }: StatPairProps) {
   if (!value) return null;
 
   return (
     <div className="flex flex-row space-x-1 items-center">
-      <Icon className={`w-4 ${iconClassname}`} />
-      <span className={`text-sm tracking-tight ${textClassName}`}>{value}</span>
+      <Icon className={iconClassname} />
+      <span className={textClassName}>{value}</span>
     </div>
   );
 }

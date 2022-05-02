@@ -26,3 +26,7 @@ export function formatMediaType(mediaType: MediaType) {
 export function formatRank(rank: number) {
   return rank ? `#${rank}` : '';
 }
+
+export function formatNumEpisodes(numEpisodes: number) {
+  return numEpisodes > 1 ? `${numEpisodes} Ep` : '';
+}

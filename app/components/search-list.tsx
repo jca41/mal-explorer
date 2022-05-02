@@ -1,13 +1,25 @@
-import { ClipboardListIcon, FilmIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
+import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
 import { Link } from '@remix-run/react';
 import { ReactNode } from 'react';
 
 import { Node } from '~/contracts/mal';
-import { formatMediaType, formatRank, formatStatus } from '~/utils/format-data';
+import { formatMediaType, formatNumEpisodes, formatRank, formatStatus } from '~/utils/format-data';
 
 import { StatPair } from './stat-pair';
 
-export function SearchListItem({ id, title, main_picture, alternative_titles, mean, rank, popularity, start_season, status, media_type }: Node) {
+export function SearchListItem({
+  id,
+  title,
+  main_picture,
+  alternative_titles,
+  mean,
+  rank,
+  popularity,
+  start_season,
+  status,
+  media_type,
+  num_episodes,
+}: Node) {
   return (
     <li className="max-w-lg w-full">
       <Link
@@ -28,10 +40,11 @@ export function SearchListItem({ id, title, main_picture, alternative_titles, me
           </h2>
 
           <div className="grid grid-cols-2 grid-flow-row gap-x-4 gap-y-2">
-            <StatPair value={mean} icon={StarIcon} iconClassname="text-yellow-500" textClassName="font-semibold" />
+            <StatPair value={mean} icon={StarIcon} iconClassname="w-4 text-yellow-500" textClassName="font-semibold text-sm tracking-tight" />
             <StatPair value={formatMediaType(media_type)} icon={FilmIcon} />
             <StatPair value={formatStatus(status)} icon={ClipboardListIcon} />
             <StatPair value={formatRank(rank)} icon={TrendingUpIcon} />
+            <StatPair value={formatNumEpisodes(num_episodes)} icon={FolderIcon} />
             <StatPair value={formatRank(popularity)} icon={UsersIcon} />
           </div>
         </div>

@@ -21,6 +21,7 @@ const MOCK_DATA = {
         media_type: 'movie',
         status: 'finished_airing',
         start_season: { year: 2010, season: 'fall' },
+        num_episodes: 300,
       },
     },
     {
