@@ -3,11 +3,12 @@ import { LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import invariant from 'tiny-invariant';
 
-import { StatPair } from '~/components/stat-pair';
+import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
+import { StatIconPair } from '~/components/stat-pair';
 import { Node } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
-import { bleach } from '~/MOCKS/details';
-import { formatMediaType, formatNumEpisodes, formatRank, formatStatus } from '~/utils/format-data';
+import { formatMediaType, formatNumEpisodes, formatPopularity, formatRank, formatStatus } from '~/utils/format-data';
+
 export const loader: LoaderFunction = async ({ params }) => {
   invariant(typeof params.id === 'string');
 
@@ -21,11 +22,28 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const STAT_ICON = 'w-5';
 const STAT_TEXT = 'text-md tracking-tight';
-const STAT_ROW = 'flex space-x-4 gap-y-2 justify-center flex-wrap';
 
 export default function AnimeDetails() {
   const data = useLoaderData<Node>();
-  const { title, alternative_titles, start_season, mean, media_type, rank, popularity, status, main_picture, synopsis, num_episodes, genres } = data;
+  const {
+    title,
+    alternative_titles,
+    start_season,
+    mean,
+    media_type,
+    rank,
+    popularity,
+    num_scoring_users,
+    status,
+    main_picture,
+    synopsis,
+    background,
+    num_episodes,
+    genres,
+    studios,
+    source,
+    related_anime,
+  } = data;
 
   return (
     <div>
@@ -38,16 +56,21 @@ export default function AnimeDetails() {
       </h1>
       <div className="mt-12 flex flex-col space-y-10">
         <section className="flex flex-col space-y-2">
-          <div className={STAT_ROW}>
-            <StatPair value={mean} icon={StarIcon} iconClassname={`text-yellow-500 ${STAT_ICON}`} textClassName={STAT_TEXT} />
-            <StatPair value={formatRank(rank)} icon={TrendingUpIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatPair value={formatRank(popularity)} icon={UsersIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatPair value={formatMediaType(media_type)} icon={FilmIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatPair value={formatStatus(status)} icon={ClipboardListIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatPair value={formatNumEpisodes(num_episodes)} icon={FolderIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-          </div>
+          <ul className="flex gap-y-2 justify-center flex-wrap space-x-4">
+            <StatIconPair value={mean} icon={StarIcon} iconClassname={`text-yellow-500 ${STAT_ICON}`} textClassName={STAT_TEXT} />
+            <StatIconPair value={formatRank(rank)} icon={TrendingUpIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
+            <StatIconPair
+              value={formatPopularity(num_scoring_users, popularity)}
+              icon={UsersIcon}
+              iconClassname={STAT_ICON}
+              textClassName={STAT_TEXT}
+            />
+            <StatIconPair value={formatMediaType(media_type)} icon={FilmIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
+            <StatIconPair value={formatStatus(status)} icon={ClipboardListIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
+            <StatIconPair value={formatNumEpisodes(num_episodes)} icon={FolderIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
+          </ul>
           {genres?.length && (
-            <div className={STAT_ROW}>
+            <div className="flex gap-y-2 justify-center flex-wrap space-x-3">
               {genres.map(({ name, id }) => (
                 <span key={id}>{name}</span>
               ))}
@@ -55,11 +78,40 @@ export default function AnimeDetails() {
           )}
         </section>
         <div className="flex justify-center">
-          <img src={main_picture.large} alt={title} className="max-w-[50%] sm:max-w-xs" />
+          <img src={main_picture.large} alt={title} className="max-w-[70%] sm:max-w-xs" />
         </div>
-        <section className="prose prose-slate mx-auto">
-          <p>{synopsis}</p>
+        <section>
+          <p className="prose prose-slate max-w-none">{synopsis || background}</p>
+          <ul className="mt-6">
+            <li className="flex space-x-2">
+              {!!studios.length && (
+                <>
+                  <span className="font-semibold">Studios:</span>
+                  <span>{studios.map((s) => s.name).join(', ')}</span>
+                </>
+              )}
+            </li>
+            {!!source && (
+              <>
+                <li className="flex space-x-2">
+                  <span className="font-semibold">Source:</span>
+                  <span className="capitalize">{source}</span>
+                </li>
+              </>
+            )}
+          </ul>
         </section>
+        {!!related_anime?.length && (
+          <section>
+            <h2 className="text-xl tracking-wide font-bold mb-4">Related anime</h2>
+
+            <GridPreview>
+              {related_anime.map((r) => (
+                <GridPreviewItem key={r.node.id} {...r} />
+              ))}
+            </GridPreview>
+          </section>
+        )}
       </div>
 
       <div className="flex flex-col space-y-10 mt-10">{JSON.stringify(data)}</div>

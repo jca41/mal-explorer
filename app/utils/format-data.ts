@@ -1,3 +1,5 @@
+import numeral from 'numeral';
+
 import { MediaType, Status } from '~/contracts/mal';
 
 const STATUS_MAP: Record<Status, string> = {
@@ -24,9 +26,13 @@ export function formatMediaType(mediaType: MediaType) {
 }
 
 export function formatRank(rank: number) {
-  return rank ? `#${rank}` : '';
+  return rank ?? '';
 }
 
 export function formatNumEpisodes(numEpisodes: number) {
   return numEpisodes > 1 ? `${numEpisodes} Ep` : '';
+}
+
+export function formatPopularity(numListUsers: number, popularity: number) {
+  return popularity ? `${formatRank(popularity)} (${numeral(numListUsers).format('0.0a')})` : '';
 }

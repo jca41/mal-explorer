@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 import { Node } from '~/contracts/mal';
 import { formatMediaType, formatNumEpisodes, formatRank, formatStatus } from '~/utils/format-data';
 
-import { StatPair } from './stat-pair';
+import { StatIconPair } from './stat-pair';
 
 export function SearchListItem({
   id,
@@ -39,14 +39,14 @@ export function SearchListItem({
             {alternative_titles.en && <div className="text-slate-500 text-sm">{alternative_titles.en}</div>}
           </h2>
 
-          <div className="grid grid-cols-2 grid-flow-row gap-x-4 gap-y-2">
-            <StatPair value={mean} icon={StarIcon} iconClassname="w-4 text-yellow-500" textClassName="font-semibold text-sm tracking-tight" />
-            <StatPair value={formatMediaType(media_type)} icon={FilmIcon} />
-            <StatPair value={formatStatus(status)} icon={ClipboardListIcon} />
-            <StatPair value={formatRank(rank)} icon={TrendingUpIcon} />
-            <StatPair value={formatNumEpisodes(num_episodes)} icon={FolderIcon} />
-            <StatPair value={formatRank(popularity)} icon={UsersIcon} />
-          </div>
+          <ul className="grid grid-cols-2 grid-flow-row gap-x-4 gap-y-2">
+            <StatIconPair value={mean} icon={StarIcon} iconClassname="w-4 text-yellow-500" textClassName="font-semibold text-sm tracking-tight" />
+            <StatIconPair value={formatMediaType(media_type)} icon={FilmIcon} />
+            <StatIconPair value={formatStatus(status)} icon={ClipboardListIcon} />
+            <StatIconPair value={formatRank(rank)} icon={TrendingUpIcon} />
+            <StatIconPair value={formatNumEpisodes(num_episodes)} icon={FolderIcon} />
+            <StatIconPair value={formatRank(popularity)} icon={UsersIcon} />
+          </ul>
         </div>
       </Link>
     </li>
