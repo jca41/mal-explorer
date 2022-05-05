@@ -41,8 +41,11 @@ export function formatPopularity(numListUsers: number, popularity: number) {
 const SOURCE_MAP: Record<string, string> = {
   manga: 'Manga',
   web_manga: 'Web Manga',
+  original: 'Original',
 };
 
 export function formatSource(source: string) {
+  console.log(source);
+
   return SOURCE_MAP[source] ?? MISSING;
 }

@@ -13,7 +13,7 @@ const renderNavItem =
 export function Navigation() {
   return (
     <nav className="py-4 px-8 flex space-x-4 items-center justify-center bg-blue-500 shadow-md">
-      <NavLink to="/">{renderNavItem('Home')}</NavLink>
+      <NavLink to="/">{renderNavItem('Search')}</NavLink>
       <NavLink to="/top">{renderNavItem('Top')}</NavLink>
       <NavLink to="/seasonal">{renderNavItem('Seasonal')}</NavLink>
     </nav>
