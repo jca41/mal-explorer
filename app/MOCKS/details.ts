@@ -13,8 +13,8 @@ export const bleach = {
   mean: 7.85,
   rank: 788,
   popularity: 40,
-  num_list_users: 1633357,
-  num_scoring_users: 954786,
+  num_list_users: 1636006,
+  num_scoring_users: 956205,
   nsfw: 'white',
   created_at: '2005-11-13T16:20:41+00:00',
   updated_at: '2022-04-18T05:10:03+00:00',
@@ -184,6 +184,17 @@ export const bleach = {
     },
     {
       node: {
+        id: 20,
+        title: 'Naruto',
+        main_picture: {
+          medium: 'https://api-cdn.myanimelist.net/images/anime/13/17405.jpg',
+          large: 'https://api-cdn.myanimelist.net/images/anime/13/17405l.jpg',
+        },
+      },
+      num_recommendations: 31,
+    },
+    {
+      node: {
         id: 1735,
         title: 'Naruto: Shippuuden',
         main_picture: {
@@ -192,17 +203,6 @@ export const bleach = {
         },
       },
       num_recommendations: 31,
-    },
-    {
-      node: {
-        id: 20,
-        title: 'Naruto',
-        main_picture: {
-          medium: 'https://api-cdn.myanimelist.net/images/anime/13/17405.jpg',
-          large: 'https://api-cdn.myanimelist.net/images/anime/13/17405l.jpg',
-        },
-      },
-      num_recommendations: 30,
     },
     {
       node: {
@@ -235,7 +235,7 @@ export const bleach = {
           large: 'https://api-cdn.myanimelist.net/images/anime/13/75194l.jpg',
         },
       },
-      num_recommendations: 19,
+      num_recommendations: 20,
     },
     {
       node: {

@@ -1,13 +1,19 @@
 import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
-import { LoaderFunction } from '@remix-run/node';
+import { LinksFunction, LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
+import reactGalleryStyles from 'react-image-gallery/styles/css/image-gallery.css';
 import invariant from 'tiny-invariant';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
+import { ImageGallery, VideoGallery } from '~/components/media-galery';
 import { StatIconPair } from '~/components/stat-pair';
 import { Node } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
 import { formatMediaType, formatNumEpisodes, formatPopularity, formatRank, formatStatus } from '~/utils/format-data';
+
+export const links: LinksFunction = () => {
+  return [{ rel: 'stylesheet', href: reactGalleryStyles }];
+};
 
 export const loader: LoaderFunction = async ({ params }) => {
   invariant(typeof params.id === 'string');
@@ -22,10 +28,12 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const STAT_ICON = 'w-5';
 const STAT_TEXT = 'text-md tracking-tight';
+const SUBTITLE = 'text-xl tracking-wide font-bold mb-6';
 
 export default function AnimeDetails() {
   const data = useLoaderData<Node>();
   const {
+    id,
     title,
     alternative_titles,
     start_season,
@@ -44,6 +52,8 @@ export default function AnimeDetails() {
     source,
     related_anime,
     recommendations,
+    videos,
+    pictures,
   } = data;
 
   return (
@@ -104,7 +114,7 @@ export default function AnimeDetails() {
         </section>
         {!!related_anime?.length && (
           <section>
-            <h2 className="text-xl tracking-wide font-bold mb-4">Related anime</h2>
+            <h2 className={SUBTITLE}>Related anime</h2>
 
             <GridPreview>
               {related_anime.map((r) => (
@@ -115,8 +125,7 @@ export default function AnimeDetails() {
         )}
         {!!recommendations?.length && (
           <section>
-            <h2 className="text-xl tracking-wide font-bold mb-4">Recommendations</h2>
-
+            <h2 className={SUBTITLE}>Recommendations</h2>
             <GridPreview>
               {recommendations.map((r) => (
                 <GridPreviewItem key={r.node.id} {...r} />
@@ -124,9 +133,23 @@ export default function AnimeDetails() {
             </GridPreview>
           </section>
         )}
+        {!!videos.length && (
+          <section>
+            <h2 className={SUBTITLE}>Videos</h2>
+            <VideoGallery key={id} videos={videos} />
+          </section>
+        )}
+        {!!pictures.length && (
+          <section>
+            <h2 className={SUBTITLE}>Images</h2>
+            <div className=" max-w-xs">
+              <ImageGallery pictures={pictures} />
+            </div>
+          </section>
+        )}
       </div>
 
-      <div className="flex flex-col space-y-10 mt-10">{JSON.stringify(data)}</div>
+      {/* <div className="flex flex-col space-y-10 mt-10">{JSON.stringify(data)}</div> */}
     </div>
   );
 }
