@@ -1,5 +1,5 @@
 export type MediaType = 'movie' | 'tv' | 'special' | 'ova' | 'ona' | 'music';
-export type Status = 'finished_airing' | 'not_yet_aired';
+export type Status = 'finished_airing' | 'not_yet_aired' | 'currently_airing';
 export type Rating = 'pg_13';
 export type Picture = {
   medium: string;

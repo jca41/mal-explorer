@@ -9,7 +9,7 @@ import { ImageGallery, VideoGallery } from '~/components/media-galery';
 import { StatIconPair } from '~/components/stat-pair';
 import { Node } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
-import { formatMediaType, formatNumEpisodes, formatPopularity, formatRank, formatStatus } from '~/utils/format-data';
+import { formatMediaType, formatNumEpisodes, formatPopularity, formatRank, formatSource, formatStatus } from '~/utils/format-data';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: reactGalleryStyles }];
@@ -106,7 +106,7 @@ export default function AnimeDetails() {
               <>
                 <li className="flex space-x-2">
                   <span className="font-semibold">Source:</span>
-                  <span className="capitalize">{source}</span>
+                  <span className="capitalize">{formatSource(source)}</span>
                 </li>
               </>
             )}

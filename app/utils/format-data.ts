@@ -5,6 +5,7 @@ import { MediaType, Status } from '~/contracts/mal';
 const STATUS_MAP: Record<Status, string> = {
   finished_airing: 'Finished',
   not_yet_aired: 'Not Aired',
+  currently_airing: 'Airing',
 };
 
 const MISSING = 'MISSING_MAPPING';
@@ -35,4 +36,13 @@ export function formatNumEpisodes(numEpisodes: number) {
 
 export function formatPopularity(numListUsers: number, popularity: number) {
   return popularity ? `${formatRank(popularity)} (${numeral(numListUsers).format('0.0a')})` : '';
+}
+
+const SOURCE_MAP: Record<string, string> = {
+  manga: 'Manga',
+  web_manga: 'Web Manga',
+};
+
+export function formatSource(source: string) {
+  return SOURCE_MAP[source] ?? MISSING;
 }

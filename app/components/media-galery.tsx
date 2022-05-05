@@ -45,5 +45,5 @@ export function ImageGallery({ pictures = [] }: Pick<Node, 'pictures'>) {
     type: 'image',
   }));
 
-  return <ReactImageGallery showPlayButton={false} items={mappedImages} />;
+  return <ReactImageGallery showPlayButton={false} items={mappedImages} lazyLoad />;
 }
