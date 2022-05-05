@@ -43,6 +43,7 @@ export default function AnimeDetails() {
     studios,
     source,
     related_anime,
+    recommendations,
   } = data;
 
   return (
@@ -107,6 +108,17 @@ export default function AnimeDetails() {
 
             <GridPreview>
               {related_anime.map((r) => (
+                <GridPreviewItem key={r.node.id} {...r} />
+              ))}
+            </GridPreview>
+          </section>
+        )}
+        {!!recommendations?.length && (
+          <section>
+            <h2 className="text-xl tracking-wide font-bold mb-4">Recommendations</h2>
+
+            <GridPreview>
+              {recommendations.map((r) => (
                 <GridPreviewItem key={r.node.id} {...r} />
               ))}
             </GridPreview>
