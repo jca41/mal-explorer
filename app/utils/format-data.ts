@@ -45,7 +45,5 @@ const SOURCE_MAP: Record<string, string> = {
 };
 
 export function formatSource(source: string) {
-  console.log(source);
-
   return SOURCE_MAP[source] ?? MISSING;
 }
