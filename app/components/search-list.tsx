@@ -23,7 +23,7 @@ export function SearchListItem({
   return (
     <li className="max-w-lg w-full">
       <Link
-        to={`anime/${id}`}
+        to={`/anime/${id}`}
         className="rounded-md bg-blue-50 py-4 px-6 shadow-sm grid grid-cols-image-content gap-4 hover:scale-[1.05] transition-transform"
       >
         <div className="w-28 md:w-32">
