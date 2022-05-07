@@ -1,3 +1,5 @@
+import { RankingTypeParam } from '~/contracts/mal';
+
 const BASE_PATH = 'https://api.myanimelist.net/v2';
 
 const clientId = process.env.MAL_CLIENT_ID as string;
@@ -5,6 +7,7 @@ const clientId = process.env.MAL_CLIENT_ID as string;
 const QUERY_TYPES = {
   list: '/anime',
   detail: ({ id }: DetailParams) => `/anime/${id}`,
+  top: '/anime/ranking',
 } as const;
 
 const FIELD_TYPES = {
@@ -18,13 +21,21 @@ type ListQuery = {
   limit: number;
   offset?: number;
 };
-type Query = ListQuery;
+
+type TopQuery = {
+  ranking_type: RankingTypeParam;
+  limit: number;
+  offset?: number;
+};
+
+type Query = ListQuery | TopQuery;
 
 type DetailParams = { id: string };
 type Params = DetailParams;
 
 type Service = {
   type: keyof typeof QUERY_TYPES;
+  fields: keyof typeof FIELD_TYPES;
   query?: Query;
   params?: Params;
 };
@@ -36,13 +47,13 @@ function normaliseQuery(query: Query = {} as Query) {
   }, {});
 }
 
-export async function malService<Result = unknown>({ type, query, params }: Service): Promise<Result> {
+export async function malService<Result = unknown>({ type, fields, query, params }: Service): Promise<Result> {
   const queryBuilder = QUERY_TYPES[type];
 
   const path = typeof queryBuilder === 'function' ? queryBuilder(params as Params) : queryBuilder;
-  const fields = FIELD_TYPES[type];
+  const fieldsString = FIELD_TYPES[fields];
 
-  const url = `${BASE_PATH}${path}?${new URLSearchParams({ fields, ...normaliseQuery(query) }).toString()}`;
+  const url = `${BASE_PATH}${path}?${new URLSearchParams({ fields: fieldsString, ...normaliseQuery(query) }).toString()}`;
 
   const response = await fetch(url, {
     method: 'GET',

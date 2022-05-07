@@ -20,6 +20,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   return malService({
     type: 'detail',
+    fields: 'detail',
     params: {
       id: params.id,
     },
@@ -66,8 +67,8 @@ export default function AnimeDetails() {
         <div className="text-xl text-slate-500 font-semibold">{alternative_titles.en}</div>
       </h1>
       <div className="mt-12 flex flex-col space-y-10">
-        <section className="flex flex-col space-y-2">
-          <ul className="flex gap-y-2 justify-center flex-wrap space-x-4">
+        <section className="flex flex-col space-y-3">
+          <ul className="flex gap-y-1 justify-center flex-wrap space-x-4">
             <StatIconPair value={mean} icon={StarIcon} iconClassname={`text-yellow-500 ${STAT_ICON}`} textClassName={STAT_TEXT} />
             <StatIconPair value={formatRank(rank)} icon={TrendingUpIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
             <StatIconPair
@@ -81,7 +82,7 @@ export default function AnimeDetails() {
             <StatIconPair value={formatNumEpisodes(num_episodes)} icon={FolderIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
           </ul>
           {genres?.length && (
-            <div className="flex gap-y-2 justify-center flex-wrap space-x-3">
+            <div className="flex gap-y-1 justify-center flex-wrap space-x-3">
               {genres.map(({ name, id }) => (
                 <span key={id}>{name}</span>
               ))}

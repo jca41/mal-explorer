@@ -1,5 +1,5 @@
 import { LoaderFunction } from '@remix-run/node';
-import { Form, useLoaderData, useSearchParams } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 
 import { SearchList, SearchListItem } from '~/components/search-list';
 import { NodeList } from '~/contracts/mal';
@@ -10,36 +10,21 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const q = url.searchParams.get('q');
 
-  if (!q) return {};
-
   return malService({
-    type: 'list',
+    type: 'top',
     fields: 'list',
     query: {
-      q,
+      ranking_type: 'all',
       limit: 20,
     },
   });
 };
 
-export default function Index() {
+export default function TopAnime() {
   const loaderData = useLoaderData<NodeList>();
-  const [params] = useSearchParams();
 
   return (
-    <div className="flex flex-col space-y-10">
-      <Form method="get" replace className="flex flex-row justify-center space-x-2">
-        <input
-          type="text"
-          name="q"
-          placeholder="Search..."
-          required
-          defaultValue={params.get('q') ?? ''}
-          minLength={3} // min query is 3 chars
-          autoComplete="off"
-          className="rounded-lg h-12 w-full max-w-xs"
-        ></input>
-      </Form>
+    <div>
       <SearchList>
         {(loaderData?.data ?? []).map(({ node }) => (
           <SearchListItem key={node.id} {...node} />

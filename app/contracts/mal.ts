@@ -93,3 +93,7 @@ export type Error = {
   error: string;
   message: string;
 };
+
+// API params
+
+export type RankingTypeParam = 'all' | 'airing' | 'upcoming' | 'tv' | 'ova' | 'movie' | 'special' | 'bypopularity' | 'favorite';
