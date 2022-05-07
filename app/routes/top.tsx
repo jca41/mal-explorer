@@ -25,6 +25,7 @@ export default function TopAnime() {
 
   return (
     <div>
+      <h1 className="text-center text-3xl tracking-wide mb-12">Top Anime</h1>
       <SearchList>
         {(loaderData?.data ?? []).map(({ node }) => (
           <SearchListItem key={node.id} {...node} />
