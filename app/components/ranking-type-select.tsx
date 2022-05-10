@@ -3,12 +3,12 @@ import { useSearchParams } from '@remix-run/react';
 import { RankingTypeParam } from '~/contracts/mal';
 
 const RANKING_TYPES: Record<RankingTypeParam, string> = {
-  all: 'All',
+  all: 'Rating',
+  bypopularity: 'Popularity',
   airing: 'Airing',
   movie: 'Movie',
-  upcoming: 'Upcoming',
   tv: 'TV',
-  bypopularity: 'Popularity',
+  upcoming: 'Upcoming',
   favorite: 'Favorite',
   ova: 'OVA',
   special: 'Special',
