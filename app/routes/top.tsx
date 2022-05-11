@@ -42,10 +42,10 @@ function Pagination({ paging, formRef }: { paging?: Paging; formRef: React.RefOb
       formData.offset = offset;
     }
 
-    window?.scrollTo({ top: 0, behavior: 'smooth' });
-
     // here we want to submit the form manually as we need to control the offset
     submit(formData);
+
+    window?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
