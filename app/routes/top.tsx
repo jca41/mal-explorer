@@ -27,10 +27,17 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
 };
 
-const BUTTON = 'tracking-tight py-2 px-3 bg-blue-200 hover:bg-blue-400 transition-colors';
+const BUTTON = 'tracking-tight px-3 bg-blue-200 hover:bg-blue-400 transition-colors';
 
-function Pagination({ paging, formRef }: { paging?: Paging; formRef: React.RefObject<HTMLFormElement> }) {
+const scrollTop = () => window?.scrollTo({ top: 0, behavior: 'smooth' });
+
+function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObject<HTMLFormElement> }) {
   const submit = useSubmit();
+
+  const onSelectChange = () => {
+    submit(formRef.current);
+    scrollTop();
+  };
 
   const loadMore = (type: keyof NonNullable<typeof paging>) => () => {
     const sort = new FormData(formRef.current as HTMLFormElement).get('sort') as string;
@@ -44,51 +51,46 @@ function Pagination({ paging, formRef }: { paging?: Paging; formRef: React.RefOb
 
     // here we want to submit the form manually as we need to control the offset
     submit(formData);
-
-    window?.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollTop();
   };
 
+  const currentPage = getPageNumber({ paging, limit: LIMIT });
+
   return (
-    <div className="mx-auto max-w-lg mt-6 space-x-2 flex justify-center">
-      {paging?.previous && (
-        <button type="button" onClick={loadMore('previous')} className={BUTTON}>
-          Previous
-        </button>
-      )}
-      {paging?.next && (
-        <button type="button" onClick={loadMore('next')} className={BUTTON}>
-          Next
-        </button>
-      )}
+    <div className="mx-auto max-w-lg flex items-end justify-between">
+      <div className="flex gap-x-2">
+        <RankingTypeSelect onChange={onSelectChange} />
+        {paging?.previous && (
+          <button type="button" onClick={loadMore('previous')} className={BUTTON}>
+            Previous
+          </button>
+        )}
+        {paging?.next && (
+          <button type="button" onClick={loadMore('next')} className={BUTTON}>
+            Next
+          </button>
+        )}
+      </div>
+      {<span className="h-min text-slate-600 font-semibold">Page {currentPage}</span>}
     </div>
   );
 }
 
 export default function TopAnime() {
   const loaderData = useLoaderData<NodeList>();
-  const submit = useSubmit();
-
   const formRef = useRef<HTMLFormElement>(null);
-
-  const onSelectChange = () => {
-    submit(formRef.current);
-  };
-
-  const currentPage = getPageNumber({ paging: loaderData.paging, limit: LIMIT });
 
   return (
     <Form ref={formRef} method="get" replace>
-      <h1 className="text-center text-3xl tracking-wide mb-12">Top Anime</h1>
-      <div className="mx-auto max-w-lg mb-6 flex items-end justify-between">
-        <RankingTypeSelect onChange={onSelectChange} />
-        {!!currentPage && <span className="h-min text-slate-600 font-semibold">Page {currentPage}</span>}
+      <h1 className="text-center text-3xl tracking-wide mb-8">Top Anime</h1>
+      <div className="sticky top-0 py-6 bg-blue-100 z-10">
+        <Controls formRef={formRef} paging={loaderData?.paging} />
       </div>
       <List>
         {(loaderData?.data ?? []).map(({ node }) => (
           <ListItem key={node.id} {...node} />
         ))}
       </List>
-      <Pagination formRef={formRef} paging={loaderData?.paging} />
     </Form>
   );
 }

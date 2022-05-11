@@ -7,7 +7,7 @@ export const getOffset = (pagingUrl?: string) => {
 };
 
 export const getPageNumber = ({ paging, limit }: { paging?: Paging; limit: number }) => {
-  let page: number | null = null;
+  let page = 0;
 
   if (paging?.next) {
     const offset = getOffset(paging?.next);
@@ -19,5 +19,5 @@ export const getPageNumber = ({ paging, limit }: { paging?: Paging; limit: numbe
     page = parseInt(offset as string) / limit + 1;
   }
 
-  return typeof page === 'number' ? page + 1 : null;
+  return page + 1;
 };
