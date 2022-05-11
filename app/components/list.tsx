@@ -7,7 +7,7 @@ import { formatMediaType, formatNumEpisodes, formatRank, formatStatus } from '~/
 
 import { StatIconPair } from './stat-pair';
 
-export function SearchListItem({
+export function ListItem({
   id,
   title,
   main_picture,
@@ -21,7 +21,7 @@ export function SearchListItem({
   num_episodes,
 }: Node) {
   return (
-    <li className="max-w-lg w-full">
+    <li className="max-w-lg w-full animate-fadeIn">
       <Link
         to={`/anime/${id}`}
         className="rounded-md bg-blue-50 py-4 px-6 shadow-sm grid grid-cols-image-content gap-4 hover:scale-[1.05] transition-transform"
@@ -53,6 +53,6 @@ export function SearchListItem({
   );
 }
 
-export function SearchList({ children }: { children: ReactNode }) {
+export function List({ children }: { children: ReactNode }) {
   return <ul className="flex flex-col space-y-4 items-center">{children}</ul>;
 }

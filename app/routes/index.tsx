@@ -1,7 +1,7 @@
 import { LoaderFunction } from '@remix-run/node';
 import { Form, useLoaderData, useSearchParams } from '@remix-run/react';
 
-import { SearchList, SearchListItem } from '~/components/search-list';
+import { List, ListItem } from '~/components/list';
 import { NodeList } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
 
@@ -40,11 +40,11 @@ export default function Index() {
           className="rounded-lg h-12 w-full max-w-xs"
         ></input>
       </Form>
-      <SearchList>
+      <List>
         {(loaderData?.data ?? []).map(({ node }) => (
-          <SearchListItem key={node.id} {...node} />
+          <ListItem key={node.id} {...node} />
         ))}
-      </SearchList>
+      </List>
     </div>
   );
 }
