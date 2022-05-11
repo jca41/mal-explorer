@@ -24,27 +24,27 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
 };
 
-const getNextOffset = (paging?: Paging) => {
-  if (!paging?.next) return undefined;
+const BUTTON = 'tracking-tight px-3 bg-blue-200 hover:bg-blue-300';
 
-  return new URL(paging?.next).searchParams.get('offset') ?? undefined;
+const getOffset = (pagingUrl?: string) => {
+  if (!pagingUrl) return undefined;
+
+  return new URL(pagingUrl).searchParams.get('offset') ?? undefined;
 };
 
-export default function TopAnime() {
-  const loaderData = useLoaderData<NodeList>();
+function Controls({ formRef, paging }: { formRef: React.RefObject<HTMLFormElement>; paging?: Paging }) {
   const submit = useSubmit();
-  const ref = useRef<HTMLFormElement>(null);
 
   const onSelectChange = () => {
-    submit(ref.current);
+    submit(formRef.current);
   };
 
-  const onLoadNextClick = () => {
-    const sort = new FormData(ref.current as HTMLFormElement).get('sort') as string;
+  const loadMore = (type: keyof NonNullable<typeof paging>) => () => {
+    const sort = new FormData(formRef.current as HTMLFormElement).get('sort') as string;
 
     const formData: Record<string, string> = { sort };
 
-    const offset = getNextOffset(loaderData?.paging);
+    const offset = getOffset(paging?.[type]);
     if (offset) {
       formData.offset = offset;
     }
@@ -54,23 +54,37 @@ export default function TopAnime() {
   };
 
   return (
+    <div className="mx-auto max-w-lg mb-6 space-x-2 flex">
+      <RankingTypeSelect onChange={onSelectChange} />
+      {paging?.previous && (
+        <button type="button" onClick={loadMore('previous')} className={BUTTON}>
+          Previous
+        </button>
+      )}
+      {paging?.next && (
+        <button type="button" onClick={loadMore('next')} className={BUTTON}>
+          Next
+        </button>
+      )}
+    </div>
+  );
+}
+
+export default function TopAnime() {
+  const loaderData = useLoaderData<NodeList>();
+
+  const ref = useRef<HTMLFormElement>(null);
+
+  return (
     <Form ref={ref} method="get" replace>
       <h1 className="text-center text-3xl tracking-wide mb-12">Top Anime</h1>
-      <div className="mx-auto max-w-lg mb-6 flex justify-end">
-        <RankingTypeSelect onChange={onSelectChange} />
-      </div>
+      <Controls formRef={ref} paging={loaderData.paging} />
       <SearchList>
         {(loaderData?.data ?? []).map(({ node }) => (
           <SearchListItem key={node.id} {...node} />
         ))}
       </SearchList>
-      {loaderData?.paging?.next && (
-        <div className="w-full flex justify-center mt-8">
-          <button type="button" onClick={() => onLoadNextClick()} className="rounded-xl bg-blue-300 py-2 px-5 shadow-md text-lg tracking-tight">
-            Load more
-          </button>
-        </div>
-      )}
+      <div className="w-full flex justify-center mt-8"></div>
     </Form>
   );
 }
