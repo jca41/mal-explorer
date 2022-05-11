@@ -14,11 +14,11 @@ const RANKING_TYPES: Record<RankingTypeParam, string> = {
   special: 'Special',
 };
 
-export function RankingTypeSelect({ onSubmit }: { onSubmit: () => void }) {
+export function RankingTypeSelect({ onChange }: { onChange: () => void }) {
   const [params] = useSearchParams();
 
   return (
-    <select name="sort" defaultValue={params.get('sort') ?? 'all'} onChange={() => onSubmit()}>
+    <select name="sort" defaultValue={params.get('sort') ?? 'all'} onChange={() => onChange()}>
       {(Object.keys(RANKING_TYPES) as (keyof typeof RANKING_TYPES)[]).map((r) => (
         <option key={r} value={r}>
           {RANKING_TYPES[r]}
