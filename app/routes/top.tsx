@@ -83,7 +83,7 @@ export default function TopAnime() {
   return (
     <Form ref={formRef} method="get" replace>
       <h1 className="text-center text-3xl tracking-wide mb-8">Top Anime</h1>
-      <div className="sticky top-0 py-6 px-2 bg-blue-100 z-10">
+      <div className="sticky top-0 py-6 bg-blue-100 z-10 before:absolute before:bg-blue-100 before:w-8 before:inset-y-0 before:-left-8 after:absolute after:bg-blue-100 after:w-8 after:inset-y-0 after:-right-8 md:before:hidden md:after:hidden">
         <Controls formRef={formRef} paging={loaderData?.paging} />
       </div>
       <List>
