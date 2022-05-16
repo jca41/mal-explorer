@@ -26,7 +26,7 @@ export function usePaginationSubmit({
 }
 
 export function CurrentPage({ page }: { page: number }) {
-  return <span className="h-min text-slate-600 font-semibold">Page {page}</span>;
+  return <span className="h-min text-slate-600 font-semibold text-sm sm:text-base">Page {page}</span>;
 }
 
 const BUTTON_LABEL = {

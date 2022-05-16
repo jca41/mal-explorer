@@ -14,7 +14,7 @@ export const RANKING_TYPES_OPTIONS: Record<RankingTypeParam, string> = {
 
 const currentYear = new Date().getFullYear();
 
-export const SEASONAL_YEAR_OPTIONS = [currentYear - 1, currentYear, currentYear + 1].reduce(
+export const SEASONAL_YEAR_OPTIONS: Record<number, string> = [currentYear - 1, currentYear, currentYear + 1].reduce(
   (acc, v) => ({
     ...acc,
     [v]: v,

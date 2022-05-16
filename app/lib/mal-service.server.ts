@@ -1,4 +1,4 @@
-import { RankingTypeParam, SeasonParam } from '~/contracts/mal';
+import { RankingTypeParam, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
 
 const BASE_PATH = 'https://api.myanimelist.net/v2';
 
@@ -32,7 +32,13 @@ type TopQuery = {
   offset?: number;
 };
 
-type Query = ListQuery | TopQuery;
+type SeasonalQuery = {
+  limit: number;
+  offset?: number;
+  sort: SeasonalSortQueryParam;
+};
+
+type Query = ListQuery | TopQuery | SeasonalQuery;
 
 type Params = DetailParams | SeasonalParams;
 type GenericQueryFn = (data: unknown) => string;

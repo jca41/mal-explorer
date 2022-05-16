@@ -1,30 +1,37 @@
 import { LoaderFunction } from '@remix-run/node';
 import { Form, useLoaderData, useSubmit } from '@remix-run/react';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 import { List, ListItem } from '~/components/list';
 import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components/pagination';
+import { RadioGroup, SEASONAL_SORT_RADIOS } from '~/components/radio-group';
 import { SEASONAL_SEASON_OPTIONS, SEASONAL_YEAR_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
-import { NodeList, Paging, RankingTypeParam } from '~/contracts/mal';
+import { NodeList, Paging, SeasonParam } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
 import { getFormData, scrollTop } from '~/utils/html';
+import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
 
 const LIMIT = 25;
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
 
-  const sort = url.searchParams.get('sort');
+  const season = (url.searchParams.get('season') ?? getCurrentSeason()) as SeasonParam;
+  const year = url.searchParams.get('year') ?? getCurrentYear();
   const offset = url.searchParams.get('offset');
 
   return malService({
-    type: 'top',
+    type: 'seasonal',
     fields: 'list',
     query: {
-      ranking_type: (sort || 'all') as RankingTypeParam,
       limit: LIMIT,
       offset: offset ? parseInt(offset) : undefined,
+      sort: 'anime_num_list_users',
+    },
+    params: {
+      year: typeof year === 'string' ? parseInt(year) : year,
+      season,
     },
   });
 };
@@ -54,15 +61,21 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
     scrollTop();
   };
 
+  const currentYear = useMemo(getCurrentYear, []);
+  const currentSeason = useMemo(getCurrentSeason, []);
+
   return (
     <div className="mx-auto max-w-lg flex items-end justify-between">
       <div className="flex gap-x-2">
-        <Select name="season" optionMap={SEASONAL_SEASON_OPTIONS} onChange={onSelectChange} />
-        <Select name="year" optionMap={SEASONAL_YEAR_OPTIONS} onChange={onSelectChange} />
+        <Select name="season" optionMap={SEASONAL_SEASON_OPTIONS} onChange={onSelectChange} defaultValue={currentSeason} />
+        <Select name="year" optionMap={SEASONAL_YEAR_OPTIONS} onChange={onSelectChange} defaultValue={currentYear} />
         <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
         <PaginationButton paging={paging} type="next" onClick={submitNextPage} />
       </div>
       <CurrentPage page={currentPage} />
+      <div className="block">
+        <RadioGroup name="sort" radioMap={SEASONAL_SORT_RADIOS} />
+      </div>
     </div>
   );
 }

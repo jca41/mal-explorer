@@ -98,3 +98,4 @@ export type Error = {
 
 export type RankingTypeParam = 'all' | 'airing' | 'upcoming' | 'tv' | 'ova' | 'movie' | 'special' | 'bypopularity' | 'favorite';
 export type SeasonParam = 'winter' | 'spring' | 'summer' | 'fall';
+export type SeasonalSortQueryParam = 'anime_score' | 'anime_num_list_users';
