@@ -1,13 +1,17 @@
-import { RankingTypeParam } from '~/contracts/mal';
+import { RankingTypeParam, SeasonParam } from '~/contracts/mal';
 
 const BASE_PATH = 'https://api.myanimelist.net/v2';
 
 const clientId = process.env.MAL_CLIENT_ID as string;
 
+type DetailParams = { id: string };
+type SeasonalParams = { season: SeasonParam; year: number };
+
 const QUERY_TYPES = {
   list: '/anime',
   detail: ({ id }: DetailParams) => `/anime/${id}`,
   top: '/anime/ranking',
+  seasonal: ({ season, year }: SeasonalParams) => `/anime/season/${year}/${season}`,
 } as const;
 
 const FIELD_TYPES = {
@@ -30,8 +34,8 @@ type TopQuery = {
 
 type Query = ListQuery | TopQuery;
 
-type DetailParams = { id: string };
-type Params = DetailParams;
+type Params = DetailParams | SeasonalParams;
+type GenericQueryFn = (data: unknown) => string;
 
 type Service = {
   type: keyof typeof QUERY_TYPES;
@@ -50,7 +54,7 @@ function normaliseQuery(query: Query = {} as Query) {
 export async function malService<Result = unknown>({ type, fields, query, params }: Service): Promise<Result> {
   const queryBuilder = QUERY_TYPES[type];
 
-  const path = typeof queryBuilder === 'function' ? queryBuilder(params as Params) : queryBuilder;
+  const path = typeof queryBuilder === 'function' ? (queryBuilder as GenericQueryFn)(params) : queryBuilder;
   const fieldsString = FIELD_TYPES[fields];
 
   const url = `${BASE_PATH}${path}?${new URLSearchParams({ fields: fieldsString, ...normaliseQuery(query) }).toString()}`;

@@ -97,3 +97,4 @@ export type Error = {
 // API params
 
 export type RankingTypeParam = 'all' | 'airing' | 'upcoming' | 'tv' | 'ova' | 'movie' | 'special' | 'bypopularity' | 'favorite';
+export type SeasonParam = 'winter' | 'spring' | 'summer' | 'fall';

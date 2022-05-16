@@ -4,7 +4,7 @@ import { useRef } from 'react';
 
 import { List, ListItem } from '~/components/list';
 import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components/pagination';
-import { RANKING_TYPES_OPTIONS, Select } from '~/components/select';
+import { SEASONAL_SEASON_OPTIONS, SEASONAL_YEAR_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
 import { NodeList, Paging, RankingTypeParam } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
@@ -57,7 +57,8 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
   return (
     <div className="mx-auto max-w-lg flex items-end justify-between">
       <div className="flex gap-x-2">
-        <Select name="sort" optionMap={RANKING_TYPES_OPTIONS} onChange={onSelectChange} defaultValue="all" />
+        <Select name="season" optionMap={SEASONAL_SEASON_OPTIONS} onChange={onSelectChange} />
+        <Select name="year" optionMap={SEASONAL_YEAR_OPTIONS} onChange={onSelectChange} />
         <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
         <PaginationButton paging={paging} type="next" onClick={submitNextPage} />
       </div>
@@ -66,13 +67,13 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
   );
 }
 
-export default function TopAnime() {
+export default function SeasonalAnime() {
   const loaderData = useLoaderData<NodeList>();
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
     <Form ref={formRef} method="get" replace>
-      <h1 className="text-center text-3xl tracking-wide mb-8">Top Anime</h1>
+      <h1 className="text-center text-3xl tracking-wide mb-8">Seasonal Anime</h1>
       <StickyHeader>
         <Controls formRef={formRef} paging={loaderData?.paging} />
       </StickyHeader>
