@@ -7,7 +7,7 @@ import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components
 import { RadioGroup, SEASONAL_SORT_RADIOS } from '~/components/radio-group';
 import { SEASONAL_SEASON_OPTIONS, SEASONAL_YEAR_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
-import { NodeList, Paging, SeasonParam } from '~/contracts/mal';
+import { NodeList, Paging, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
@@ -20,6 +20,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const season = (url.searchParams.get('season') ?? getCurrentSeason()) as SeasonParam;
   const year = url.searchParams.get('year') ?? getCurrentYear();
   const offset = url.searchParams.get('offset');
+  const sort = url.searchParams.get('sort') ?? 'anime_score';
 
   return malService({
     type: 'seasonal',
@@ -27,7 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     query: {
       limit: LIMIT,
       offset: offset ? parseInt(offset) : undefined,
-      sort: 'anime_num_list_users',
+      sort: sort as SeasonalSortQueryParam,
     },
     params: {
       year: typeof year === 'string' ? parseInt(year) : year,
@@ -65,16 +66,19 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
   const currentSeason = useMemo(getCurrentSeason, []);
 
   return (
-    <div className="mx-auto max-w-lg flex items-end justify-between">
-      <div className="flex gap-x-2">
-        <Select name="season" optionMap={SEASONAL_SEASON_OPTIONS} onChange={onSelectChange} defaultValue={currentSeason} />
-        <Select name="year" optionMap={SEASONAL_YEAR_OPTIONS} onChange={onSelectChange} defaultValue={currentYear} />
-        <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
-        <PaginationButton paging={paging} type="next" onClick={submitNextPage} />
+    <div className="mx-auto max-w-lg">
+      <div className="flex items-end justify-between">
+        <div className="flex gap-x-2">
+          <Select name="season" optionMap={SEASONAL_SEASON_OPTIONS} onChange={onSelectChange} defaultValue={currentSeason} />
+          <Select name="year" optionMap={SEASONAL_YEAR_OPTIONS} onChange={onSelectChange} defaultValue={currentYear} />
+          <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
+          <PaginationButton paging={paging} type="next" onClick={submitNextPage} />
+        </div>
+        <CurrentPage page={currentPage} />
       </div>
-      <CurrentPage page={currentPage} />
+
       <div className="block">
-        <RadioGroup name="sort" radioMap={SEASONAL_SORT_RADIOS} />
+        <RadioGroup name="sort" label="Sort By" radioMap={SEASONAL_SORT_RADIOS} onChange={onSelectChange} defaultValue="anime_score" />
       </div>
     </div>
   );
