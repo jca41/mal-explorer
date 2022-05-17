@@ -13,6 +13,7 @@ import { getFormData, scrollTop } from '~/utils/html';
 import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
 
 const LIMIT = 25;
+const DEFAULT_SORT = 'anime_score';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -20,7 +21,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const season = (url.searchParams.get('season') ?? getCurrentSeason()) as SeasonParam;
   const year = url.searchParams.get('year') ?? getCurrentYear();
   const offset = url.searchParams.get('offset');
-  const sort = url.searchParams.get('sort') ?? 'anime_score';
+  const sort = url.searchParams.get('sort') ?? DEFAULT_SORT;
 
   return malService({
     type: 'seasonal',
@@ -71,14 +72,14 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
         <div className="flex gap-x-2">
           <Select name="season" optionMap={SEASONAL_SEASON_OPTIONS} onChange={onSelectChange} defaultValue={currentSeason} />
           <Select name="year" optionMap={SEASONAL_YEAR_OPTIONS} onChange={onSelectChange} defaultValue={currentYear} />
-          <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
           <PaginationButton paging={paging} type="next" onClick={submitNextPage} />
+          <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
         </div>
         <CurrentPage page={currentPage} />
       </div>
 
-      <div className="block">
-        <RadioGroup name="sort" label="Sort By" radioMap={SEASONAL_SORT_RADIOS} onChange={onSelectChange} defaultValue="anime_score" />
+      <div className="mt-3">
+        <RadioGroup name="sort" label="Sort By" radioMap={SEASONAL_SORT_RADIOS} onChange={onSelectChange} defaultValue={DEFAULT_SORT} />
       </div>
     </div>
   );

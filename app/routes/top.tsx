@@ -58,8 +58,8 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
     <div className="mx-auto max-w-lg flex items-end justify-between">
       <div className="flex gap-x-2">
         <Select name="sort" optionMap={RANKING_TYPES_OPTIONS} onChange={onSelectChange} defaultValue="all" />
-        <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
         <PaginationButton paging={paging} type="next" onClick={submitNextPage} />
+        <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
       </div>
       <CurrentPage page={currentPage} />
     </div>

@@ -1,6 +1,7 @@
 export type MediaType = 'movie' | 'tv' | 'special' | 'ova' | 'ona' | 'music';
 export type Status = 'finished_airing' | 'not_yet_aired' | 'currently_airing';
 export type Rating = 'pg_13';
+export type Source = 'manga' | 'web_manga' | 'original' | 'light_novel';
 export type Picture = {
   medium: string;
   large: string;
@@ -38,7 +39,7 @@ export type Video = {
 export type Node = {
   id: number;
   title: string;
-  main_picture: Picture;
+  main_picture?: Picture;
   alternative_titles: {
     synonyms: string[];
     en: string;
@@ -63,7 +64,7 @@ export type Node = {
     year: number;
     season: string;
   };
-  source: string;
+  source: Source;
   average_episode_duration: number;
   rating: Rating;
   studios: { id: number; name: string }[];

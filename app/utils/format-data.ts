@@ -1,6 +1,8 @@
 import numeral from 'numeral';
 
-import { MediaType, Status } from '~/contracts/mal';
+import { MediaType, Source, Status } from '~/contracts/mal';
+
+import { formatSnakeCase } from './string';
 
 const STATUS_MAP: Record<Status, string> = {
   finished_airing: 'Finished',
@@ -8,22 +10,20 @@ const STATUS_MAP: Record<Status, string> = {
   currently_airing: 'Airing',
 };
 
-const MISSING = 'MISSING_MAPPING';
+const formatMissing = (s: string) => `missing -> ${s}`;
 
 export function formatStatus(status: Status) {
-  return STATUS_MAP[status] ?? MISSING;
+  return STATUS_MAP[status] ?? formatMissing(status);
 }
 
-const MEDIA_TYPE_MAP: Record<MediaType, string> = {
-  movie: 'Movie',
+const MEDIA_TYPE_MAP: Partial<Record<MediaType, string>> = {
   tv: 'TV',
   ova: 'OVA',
   ona: 'ONA',
-  special: 'Special',
-  music: 'Music',
 };
+
 export function formatMediaType(mediaType: MediaType) {
-  return MEDIA_TYPE_MAP[mediaType] ?? MISSING;
+  return MEDIA_TYPE_MAP[mediaType] ?? formatSnakeCase(mediaType);
 }
 
 export function formatRank(rank: number) {
@@ -38,12 +38,6 @@ export function formatPopularity(numListUsers: number, popularity: number) {
   return popularity ? `${formatRank(popularity)} (${numeral(numListUsers).format('0.0a')})` : '';
 }
 
-const SOURCE_MAP: Record<string, string> = {
-  manga: 'Manga',
-  web_manga: 'Web Manga',
-  original: 'Original',
-};
-
-export function formatSource(source: string) {
-  return SOURCE_MAP[source] ?? MISSING;
+export function formatSource(source: Source) {
+  return formatSnakeCase(source);
 }

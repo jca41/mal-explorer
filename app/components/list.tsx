@@ -27,7 +27,7 @@ export function ListItem({
         className="rounded-md bg-blue-50 py-4 px-6 shadow-sm grid grid-cols-image-content gap-4 hover:scale-[1.05] transition-transform"
       >
         <div className="w-28 md:w-32">
-          <img src={main_picture.medium} alt={title} />
+          {main_picture?.medium ? <img src={main_picture?.medium} alt={title} /> : <div className="bg-blue-100 w-full h-full"></div>}
         </div>
 
         <div className="">
