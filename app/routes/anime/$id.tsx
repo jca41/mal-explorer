@@ -89,9 +89,11 @@ export default function AnimeDetails() {
             </div>
           )}
         </section>
-        <div className="flex justify-center">
-          <img src={main_picture.large} alt={title} className="max-w-[70%] sm:max-w-xs" />
-        </div>
+        {main_picture?.large && (
+          <div className="flex justify-center">
+            <img src={main_picture.large} alt={title} className="max-w-[70%] sm:max-w-xs" />
+          </div>
+        )}
         <section>
           <p className="prose prose-slate max-w-none">{synopsis || background}</p>
           <ul className="mt-6">
