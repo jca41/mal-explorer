@@ -30,7 +30,7 @@ export function CurrentPage({ page }: { page: number }) {
 }
 
 const BUTTON_LABEL = {
-  previous: 'Previous',
+  previous: 'Prev',
   next: 'Next',
 };
 

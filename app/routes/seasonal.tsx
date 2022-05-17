@@ -67,19 +67,18 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
   const currentSeason = useMemo(getCurrentSeason, []);
 
   return (
-    <div className="mx-auto max-w-lg">
-      <div className="flex items-end justify-between">
+    <div className="mx-auto max-w-lg space-y-3">
+      <div className="flex items-end">
         <div className="flex gap-x-2">
           <Select name="season" optionMap={SEASONAL_SEASON_OPTIONS} onChange={onSelectChange} defaultValue={currentSeason} />
           <Select name="year" optionMap={SEASONAL_YEAR_OPTIONS} onChange={onSelectChange} defaultValue={currentYear} />
           <PaginationButton paging={paging} type="next" onClick={submitNextPage} />
           <PaginationButton paging={paging} type="previous" onClick={submitPreviousPage} />
         </div>
-        <CurrentPage page={currentPage} />
       </div>
-
-      <div className="mt-3">
+      <div className="flex justify-between items-end">
         <RadioGroup name="sort" label="Sort By" radioMap={SEASONAL_SORT_RADIOS} onChange={onSelectChange} defaultValue={DEFAULT_SORT} />
+        <CurrentPage page={currentPage} />
       </div>
     </div>
   );
