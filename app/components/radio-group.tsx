@@ -7,24 +7,37 @@ export const SEASONAL_SORT_RADIOS: Record<SeasonalSortQueryParam, string> = {
   anime_num_list_users: 'users',
 };
 
-function Radio({ name, label, value, defaultChecked = false }) {
+type RadioGroupProps<O> = {
+  onChange: () => void;
+  name: string;
+  radioMap: O;
+  defaultValue: keyof O;
+};
+
+type RadioProps<O> = Pick<RadioGroupProps<O>, 'name' | 'onChange'> & {
+  label: O[keyof O];
+  value: keyof O;
+  defaultChecked: boolean;
+};
+
+function Radio<O extends Record<string | number, string>>({ name, label, value, defaultChecked }: RadioProps<O>) {
   const id = `${name}-${value}`;
   return (
     <>
       <label htmlFor={id}>{label}</label>
-      <input id={id} type="radio" name={name} value={value} defaultChecked={defaultChecked} />
+      <input id={id} type="radio" name={name} value={value?.toString()} defaultChecked={defaultChecked} />
     </>
   );
 }
 
-export function RadioGroup({ name, radioMap }) {
+export function RadioGroup<O extends Record<string | number, string>>({ name, radioMap, defaultValue, onChange }: RadioGroupProps<O>) {
   const [params] = useSearchParams();
-  const defaultValue = params.get('sort');
+  const defaultCheckedValue = params.get(name) ?? defaultValue;
 
   return (
     <div>
-      {Object.keys(radioMap).map((r) => (
-        <Radio key={r} name={name} label={radioMap[r]} value={r} defaultChecked={defaultValue === r} />
+      {(Object.keys(radioMap) as (keyof typeof radioMap)[]).map((r) => (
+        <Radio key={r as string} name={name} label={radioMap[r]} value={r} defaultChecked={defaultCheckedValue === r} onChange={onChange} />
       ))}
     </div>
   );
