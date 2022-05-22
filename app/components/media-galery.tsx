@@ -22,13 +22,9 @@ export function VideoGallery({ videos = [] }: Pick<Node, 'videos'>) {
         ))}
       </select>
       {mounted && (
-        <ReactPlayer
-          controls
-          style={{
-            maxWidth: '100%',
-          }}
-          url={selected}
-        />
+        <div className="aspect-video">
+          <ReactPlayer width="100%" height="100%" controls url={selected} />
+        </div>
       )}
     </div>
   );

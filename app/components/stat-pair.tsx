@@ -17,3 +17,19 @@ export function StatIconPair({ icon: Icon, iconClassname = 'w-4', value, textCla
     </li>
   );
 }
+
+type StatPairProps = {
+  label: string;
+  value?: string | null;
+};
+
+export function StatPair({ label, value }: StatPairProps) {
+  if (!value) return null;
+
+  return (
+    <li className="flex space-x-2">
+      <span className="font-semibold">{`${label}: `}</span>
+      <span>{value}</span>
+    </li>
+  );
+}

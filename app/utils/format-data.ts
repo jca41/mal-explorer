@@ -41,3 +41,9 @@ export function formatPopularity(numListUsers: number, popularity: number) {
 export function formatSource(source: Source) {
   return formatSnakeCase(source);
 }
+
+export function formatEpisodeDuration(durationInSeconds: number | undefined) {
+  if (!durationInSeconds) return null;
+
+  return `${Math.floor(durationInSeconds / 60)}m`;
+}

@@ -6,10 +6,19 @@ import invariant from 'tiny-invariant';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
-import { StatIconPair } from '~/components/stat-pair';
+import { StatIconPair, StatPair } from '~/components/stat-pair';
 import { Node } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
-import { formatMediaType, formatNumEpisodes, formatPopularity, formatRank, formatSource, formatStatus } from '~/utils/format-data';
+import {
+  formatEpisodeDuration,
+  formatMediaType,
+  formatNumEpisodes,
+  formatPopularity,
+  formatRank,
+  formatSource,
+  formatStatus,
+} from '~/utils/format-data';
+import { formatSnakeCase } from '~/utils/string';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: reactGalleryStyles }];
@@ -55,6 +64,10 @@ export default function AnimeDetails() {
     recommendations,
     videos,
     pictures,
+    start_date,
+    end_date,
+    rating,
+    average_episode_duration,
   } = data;
 
   return (
@@ -94,36 +107,44 @@ export default function AnimeDetails() {
             <img src={main_picture.large} alt={title} className="max-w-[70%] sm:max-w-xs" />
           </div>
         )}
+        {background && (
+          <section>
+            <h2 className={SUBTITLE}>Background</h2>
+            <p className="prose-lg prose-slate max-w-none">{background}</p>
+          </section>
+        )}
+        {synopsis && (
+          <section>
+            <h2 className={SUBTITLE}>Synopsis</h2>
+            {synopsis && <p className="mt-4 prose prose-slate max-w-none">{synopsis}</p>}
+          </section>
+        )}
         <section>
-          <p className="prose prose-slate max-w-none">{synopsis || background}</p>
-          <ul className="mt-6">
-            <li className="flex space-x-2">
-              {!!studios.length && (
-                <>
-                  <span className="font-semibold">Studios:</span>
-                  <span>{studios.map((s) => s.name).join(', ')}</span>
-                </>
-              )}
-            </li>
-            {!!source && (
-              <>
-                <li className="flex space-x-2">
-                  <span className="font-semibold">Source:</span>
-                  <span className="capitalize">{formatSource(source)}</span>
-                </li>
-              </>
-            )}
+          <h2 className={SUBTITLE}>Extra info</h2>
+          <ul className="grid grid-cols-1 md:grid-cols-2">
+            <StatPair label="Studios" value={studios?.map((s) => s.name).join(', ')} />
+            <StatPair label="Source" value={formatSource(source)} />
+            <StatPair label="Start date" value={start_date} />
+            <StatPair label="End date" value={end_date} />
+            <StatPair label="Rating" value={formatSnakeCase(rating)?.toUpperCase?.()} />
+            <StatPair label="Avg ep duration" value={formatEpisodeDuration(average_episode_duration)} />
           </ul>
         </section>
         {!!related_anime?.length && (
           <section>
-            <h2 className={SUBTITLE}>Related anime</h2>
-
+            <h2 className={SUBTITLE}>Related</h2>
             <GridPreview>
               {related_anime.map((r) => (
                 <GridPreviewItem key={r.node.id} {...r} />
               ))}
             </GridPreview>
+          </section>
+        )}
+
+        {!!videos.length && (
+          <section>
+            <h2 className={SUBTITLE}>Videos</h2>
+            <VideoGallery key={id} videos={videos} />
           </section>
         )}
         {!!recommendations?.length && (
@@ -136,23 +157,15 @@ export default function AnimeDetails() {
             </GridPreview>
           </section>
         )}
-        {!!videos.length && (
-          <section>
-            <h2 className={SUBTITLE}>Videos</h2>
-            <VideoGallery key={id} videos={videos} />
-          </section>
-        )}
         {!!pictures.length && (
           <section>
             <h2 className={SUBTITLE}>Images</h2>
-            <div className=" max-w-xs">
+            <div className=" max-w-xs mx-auto lg:mx-0">
               <ImageGallery pictures={pictures} />
             </div>
           </section>
         )}
       </div>
-
-      {/* <div className="flex flex-col space-y-10 mt-10">{JSON.stringify(data)}</div> */}
     </div>
   );
 }
