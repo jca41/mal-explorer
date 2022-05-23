@@ -107,12 +107,6 @@ export default function AnimeDetails() {
             <img src={main_picture.large} alt={title} className="max-w-[70%] sm:max-w-xs" />
           </div>
         )}
-        {background && (
-          <section>
-            <h2 className={SUBTITLE}>Background</h2>
-            <p className="prose-lg prose-slate max-w-none">{background}</p>
-          </section>
-        )}
         {synopsis && (
           <section>
             <h2 className={SUBTITLE}>Synopsis</h2>
@@ -120,7 +114,7 @@ export default function AnimeDetails() {
           </section>
         )}
         <section>
-          <h2 className={SUBTITLE}>Extra info</h2>
+          <h2 className={SUBTITLE}>Info</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2">
             <StatPair label="Studios" value={studios?.map((s) => s.name).join(', ')} />
             <StatPair label="Source" value={formatSource(source)} />
@@ -145,6 +139,12 @@ export default function AnimeDetails() {
           <section>
             <h2 className={SUBTITLE}>Videos</h2>
             <VideoGallery key={id} videos={videos} />
+          </section>
+        )}
+        {background && (
+          <section>
+            <h2 className={SUBTITLE}>Background</h2>
+            <p className="prose-lg prose-slate max-w-none">{background}</p>
           </section>
         )}
         {!!recommendations?.length && (
