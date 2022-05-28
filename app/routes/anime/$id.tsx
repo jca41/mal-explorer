@@ -7,6 +7,7 @@ import invariant from 'tiny-invariant';
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
 import { StatIconPair, StatPair } from '~/components/stat-pair';
+import { TextClamp } from '~/components/text-clamp';
 import { Node } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
 import {
@@ -110,7 +111,7 @@ export default function AnimeDetails() {
         {synopsis && (
           <section>
             <h2 className={SUBTITLE}>Synopsis</h2>
-            {synopsis && <p className="mt-4 prose prose-slate max-w-none">{synopsis}</p>}
+            <TextClamp text={synopsis}>{<p className="prose prose-slate max-w-none">{synopsis}</p>}</TextClamp>
           </section>
         )}
         <section>
@@ -144,7 +145,7 @@ export default function AnimeDetails() {
         {background && (
           <section>
             <h2 className={SUBTITLE}>Background</h2>
-            <p className="prose-lg prose-slate max-w-none">{background}</p>
+            <TextClamp text={background}>{<p className="prose-lg prose-slate max-w-none">{background}</p>}</TextClamp>
           </section>
         )}
         {!!recommendations?.length && (
