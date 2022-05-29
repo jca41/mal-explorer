@@ -28,7 +28,7 @@ export default function Index() {
 
   return (
     <div className="flex flex-col space-y-10">
-      <Form method="get" replace className="flex flex-row justify-center space-x-2">
+      <Form method="get" replace action="/" className="flex flex-row justify-center space-x-2">
         <input
           type="text"
           name="q"
