@@ -6,6 +6,7 @@ import invariant from 'tiny-invariant';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
+import { RelatedGrid } from '~/components/related-grid';
 import { StatIconPair, StatPair } from '~/components/stat-pair';
 import { TextClamp } from '~/components/text-clamp';
 import { Node } from '~/contracts/mal';
@@ -128,11 +129,7 @@ export default function AnimeDetails() {
         {!!related_anime?.length && (
           <section>
             <h2 className={SUBTITLE}>Related</h2>
-            <GridPreview>
-              {related_anime.map((r) => (
-                <GridPreviewItem key={r.node.id} {...r} />
-              ))}
-            </GridPreview>
+            <RelatedGrid key={id} items={related_anime} />
           </section>
         )}
 
