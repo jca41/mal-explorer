@@ -6,7 +6,7 @@ export type Picture = {
   medium: string;
   large: string;
 };
-export type RelationType = 'sequel' | 'prequel' | 'other';
+export type RelationType = 'sequel' | 'prequel' | 'other' | 'alternative_version' | 'character' | 'side_story' | 'summary' | 'parent_story';
 export type RelatedAnime = {
   node: Pick<Node, 'id' | 'title' | 'main_picture'>;
   relation_type: RelationType;
