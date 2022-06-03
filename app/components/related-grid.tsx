@@ -24,7 +24,7 @@ function sortUniqueRelations(items: UniqueRelationsItem[]) {
   return items.sort((a, b) => SORT_ORDER.indexOf(b.value) - SORT_ORDER.indexOf(a.value));
 }
 
-const BASE_BUTTON = 'text-xs font-medium rounded-full shadow-sm py-1 px-3.5 transition-colors whitespace-nowrap';
+const BASE_BUTTON = 'text-xs font-medium rounded-full shadow-sm py-1 px-3.5 transition-colors duration-300 whitespace-nowrap';
 
 export function RelatedGrid({ items }: { items: RelatedAnime[] }) {
   const relations = useMemo(() => {
@@ -45,7 +45,7 @@ export function RelatedGrid({ items }: { items: RelatedAnime[] }) {
             const isSelected = selected === r.value;
             const clickHandler = () => setSelected(r.value);
             return (
-              <button key={r.value} onClick={clickHandler} className={`${BASE_BUTTON} ${isSelected ? 'bg-blue-300 text-white' : 'bg-slate-100'}`}>
+              <button key={r.value} onClick={clickHandler} className={`${BASE_BUTTON} ${isSelected ? 'bg-blue-400 text-white' : 'bg-slate-100'}`}>
                 {r.label}
               </button>
             );
