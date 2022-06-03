@@ -19,6 +19,7 @@ import {
   formatPopularity,
   formatRank,
   formatSource,
+  formatStartAndEndDate,
   formatStatus,
 } from '~/utils/format-data';
 import { formatSnakeCase } from '~/utils/string';
@@ -123,10 +124,10 @@ export default function AnimeDetails() {
           <ul className="grid grid-cols-1 md:grid-cols-2">
             <StatPair label="Studios" value={studios?.map((s) => s.name).join(', ')} />
             <StatPair label="Source" value={formatSource(source)} />
-            <StatPair label="Start date" value={start_date} />
-            <StatPair label="End date" value={end_date} />
+            <StatPair label="Average ep duration" value={formatEpisodeDuration(average_episode_duration)} />
+            <StatPair label="Start date" value={formatStartAndEndDate(start_date)} />
+            <StatPair label="End date" value={formatStartAndEndDate(end_date)} />
             <StatPair label="Rating" value={formatSnakeCase(rating)?.toUpperCase?.()} />
-            <StatPair label="Avg ep duration" value={formatEpisodeDuration(average_episode_duration)} />
           </ul>
         </section>
         {!!related_anime?.length && (

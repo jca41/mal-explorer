@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     query: {
       ranking_type: (sort || 'all') as RankingTypeParam,
       limit: LIMIT,
-      offset: offset ? parseInt(offset) : undefined,
+      offset: offset ? parseInt(offset) : 0,
     },
   });
 };

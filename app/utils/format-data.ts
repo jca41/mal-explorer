@@ -1,6 +1,6 @@
 import numeral from 'numeral';
 
-import { MediaType, Source, Status } from '~/contracts/mal';
+import { MediaType, SimpleDateString, Source, Status } from '~/contracts/mal';
 
 import { formatSnakeCase } from './string';
 
@@ -46,4 +46,9 @@ export function formatEpisodeDuration(durationInSeconds: number | undefined) {
   if (!durationInSeconds) return null;
 
   return `${Math.floor(durationInSeconds / 60)}m`;
+}
+
+export function formatStartAndEndDate(date?: SimpleDateString) {
+  if (!date) return null;
+  return date.split('-').reverse().join('/');
 }

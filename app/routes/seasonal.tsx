@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     fields: 'list',
     query: {
       limit: LIMIT,
-      offset: offset ? parseInt(offset) : undefined,
+      offset: offset ? parseInt(offset) : 0,
       sort: sort as SeasonalSortQueryParam,
     },
     params: {

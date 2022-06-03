@@ -12,6 +12,7 @@ export type RelatedAnime = {
   relation_type: RelationType;
   relation_type_formatted: Uppercase<RelationType>;
 };
+export type SimpleDateString = `${number}-${number}-${number}`;
 export type Recommendation = {
   node: Pick<Node, 'id' | 'title' | 'main_picture'>;
   num_recommendations: number;
@@ -45,8 +46,8 @@ export type Node = {
     en?: string;
     ja?: string;
   };
-  start_date?: string;
-  end_date?: string;
+  start_date?: SimpleDateString;
+  end_date?: SimpleDateString;
   synopsis: string;
   mean: number;
   rank: number;
