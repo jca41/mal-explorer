@@ -11,6 +11,7 @@ import { StatIconPair, StatPair } from '~/components/stat-pair';
 import { TextClamp } from '~/components/text-clamp';
 import { Node } from '~/contracts/mal';
 import { malService } from '~/lib/mal-service.server';
+import { shouldShowAltTitle } from '~/utils/check-data';
 import {
   formatEpisodeDuration,
   formatMediaType,
@@ -79,7 +80,9 @@ export default function AnimeDetails() {
           <span className="font-bold">{title}</span>
           {!!start_season?.year && <span className="font-normal">{` (${start_season.year})`}</span>}
         </div>
-        <div className="text-xl text-slate-500 font-semibold">{alternative_titles.en}</div>
+        {shouldShowAltTitle({ title, alt: alternative_titles.en }) && (
+          <div className="text-xl text-slate-500 font-semibold">{alternative_titles.en}</div>
+        )}
       </h1>
       <div className="mt-12 flex flex-col space-y-10">
         <section className="flex flex-col space-y-3">

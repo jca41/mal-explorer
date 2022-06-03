@@ -3,6 +3,7 @@ import { Link } from '@remix-run/react';
 import { ReactNode } from 'react';
 
 import { Node } from '~/contracts/mal';
+import { shouldShowAltTitle } from '~/utils/check-data';
 import { formatMediaType, formatNumEpisodes, formatRank, formatStatus } from '~/utils/format-data';
 
 import { StatIconPair } from './stat-pair';
@@ -36,7 +37,7 @@ export function ListItem({
               {title}
               {start_season?.year && <span className="font-normal">{` (${start_season?.year})`}</span>}
             </div>
-            {alternative_titles.en && <div className="text-slate-500 text-sm">{alternative_titles.en}</div>}
+            {shouldShowAltTitle({ title, alt: alternative_titles.en }) && <div className="text-slate-500 text-sm">{alternative_titles.en}</div>}
           </h2>
 
           <ul className="grid grid-cols-2 grid-flow-row gap-x-4 gap-y-2">

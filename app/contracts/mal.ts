@@ -42,8 +42,8 @@ export type Node = {
   main_picture?: Picture;
   alternative_titles: {
     synonyms: string[];
-    en: string;
-    ja: string;
+    en?: string;
+    ja?: string;
   };
   start_date?: string;
   end_date?: string;
