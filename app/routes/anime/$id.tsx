@@ -136,17 +136,16 @@ export default function AnimeDetails() {
             <RelatedGrid key={id} items={related_anime} />
           </section>
         )}
-
-        {!!videos.length && (
-          <section>
-            <h2 className={SUBTITLE}>Videos</h2>
-            <VideoGallery key={id} videos={videos} />
-          </section>
-        )}
         {background && (
           <section>
             <h2 className={SUBTITLE}>Background</h2>
             <TextClamp text={background}>{<p className="prose-lg prose-slate max-w-none">{background}</p>}</TextClamp>
+          </section>
+        )}
+        {!!videos.length && (
+          <section>
+            <h2 className={SUBTITLE}>Videos</h2>
+            <VideoGallery key={id} videos={videos} />
           </section>
         )}
         {!!recommendations?.length && (
