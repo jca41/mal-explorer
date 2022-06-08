@@ -10,7 +10,7 @@ import { RelatedGrid } from '~/components/related-grid';
 import { StatIconPair, StatPair } from '~/components/stat-pair';
 import { TextClamp } from '~/components/text-clamp';
 import { Node } from '~/contracts/mal';
-import { malService } from '~/lib/mal-service.server';
+import { malService } from '~/lib/mal/service.server';
 import { shouldShowAltTitle } from '~/utils/check-data';
 import {
   formatEpisodeDuration,

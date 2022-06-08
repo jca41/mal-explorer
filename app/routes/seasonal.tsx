@@ -8,7 +8,7 @@ import { RadioGroup, SEASONAL_SORT_RADIOS } from '~/components/radio-group';
 import { SEASONAL_SEASON_OPTIONS, SEASONAL_YEAR_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
 import { NodeList, Paging, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
-import { malService } from '~/lib/mal-service.server';
+import { malService } from '~/lib/mal/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
 

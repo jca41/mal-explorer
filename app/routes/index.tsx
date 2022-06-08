@@ -3,7 +3,7 @@ import { Form, useLoaderData, useSearchParams } from '@remix-run/react';
 
 import { List, ListItem } from '~/components/list';
 import { NodeList } from '~/contracts/mal';
-import { malService } from '~/lib/mal-service.server';
+import { malService } from '~/lib/mal/service.server';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);

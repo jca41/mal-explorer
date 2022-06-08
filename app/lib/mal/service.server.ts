@@ -1,8 +1,6 @@
 import { RankingTypeParam, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
 
-const BASE_PATH = 'https://api.myanimelist.net/v2';
-
-const clientId = process.env.MAL_CLIENT_ID as string;
+import { BASE_PATH, CLIENT_ID } from './constants';
 
 type DetailParams = { id: string };
 type SeasonalParams = { season: SeasonParam; year: number };
@@ -68,7 +66,7 @@ export async function malService<Result = unknown>({ type, fields, query, params
   const response = await fetch(url, {
     method: 'GET',
     headers: {
-      'X-MAL-CLIENT-ID': clientId,
+      'X-MAL-CLIENT-ID': CLIENT_ID,
     },
   });
 
