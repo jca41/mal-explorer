@@ -1,6 +1,6 @@
 import { RankingTypeParam, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
 
-import { BASE_PATH, CLIENT_ID } from './constants';
+import { BASE_PATH, CLIENT_ID } from './constants.server';
 
 type DetailParams = { id: string };
 type SeasonalParams = { season: SeasonParam; year: number };
