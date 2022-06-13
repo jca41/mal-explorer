@@ -10,7 +10,8 @@ import { RelatedGrid } from '~/components/related-grid';
 import { StatIconPair, StatPair } from '~/components/stat-pair';
 import { TextClamp } from '~/components/text-clamp';
 import { Node } from '~/contracts/mal';
-import { malService } from '~/lib/mal/service.server';
+import { malService } from '~/lib/mal/api/service.server';
+import { getAccessToken } from '~/lib/session.server';
 import { shouldShowAltTitle } from '~/utils/check-data';
 import {
   formatEpisodeDuration,
@@ -28,8 +29,10 @@ export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: reactGalleryStyles }];
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, request }) => {
   invariant(typeof params.id === 'string');
+
+  const accessToken = await getAccessToken(request);
 
   return malService({
     type: 'detail',
@@ -37,6 +40,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     params: {
       id: params.id,
     },
+    accessToken,
   });
 };
 
@@ -55,7 +59,7 @@ export default function AnimeDetails() {
     media_type,
     rank,
     popularity,
-    num_scoring_users,
+    num_list_users,
     status,
     main_picture,
     synopsis,
@@ -90,12 +94,7 @@ export default function AnimeDetails() {
           <ul className="flex gap-y-1 justify-center flex-wrap space-x-4">
             <StatIconPair value={mean} icon={StarIcon} iconClassname={`text-yellow-500 ${STAT_ICON}`} textClassName={STAT_TEXT} />
             <StatIconPair value={formatRank(rank)} icon={TrendingUpIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatIconPair
-              value={formatPopularity(num_scoring_users, popularity)}
-              icon={UsersIcon}
-              iconClassname={STAT_ICON}
-              textClassName={STAT_TEXT}
-            />
+            <StatIconPair value={formatPopularity(num_list_users, popularity)} icon={UsersIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
             <StatIconPair value={formatMediaType(media_type)} icon={FilmIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
             <StatIconPair value={formatStatus(status)} icon={ClipboardListIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
             <StatIconPair value={formatNumEpisodes(num_episodes)} icon={FolderIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />

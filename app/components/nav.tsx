@@ -28,7 +28,7 @@ export function Navigation() {
       <NavLink className={getClassName} to="/seasonal">
         Seasonal
       </NavLink>
-      {!signedIn ? (
+      {signedIn ? (
         <button
           className="absolute right-2 md:right-8 text-xs border text-white align-middle rounded-md py-1 px-1.5 transition-transform transform hover:scale-110"
           onClick={() => onAuthAction()}
