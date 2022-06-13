@@ -1,8 +1,11 @@
-import { LinksFunction, MetaFunction } from '@remix-run/node';
+import { LinksFunction, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from '@remix-run/react';
 
 import { AppLayout } from '~/layouts/app';
 import styles from '~/styles/app.css';
+
+import { ClientAuthState } from './contracts/auth';
+import { getAccessToken } from './lib/session.server';
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }];
@@ -13,6 +16,16 @@ export const meta: MetaFunction = () => ({
   title: 'MAL Explorer',
   viewport: 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no',
 });
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const accessToken = await getAccessToken(request);
+
+  const authState: ClientAuthState = {
+    signedIn: !!accessToken,
+  };
+
+  return authState;
+};
 
 export default function App() {
   return (

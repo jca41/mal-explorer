@@ -23,6 +23,12 @@ export async function getNewAccessTokenCookieHeader({ accessToken, expiresIn }: 
   });
 }
 
+export async function clearAccessTokenCookieHeader() {
+  return accessTokenCookie.serialize('', {
+    maxAge: 0,
+  });
+}
+
 export async function getNewRefreshTokenCookieHeader({ refreshToken }: AuthState) {
   return refreshTokenCookie.serialize(refreshToken);
 }

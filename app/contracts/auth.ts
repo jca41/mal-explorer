@@ -4,3 +4,7 @@ export type AuthState = {
   accessToken: string;
   refreshToken: string;
 };
+
+export type ClientAuthState = {
+  signedIn: boolean;
+};
