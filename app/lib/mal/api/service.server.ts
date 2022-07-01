@@ -1,27 +1,31 @@
 import { AuthState } from '~/contracts/auth';
+import { QueryDef, QueryKeys } from '~/contracts/service';
 
 import { BASE_PATH, CLIENT_ID } from '../constants.server';
 import { getAuthHeaders } from './auth-helpers';
-import { FIELD_TYPES, GenericQueryFn, Params, Query, QUERY_TYPES } from './queries';
+import { FIELDS, PATHS } from './queries';
 
-type Service = {
-  type: keyof typeof QUERY_TYPES;
-  fields: keyof typeof FIELD_TYPES;
-  query?: Query;
-  params?: Params;
+type Service = (QueryDef & { [k in QueryKeys]: { type: k } })[QueryKeys] & {
+  fields: keyof typeof FIELDS;
   accessToken?: AuthState['accessToken'];
 };
 
-function normaliseQuery(query: Query = {} as Query) {
+type GenericQueryParams = Record<string, string | number>;
+type GenericQueryFn = (data: unknown) => string;
+
+function normaliseQuery(query: GenericQueryParams = {}) {
   return Object.keys(query).reduce((acc, key) => {
-    const value = query[key as keyof Query];
+    const value = query[key];
     return { ...acc, [key]: typeof value !== 'string' ? value?.toString?.() : value };
   }, {});
 }
 
-export async function malService<Result = unknown>({ type, fields, query, params, accessToken }: Service): Promise<Result> {
-  const queryBuilder = QUERY_TYPES[type];
-  const fieldBuilder = FIELD_TYPES[fields];
+export async function malService<Result = unknown>({ type, fields, accessToken, ...options }: Service): Promise<Result> {
+  const params = 'params' in options ? options['params'] : undefined;
+  const query = 'query' in options ? options['query'] : undefined;
+
+  const queryBuilder = PATHS[type];
+  const fieldBuilder = FIELDS[fields];
 
   const path = typeof queryBuilder === 'function' ? (queryBuilder as GenericQueryFn)(params) : queryBuilder;
   const fieldsString = typeof fieldBuilder === 'function' ? fieldBuilder({ signedIn: !!accessToken }) : fieldBuilder;

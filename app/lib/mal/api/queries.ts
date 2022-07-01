@@ -1,40 +1,16 @@
 import { ClientAuthState } from '~/contracts/auth';
-import { RankingTypeParam, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
+import { ExtractParamsDef } from '~/contracts/service';
 
-type DetailParams = { id: string };
-type SeasonalParams = { season: SeasonParam; year: number };
-
-export type ListQuery = {
-  q: string;
-  limit: number;
-  offset?: number;
-};
-
-export type TopQuery = {
-  ranking_type: RankingTypeParam;
-  limit: number;
-  offset?: number;
-};
-
-export type SeasonalQuery = {
-  limit: number;
-  offset?: number;
-  sort: SeasonalSortQueryParam;
-};
-
-export type Query = ListQuery | TopQuery | SeasonalQuery;
-
-export type Params = DetailParams | SeasonalParams;
 export type GenericQueryFn = (data: unknown) => string;
 
-export const QUERY_TYPES = {
+export const PATHS = {
   list: '/anime',
-  detail: ({ id }: DetailParams) => `/anime/${id}`,
+  detail: ({ id }: ExtractParamsDef<'detail'>) => `/anime/${id}`,
   top: '/anime/ranking',
-  seasonal: ({ season, year }: SeasonalParams) => `/anime/season/${year}/${season}`,
+  seasonal: ({ season, year }: ExtractParamsDef<'seasonal'>) => `/anime/season/${year}/${season}`,
 } as const;
 
-export const FIELD_TYPES = {
+export const FIELDS = {
   list: 'id,title,main_picture,alternative_titles,mean,rank,popularity,media_type,status,start_season,num_episodes',
   detail: ({ signedIn }: ClientAuthState) => {
     const DEFAULT_DETAIL =
