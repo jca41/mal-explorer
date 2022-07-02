@@ -1,11 +1,11 @@
 import { AuthState } from '~/contracts/auth';
-import { QueryDef, QueryKeys } from '~/contracts/service';
+import { QueryDef } from '~/contracts/service';
 
 import { BASE_PATH, CLIENT_ID } from '../constants.server';
 import { getAuthHeaders } from './auth-helpers';
 import { FIELDS, PATHS } from './queries';
 
-type Service = (QueryDef & { [k in QueryKeys]: { type: k } })[QueryKeys] & {
+type Service = QueryDef & {
   fields: keyof typeof FIELDS;
   accessToken?: AuthState['accessToken'];
 };
