@@ -37,8 +37,10 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   return malService({
     type: 'detail',
     fields: 'detail',
-    params: {
-      id: params.id,
+    input: {
+      params: {
+        id: params.id,
+      },
     },
     accessToken,
   });

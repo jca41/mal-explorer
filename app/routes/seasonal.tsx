@@ -26,14 +26,16 @@ export const loader: LoaderFunction = async ({ request }) => {
   return malService({
     type: 'seasonal',
     fields: 'list',
-    query: {
-      limit: LIMIT,
-      offset: offset ? parseInt(offset) : 0,
-      sort: sort as SeasonalSortQueryParam,
-    },
-    params: {
-      year: typeof year === 'string' ? parseInt(year) : year,
-      season,
+    input: {
+      query: {
+        limit: LIMIT,
+        offset: offset ? parseInt(offset) : 0,
+        sort: sort as SeasonalSortQueryParam,
+      },
+      params: {
+        year: typeof year === 'string' ? parseInt(year) : year,
+        season,
+      },
     },
   });
 };

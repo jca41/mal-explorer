@@ -1,13 +1,13 @@
 import { ClientAuthState } from '~/contracts/auth';
-import { ExtractParamsDef } from '~/contracts/service';
+import { ExtractInputParamsDef } from '~/contracts/service';
 
 export type GenericQueryFn = (data: unknown) => string;
 
 export const PATHS = {
   list: '/anime',
-  detail: ({ id }: ExtractParamsDef<'detail'>) => `/anime/${id}`,
+  detail: ({ id }: ExtractInputParamsDef<'detail'>) => `/anime/${id}`,
   top: '/anime/ranking',
-  seasonal: ({ season, year }: ExtractParamsDef<'seasonal'>) => `/anime/season/${year}/${season}`,
+  seasonal: ({ season, year }: ExtractInputParamsDef<'seasonal'>) => `/anime/season/${year}/${season}`,
 } as const;
 
 export const FIELDS = {

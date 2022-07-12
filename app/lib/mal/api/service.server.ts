@@ -1,14 +1,9 @@
 import { AuthState } from '~/contracts/auth';
-import { QueryDef } from '~/contracts/service';
+import { BaseService, ExtractOutputDef } from '~/contracts/service';
 
 import { BASE_PATH, CLIENT_ID } from '../constants.server';
 import { getAuthHeaders } from './auth-helpers';
 import { FIELDS, PATHS } from './queries';
-
-type Service = QueryDef & {
-  fields: keyof typeof FIELDS;
-  accessToken?: AuthState['accessToken'];
-};
 
 type GenericQueryParams = Record<string, string | number>;
 type GenericQueryFn = (data: unknown) => string;
@@ -20,9 +15,14 @@ function normaliseQuery(query: GenericQueryParams = {}) {
   }, {});
 }
 
-export async function malService<Result = unknown>({ type, fields, accessToken, ...options }: Service): Promise<Result> {
-  const params = 'params' in options ? options['params'] : undefined;
-  const query = 'query' in options ? options['query'] : undefined;
+type Service = BaseService & {
+  fields: keyof typeof FIELDS;
+  accessToken?: AuthState['accessToken'];
+};
+
+export async function malService<S extends Service>({ type, fields, input, accessToken }: S): Promise<ExtractOutputDef<S['type']>> {
+  const params = 'params' in input ? input['params'] : undefined;
+  const query = 'query' in input ? input['query'] : undefined;
 
   const queryBuilder = PATHS[type];
   const fieldBuilder = FIELDS[fields];

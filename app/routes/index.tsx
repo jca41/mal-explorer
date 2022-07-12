@@ -15,9 +15,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   return malService({
     type: 'list',
     fields: 'list',
-    query: {
-      q,
-      limit: 20,
+    input: {
+      query: {
+        q,
+        limit: 20,
+      },
     },
   });
 };

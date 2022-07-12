@@ -21,10 +21,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   return malService({
     type: 'top',
     fields: 'list',
-    query: {
-      ranking_type: (sort || 'all') as RankingTypeParam,
-      limit: LIMIT,
-      offset: offset ? parseInt(offset) : 0,
+    input: {
+      query: {
+        ranking_type: (sort || 'all') as RankingTypeParam,
+        limit: LIMIT,
+        offset: offset ? parseInt(offset) : 0,
+      },
     },
   });
 };
