@@ -7,7 +7,7 @@ import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components
 import { RANKING_TYPES_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
 import { NodeList, Paging, RankingTypeParam } from '~/contracts/mal';
-import { malService } from '~/lib/mal-service.server';
+import { malService } from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 
 const LIMIT = 25;
@@ -21,10 +21,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   return malService({
     type: 'top',
     fields: 'list',
-    query: {
-      ranking_type: (sort || 'all') as RankingTypeParam,
-      limit: LIMIT,
-      offset: offset ? parseInt(offset) : 0,
+    input: {
+      query: {
+        ranking_type: (sort || 'all') as RankingTypeParam,
+        limit: LIMIT,
+        offset: offset ? parseInt(offset) : 0,
+      },
     },
   });
 };

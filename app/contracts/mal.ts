@@ -37,6 +37,14 @@ export type Video = {
   thumbnail: string;
 };
 
+export type MyListStatus = {
+  is_rewatching: boolean;
+  num_episodes_watched: number;
+  score: number;
+  status: 'completed';
+  updated_at: string;
+};
+
 export type Node = {
   id: number;
   title: string;
@@ -79,6 +87,7 @@ export type Node = {
   recommendations: Recommendation[];
   statistics: Statistics;
   videos: Video[];
+  my_list_status?: MyListStatus;
 };
 
 export type Paging = {
