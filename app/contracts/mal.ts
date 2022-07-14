@@ -41,7 +41,7 @@ export type MyListStatus = {
   is_rewatching: boolean;
   num_episodes_watched: number;
   score: number;
-  status: 'completed';
+  status: 'completed' | 'plan_to_watch';
   updated_at: string;
 };
 
