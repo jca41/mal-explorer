@@ -8,6 +8,8 @@ const REDIRECT_URI =
   process.env.NODE_ENV === 'development' ? `http://localhost:3000${EXCHANGE_PATH}` : `https://${process.env.VERCEL_URL}${EXCHANGE_PATH}`;
 
 export function getAuthorizationUrl({ state }: { state?: Record<string, string> } = {}) {
+  console.log('redirect:', REDIRECT_URI);
+
   const urlParams = new URLSearchParams({
     client_id: CLIENT_ID,
     code_challenge: PKCE_VERIFIER,
