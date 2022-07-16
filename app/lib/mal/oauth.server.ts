@@ -4,7 +4,7 @@ import { CLIENT_ID, CLIENT_SECRET, EXCHANGE_PATH, OAUTH_PATH } from './constants
 
 export const PKCE_VERIFIER = process.env.PKCE_VERIFIER as string;
 
-const REDIRECT_URI = process.env.NODE_ENV === 'development' ? `http://localhost:3000${EXCHANGE_PATH}` : '';
+const REDIRECT_URI = process.env.NODE_ENV === 'development' ? `http://localhost:3000${EXCHANGE_PATH}` : `${process.env.VERCEL_URL}${EXCHANGE_PATH}`;
 
 export function getAuthorizationUrl({ state }: { state?: Record<string, string> } = {}) {
   const urlParams = new URLSearchParams({
