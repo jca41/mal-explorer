@@ -1,4 +1,4 @@
-import { LoaderFunction } from '@remix-run/node';
+import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useSubmit } from '@remix-run/react';
 import { useMemo, useRef } from 'react';
 
@@ -7,7 +7,7 @@ import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components
 import { RadioGroup, SEASONAL_SORT_RADIOS } from '~/components/radio-group';
 import { SEASONAL_SEASON_OPTIONS, SEASONAL_YEAR_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
-import { NodeList, Paging, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
+import { Paging, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
 import { malService } from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
@@ -15,7 +15,7 @@ import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
 const LIMIT = 25;
 const DEFAULT_SORT = 'anime_score';
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
 
   const season = (url.searchParams.get('season') ?? getCurrentSeason()) as SeasonParam;
@@ -38,7 +38,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       },
     },
   });
-};
+}
 
 function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObject<HTMLFormElement> }) {
   const submit = useSubmit();
@@ -87,7 +87,7 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
 }
 
 export default function SeasonalAnime() {
-  const loaderData = useLoaderData<NodeList>();
+  const loaderData = useLoaderData<typeof loader>();
   const formRef = useRef<HTMLFormElement>(null);
 
   return (

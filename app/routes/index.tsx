@@ -1,11 +1,10 @@
-import { LoaderFunction } from '@remix-run/node';
+import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useSearchParams } from '@remix-run/react';
 
 import { List, ListItem } from '~/components/list';
-import { NodeList } from '~/contracts/mal';
 import { malService } from '~/lib/mal/api/service.server';
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
 
   const q = url.searchParams.get('q');
@@ -22,10 +21,10 @@ export const loader: LoaderFunction = async ({ request }) => {
       },
     },
   });
-};
+}
 
 export default function Index() {
-  const loaderData = useLoaderData<NodeList>();
+  const loaderData = useLoaderData<typeof loader>();
   const [params] = useSearchParams();
 
   return (
