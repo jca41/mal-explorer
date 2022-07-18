@@ -8,7 +8,7 @@ import { ClientAuthState } from '~/contracts/auth';
 
 import { useRouteMatch } from './use-route-match';
 
-const NAV_ITEM_COMMON = 'font-semibold text-base tracking-wide text-white decoration-dotted decoration-2';
+const NAV_ITEM_COMMON = 'font-semibold text-base tracking-wide text-white';
 const CL = {
   navItemCommon: NAV_ITEM_COMMON,
   navItem: `${NAV_ITEM_COMMON} hover:underline`,
