@@ -170,7 +170,7 @@ export default function AnimeDetails() {
           </section>
         )}
       </div>
-      <MyListStatusPopup myListStatus={my_list_status} />
+      <MyListStatusPopup myListStatus={my_list_status} numEpisodes={num_episodes} />
     </div>
   );
 }
