@@ -41,8 +41,11 @@ function Range({ name, initialValue, max }: RangeProps) {
     </div>
   );
 }
+
 export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyListStatusModalProps) {
   console.log(myListStatus);
+
+  const status = myListStatus?.status ?? 'plan_to_watch';
 
   return (
     <Modal title={'My List'} controls={controls}>
@@ -58,14 +61,17 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
               ))}
             </select>
           </div>
-          <div className={CL.container}>
-            <label className={CL.label}>Score</label>
-            <Range name="score" initialValue={myListStatus?.score} max={10} />
-          </div>
-          {numEpisodes > 1 && (
+          {status !== 'plan_to_watch' && (
+            <div className={CL.container}>
+              <label className={CL.label}>Score</label>
+              <Range name="score" initialValue={myListStatus?.score ?? 0} max={10} />
+            </div>
+          )}
+
+          {numEpisodes > 1 && status !== 'plan_to_watch' && (
             <div className={CL.container}>
               <label className={CL.label}>Episodes watched</label>
-              <Range name="watchCount" initialValue={myListStatus?.num_episodes_watched} max={numEpisodes} />
+              <Range name="progress" initialValue={myListStatus?.num_episodes_watched ?? 0} max={numEpisodes} />
             </div>
           )}
 
