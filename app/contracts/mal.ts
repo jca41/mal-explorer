@@ -42,7 +42,12 @@ export type MyListStatus = {
   num_episodes_watched: number;
   score: number;
   status: 'completed' | 'plan_to_watch' | 'watching' | 'on_hold' | 'dropped';
+  priority: 0 | 1 | 2;
   updated_at: string;
+  start_date: string;
+  comments: string;
+  rewatch_value: number;
+  num_times_rewatched: number;
 };
 
 export type Node = {
