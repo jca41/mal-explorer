@@ -80,8 +80,8 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
               <Range name="numEpisodesWatched" initialValue={myListStatus?.num_episodes_watched ?? 0} max={numEpisodes} />
             </div>
           )}
-          <div className="py-2 space-y-3">
-            <h3 className={CL.subcategory}>Rewatch</h3>
+          <div className="py-2 space-y-2">
+            <h3 className={CL.label}>Re-watch</h3>
             <div className="flex flex-row items-start justify-between">
               <div className="basis-0">
                 <label className={CL.labelSmall}>Count</label>
