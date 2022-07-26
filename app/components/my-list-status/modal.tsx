@@ -1,5 +1,5 @@
 import { Form } from '@remix-run/react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { MyListStatus } from '~/contracts/mal';
 import { isNotStatus } from '~/utils/check-data';
@@ -12,6 +12,11 @@ import { Range } from './range';
 
 type MyListStatusModalProps = MyListStatusProps & {
   controls: UseModal;
+};
+
+type UseFieldVisibility = {
+  numEpisodes: MyListStatusProps['numEpisodes'];
+  state: { status: MyListStatus['status']; startDate: MyListStatus['start_date'] };
 };
 
 const CL = {
@@ -31,19 +36,31 @@ const PRIORITY_OPTIONS: ReadonlyArray<{ l: string; v: MyListStatus['priority'] }
   { l: 'High', v: 2 },
 ];
 
-// TODO: refactor to a reducer so states can control each other
-
-export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyListStatusModalProps) {
-  const [status, setStatus] = useState(myListStatus?.status ?? 'plan_to_watch');
+function useFieldVisibility({ numEpisodes, state }: UseFieldVisibility) {
+  const { status, startDate } = state;
 
   const isNotPlanToWatch = isNotStatus(status, 'plan_to_watch');
 
-  const updatedAt = myListStatus?.updated_at ? new Date(myListStatus.updated_at) : null;
+  return {
+    score: isNotPlanToWatch,
+    numEpisodesWatched: numEpisodes > 1 && isNotStatus(status, ['completed', 'plan_to_watch']),
+    dates: isNotPlanToWatch,
+    finishDate: isNotStatus(status, ['watching', 'on_hold']) && !!startDate,
+  };
+}
+
+export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyListStatusModalProps) {
+  const [status, setStatus] = useState(myListStatus?.status ?? 'plan_to_watch');
+  const [startDate, setStartDate] = useState(myListStatus?.start_date);
+
+  const visibleFields = useFieldVisibility({ numEpisodes, state: { status, startDate } });
+
+  const updatedAt = useMemo(() => (myListStatus?.updated_at ? new Date(myListStatus.updated_at) : null), [myListStatus?.updated_at]);
 
   console.log(myListStatus);
 
   return (
-    <Modal title={'My List'} controls={controls}>
+    <Modal title="My List" controls={controls}>
       <Form method="post">
         <div className="divide-y divide-slate-300 divide-dashed">
           <div className="flex flex-row justify-between py-2">
@@ -68,13 +85,13 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
               </select>
             </div>
           </div>
-          {isNotPlanToWatch && (
+          {visibleFields.score && (
             <div className={CL.container}>
               <label className={CL.label}>Score</label>
               <Range name="score" initialValue={myListStatus?.score ?? 0} max={10} />
             </div>
           )}
-          {numEpisodes > 1 && isNotStatus(status, ['completed', 'plan_to_watch']) && (
+          {visibleFields.numEpisodesWatched && (
             <div className={CL.container}>
               <label className={CL.label}>Episodes watched</label>
               <Range name="numEpisodesWatched" initialValue={myListStatus?.num_episodes_watched ?? 0} max={numEpisodes} />
@@ -93,22 +110,16 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
               </div>
             </div>
           </div>
-          {isNotPlanToWatch && (
+          {visibleFields.dates && (
             <div className="flex flex-row justify-between py-2">
               <div className="basis-0">
                 <label className={CL.label}>Start date</label>
-                <input className={CL.select} name="startDate" type="date" defaultValue={myListStatus?.start_date} />
+                <input className={CL.select} name="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
               </div>
-              {isNotStatus(status, ['watching', 'on_hold']) ? (
+              {visibleFields.finishDate ? (
                 <div className="basis-0">
                   <label className={CL.label}>Finish date</label>
-                  <input
-                    className={CL.select}
-                    name="finishDate"
-                    type="date"
-                    min={myListStatus?.start_date}
-                    defaultValue={myListStatus?.finish_date}
-                  />
+                  <input className={CL.select} name="finishDate" type="date" min={startDate} defaultValue={myListStatus?.finish_date} />
                 </div>
               ) : (
                 <div></div>
