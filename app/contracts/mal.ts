@@ -38,13 +38,14 @@ export type Video = {
 };
 
 export type MyListStatus = {
-  is_rewatching: boolean;
+  is_rewatching: boolean; // only used to reset num_episodes_watched
   num_episodes_watched: number;
   score: number;
   status: 'completed' | 'plan_to_watch' | 'watching' | 'on_hold' | 'dropped';
   priority: 0 | 1 | 2;
   updated_at: string;
-  start_date: string;
+  start_date?: string;
+  finish_date?: string;
   comments: string;
   rewatch_value: number;
   num_times_rewatched: number;
