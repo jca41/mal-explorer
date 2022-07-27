@@ -35,7 +35,7 @@ export function formatNumEpisodes(numEpisodes: number) {
 }
 
 export function formatPopularity(numListUsers: number, popularity: number) {
-  const formattedNumListUsers = numListUsers > 100 ? numeral(numListUsers).format('0.0a') : '< 100';
+  const formattedNumListUsers = numListUsers > 100 ? numeral(numListUsers).format('0.0a') : '<100';
   return popularity ? `${formatRank(popularity)} (${formattedNumListUsers})` : '';
 }
 

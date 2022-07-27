@@ -6,6 +6,7 @@ import invariant from 'tiny-invariant';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
+import { MyListStatusPopup } from '~/components/my-list-status/popup';
 import { RelatedGrid } from '~/components/related-grid';
 import { StatIconPair, StatPair } from '~/components/stat-pair';
 import { TextClamp } from '~/components/text-clamp';
@@ -78,10 +79,11 @@ export default function AnimeDetails() {
     end_date,
     rating,
     average_episode_duration,
+    my_list_status,
   } = data;
 
   return (
-    <div>
+    <div className="relative">
       <h1 className="text-2xl text-center tracking-wide">
         <div>
           <span className="font-bold">{title}</span>
@@ -125,7 +127,7 @@ export default function AnimeDetails() {
           <ul className="grid grid-cols-1 md:grid-cols-2">
             <StatPair label="Studios" value={studios?.map((s) => s.name).join(', ')} />
             <StatPair label="Source" value={formatSource(source)} />
-            <StatPair label="Average ep duration" value={formatEpisodeDuration(average_episode_duration)} />
+            <StatPair label="Average ep. duration" value={formatEpisodeDuration(average_episode_duration)} />
             <StatPair label="Start date" value={formatStartAndEndDate(start_date)} />
             <StatPair label="End date" value={formatStartAndEndDate(end_date)} />
             <StatPair label="Rating" value={formatSnakeCase(rating)?.toUpperCase?.()} />
@@ -168,6 +170,7 @@ export default function AnimeDetails() {
           </section>
         )}
       </div>
+      <MyListStatusPopup myListStatus={my_list_status} numEpisodes={num_episodes} />
     </div>
   );
 }

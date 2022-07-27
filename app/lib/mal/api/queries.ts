@@ -16,6 +16,6 @@ export const FIELDS = {
     const DEFAULT_DETAIL =
       'id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,recommendations,studios,videos,statistics';
 
-    return signedIn ? `${DEFAULT_DETAIL}, my_list_status` : DEFAULT_DETAIL;
+    return signedIn ? `${DEFAULT_DETAIL}, my_list_status{priority,comments,num_times_rewatched,rewatch_value}` : DEFAULT_DETAIL;
   },
 } as const;

@@ -1,4 +1,4 @@
-import { LoaderFunction } from '@remix-run/node';
+import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useSubmit } from '@remix-run/react';
 import { useRef } from 'react';
 
@@ -6,13 +6,13 @@ import { List, ListItem } from '~/components/list';
 import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components/pagination';
 import { RANKING_TYPES_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
-import { NodeList, Paging, RankingTypeParam } from '~/contracts/mal';
+import { Paging, RankingTypeParam } from '~/contracts/mal';
 import { malService } from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 
 const LIMIT = 25;
 
-export const loader: LoaderFunction = async ({ request }) => {
+export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
 
   const sort = url.searchParams.get('sort');
@@ -29,7 +29,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       },
     },
   });
-};
+}
 
 function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObject<HTMLFormElement> }) {
   const submit = useSubmit();
@@ -69,12 +69,12 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
 }
 
 export default function TopAnime() {
-  const loaderData = useLoaderData<NodeList>();
+  const loaderData = useLoaderData<typeof loader>();
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
     <Form ref={formRef} method="get" replace>
-      <h1 className="text-center text-3xl tracking-wide mb-8">Top Anime</h1>
+      <h1 className="text-center text-3xl tracking-wide mb-4 md:mb-8">Top Anime</h1>
       <StickyHeader>
         <Controls formRef={formRef} paging={loaderData?.paging} />
       </StickyHeader>
