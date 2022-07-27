@@ -1,5 +1,5 @@
 import { Form } from '@remix-run/react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { MyListStatus } from '~/contracts/mal';
 import { isNotStatus } from '~/utils/check-data';
@@ -53,11 +53,14 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
   const [status, setStatus] = useState(myListStatus?.status ?? 'plan_to_watch');
   const [startDate, setStartDate] = useState(myListStatus?.start_date);
 
+  // Reset when props change
+  useEffect(() => {
+    setStatus(myListStatus?.status ?? 'plan_to_watch');
+    setStartDate(myListStatus?.start_date);
+  }, [myListStatus]);
+
   const visibleFields = useFieldVisibility({ numEpisodes, state: { status, startDate } });
-
   const updatedAt = useMemo(() => (myListStatus?.updated_at ? new Date(myListStatus.updated_at) : null), [myListStatus?.updated_at]);
-
-  console.log(myListStatus);
 
   return (
     <Modal title="My List" controls={controls}>
@@ -131,17 +134,23 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
             <textarea className="text-sm mt-2" rows={3} name="comments" defaultValue={myListStatus?.comments}></textarea>
           </div>
         </div>
-        <div className="mt-2">
-          <DeleteFlow />
-        </div>
-        {!!updatedAt && (
-          <div className="mt-4 text-slate-500 text-xs">
-            <span>Last updated on </span>
-            <span>{updatedAt.toLocaleDateString()}</span>
-            <span>{`, ${updatedAt.toLocaleTimeString()}`}</span>
+        {!!myListStatus && (
+          <div className="mt-2">
+            <DeleteFlow />
           </div>
         )}
-        <div className="mt-4 flex justify-end space-x-3">
+        <div className="mt-4 flex justify-between items-end">
+          {updatedAt ? (
+            <div className="text-slate-500 text-xs max-w-xs">
+              <span>Last updated on </span>
+              <div>
+                <span>{updatedAt.toLocaleDateString()}</span>
+                <span>{`, ${updatedAt.toLocaleTimeString()}`}</span>
+              </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
           <div className="space-x-3">
             <button type="button" className={`${CL.actionButton} bg-slate-200`} onClick={controls.close}>
               Cancel
