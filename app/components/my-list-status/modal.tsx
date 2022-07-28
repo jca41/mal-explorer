@@ -106,7 +106,13 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
             <div className="flex flex-row items-start justify-between">
               <div className={CL.stackedLabelInput}>
                 <label className={CL.labelSmall}>Count</label>
-                <input className={`${CL.input} w-20`} type="number" name="timesRewatching" min={0} defaultValue={myListStatus?.num_times_rewatched} />
+                <input
+                  className={`${CL.input} w-20`}
+                  type="number"
+                  name="timesRewatching"
+                  min={0}
+                  defaultValue={myListStatus?.num_times_rewatched ?? 0}
+                />
               </div>
               <div className={CL.stackedLabelInput}>
                 <label className={CL.labelSmall}>Value</label>
