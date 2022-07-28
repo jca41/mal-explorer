@@ -13,9 +13,9 @@ export function GridPreview({ children }: { children: ReactNode }) {
 export function GridPreviewItem(item: RelatedAnime | Recommendation) {
   return (
     <li className="hover:bg-blue-50 hover:shadow-md transition ease-in-out px-1 pt-1 pb-2">
-      <Link to={`/anime/${item.node.id}`} className="">
-        <div className="relative w-full">
-          <img className="aspect-[3/4] object-cover object-top" src={item?.node?.main_picture?.large} alt={item.node.title} loading="lazy" />
+      <Link to={`/anime/${item.node.id}`}>
+        <div className="relative">
+          <img className="aspect-[3/4] object-cover object-top w-full" src={item?.node?.main_picture?.large} alt={item.node.title} loading="lazy" />
           <div className="absolute h-1/3 inset-x-0 bottom-0 bg-gradient-to-b from-transparent  to-black/80">
             <div className="absolute bottom-2 right-3">
               <StatIconPair value={item.node.mean} icon={StarIcon} iconClassname="text-yellow-500" textClassName="font-medium text-xs text-white" />
