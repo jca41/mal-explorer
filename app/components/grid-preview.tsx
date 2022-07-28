@@ -18,7 +18,13 @@ export function GridPreviewItem(item: RelatedAnime | Recommendation) {
           <img className="aspect-[3/4] object-cover object-top w-full" src={item?.node?.main_picture?.large} alt={item.node.title} loading="lazy" />
           <div className="absolute h-1/3 inset-x-0 bottom-0 bg-gradient-to-b from-transparent  to-black/80">
             <div className="absolute bottom-2 right-3">
-              <StatIconPair value={item.node.mean} icon={StarIcon} iconClassname="text-yellow-500" textClassName="font-medium text-xs text-white" />
+              <StatIconPair
+                as="div"
+                value={item.node.mean}
+                icon={StarIcon}
+                iconClassname="text-yellow-500"
+                textClassName="font-medium text-xs text-white"
+              />
             </div>
           </div>
         </div>

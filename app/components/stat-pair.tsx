@@ -6,16 +6,17 @@ type StatIconPairProps = {
   value: string | number;
   iconClassname?: string;
   textClassName?: string;
+  as?: 'div' | 'li';
 };
 
-export function StatIconPair({ icon: Icon, iconClassname, value, textClassName }: StatIconPairProps) {
+export function StatIconPair({ icon: Icon, iconClassname, value, textClassName, as: As = 'li' }: StatIconPairProps) {
   if (!value) return null;
 
   return (
-    <li className="flex flex-row space-x-1 items-center">
+    <As className="flex flex-row space-x-1 items-center">
       <Icon className={twMerge('w-4', iconClassname)} />
       <span className={twMerge('text-sm tracking-tight', textClassName)}>{value}</span>
-    </li>
+    </As>
   );
 }
 
