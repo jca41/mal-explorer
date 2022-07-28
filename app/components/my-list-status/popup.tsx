@@ -27,7 +27,6 @@ export function MyListStatusPopup({ myListStatus, numEpisodes }: MyListStatusPro
   const status = myListStatus?.status ?? 'add';
 
   const Icon = STATUS_TO_ICONS[status];
-  console.log(myListStatus);
 
   return (
     <>
