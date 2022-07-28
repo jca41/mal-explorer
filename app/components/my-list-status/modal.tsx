@@ -27,6 +27,7 @@ const CL = {
   select: 'text-sm py-1.5 pl-2.5',
   input: 'text-sm py-1.5 px-2.5',
   actionButton: 'rounded-md font-semibold py-1 px-2.5 shadow-md text-slate-600',
+  stackedLabelInput: 'flex flex-col',
 };
 
 const LIST_STATUS: ReadonlyArray<MyListStatus['status']> = ['plan_to_watch', 'watching', 'completed', 'dropped', 'on_hold'] as const;
@@ -67,7 +68,7 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
       <Form method="post">
         <div className="divide-y divide-slate-300 divide-dashed">
           <div className="flex flex-row justify-between py-2">
-            <div className="basis-0">
+            <div className={CL.stackedLabelInput}>
               <label className={CL.label}>Status</label>
               <select name="status" className={CL.select} value={status} onChange={(e) => setStatus(e.target.value as MyListStatus['status'])}>
                 {LIST_STATUS.map((v) => (
@@ -77,7 +78,7 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
                 ))}
               </select>
             </div>
-            <div className="basis-0">
+            <div className={CL.stackedLabelInput}>
               <label className={CL.label}>Priority</label>
               <select name="priority" className={CL.select} defaultValue={myListStatus?.priority}>
                 {PRIORITY_OPTIONS.map(({ l, v }) => (
@@ -103,11 +104,11 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
           <div className="py-2 space-y-2">
             <h3 className={CL.label}>Re-watch</h3>
             <div className="flex flex-row items-start justify-between">
-              <div className="basis-0">
+              <div className={CL.stackedLabelInput}>
                 <label className={CL.labelSmall}>Count</label>
                 <input className={`${CL.input} w-20`} type="number" name="timesRewatching" min={0} defaultValue={myListStatus?.num_times_rewatched} />
               </div>
-              <div className="basis-0">
+              <div className={CL.stackedLabelInput}>
                 <label className={CL.labelSmall}>Value</label>
                 <Range name="rewatchValue" initialValue={myListStatus?.rewatch_value ?? 0} max={5} />
               </div>
@@ -115,12 +116,12 @@ export function MyListStatusModal({ myListStatus, numEpisodes, controls }: MyLis
           </div>
           {visibleFields.dates && (
             <div className="flex flex-row justify-between py-2">
-              <div className="basis-0">
+              <div className={CL.stackedLabelInput}>
                 <label className={CL.label}>Start date</label>
                 <input className={CL.select} name="startDate" type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
               </div>
               {visibleFields.finishDate ? (
-                <div className="basis-0">
+                <div className={CL.stackedLabelInput}>
                   <label className={CL.label}>Finish date</label>
                   <input className={CL.select} name="finishDate" type="date" min={startDate} defaultValue={myListStatus?.finish_date} />
                 </div>

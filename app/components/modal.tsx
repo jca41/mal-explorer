@@ -7,7 +7,7 @@ export type UseModal = {
   open: () => void;
 };
 export function useModal(): UseModal {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(true);
 
   return {
     state: isOpen,
