@@ -8,13 +8,13 @@ export type Picture = {
 };
 export type RelationType = 'sequel' | 'prequel' | 'other' | 'alternative_version' | 'character' | 'side_story' | 'summary' | 'parent_story';
 export type RelatedAnime = {
-  node: Pick<Node, 'id' | 'title' | 'main_picture'>;
+  node: Pick<Node, 'id' | 'title' | 'main_picture' | 'mean'>;
   relation_type: RelationType;
   relation_type_formatted: Uppercase<RelationType>;
 };
 export type SimpleDateString = `${number}-${number}-${number}`;
 export type Recommendation = {
-  node: Pick<Node, 'id' | 'title' | 'main_picture'>;
+  node: Pick<Node, 'id' | 'title' | 'main_picture' | 'mean'>;
   num_recommendations: number;
 };
 export type Statistics = {

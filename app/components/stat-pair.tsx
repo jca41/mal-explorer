@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type StatIconPairProps = {
   icon: FC<{ className: string }>;
@@ -7,13 +8,13 @@ type StatIconPairProps = {
   textClassName?: string;
 };
 
-export function StatIconPair({ icon: Icon, iconClassname = 'w-4', value, textClassName = 'text-sm tracking-tight' }: StatIconPairProps) {
+export function StatIconPair({ icon: Icon, iconClassname, value, textClassName }: StatIconPairProps) {
   if (!value) return null;
 
   return (
     <li className="flex flex-row space-x-1 items-center">
-      <Icon className={iconClassname} />
-      <span className={textClassName}>{value}</span>
+      <Icon className={twMerge('w-4', iconClassname)} />
+      <span className={twMerge('text-sm tracking-tight', textClassName)}>{value}</span>
     </li>
   );
 }

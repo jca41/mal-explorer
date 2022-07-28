@@ -41,7 +41,7 @@ export function ListItem({
           </h2>
 
           <ul className="grid grid-cols-2 grid-flow-row gap-x-4 gap-y-2">
-            <StatIconPair value={mean} icon={StarIcon} iconClassname="w-4 text-yellow-500" textClassName="font-semibold text-sm tracking-tight" />
+            <StatIconPair value={mean} icon={StarIcon} iconClassname="text-yellow-500" textClassName="font-semibold" />
             <StatIconPair value={formatMediaType(media_type)} icon={FilmIcon} />
             <StatIconPair value={formatStatus(status)} icon={ClipboardListIcon} />
             <StatIconPair value={formatRank(rank)} icon={TrendingUpIcon} />
