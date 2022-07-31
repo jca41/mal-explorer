@@ -19,6 +19,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.30.6
   '@typescript-eslint/parser': ^5.30.6
   '@vercel/node': ^2.5.0
+  '@xstate/react': ^3.0.0
   autoprefixer: ^10.4.7
   eslint: ^8.20.0
   eslint-plugin-simple-import-sort: ^7.0.0
@@ -36,6 +37,7 @@ specifiers:
   tailwindcss: ^3.1.6
   tiny-invariant: ^1.2.0
   typescript: ^4.7.4
+  xstate: ^4.32.1
 
 dependencies:
   '@headlessui/react': 1.6.6_react-dom@18.2.0+react@18.2.0
@@ -44,6 +46,7 @@ dependencies:
   '@remix-run/react': 1.6.5_react-dom@18.2.0+react@18.2.0
   '@remix-run/vercel': 1.6.5_fa786f87946a1f95a5f97921ba948855
   '@vercel/node': 2.5.0
+  '@xstate/react': 3.0.0_00fbca160a99d6710ca553c901b20c9b
   numeral: 2.0.6
   pkce-challenge: 3.0.0
   react: 18.2.0
@@ -51,6 +54,7 @@ dependencies:
   react-image-gallery: 1.2.8_react@18.2.0
   react-player: 2.10.1_react@18.2.0
   tiny-invariant: 1.2.0
+  xstate: 4.32.1
 
 devDependencies:
   '@remix-run/dev': 1.6.5_bb9b31fe1ed27c7e189de92eecebcd3d
@@ -2241,6 +2245,26 @@ packages:
 
   /@web3-storage/multipart-parser/1.0.0:
     resolution: {integrity: sha512-BEO6al7BYqcnfX15W2cnGR+Q566ACXAT9UQykORCWW80lmkpWsnEob6zJS1ZVBKsSJC8+7vJkHwlp+lXG1UCdw==}
+
+  /@xstate/react/3.0.0_00fbca160a99d6710ca553c901b20c9b:
+    resolution: {integrity: sha512-KHSCfwtb8gZ7QH2luihvmKYI+0lcdHQOmGNRUxUEs4zVgaJCyd8csCEmwPsudpliLdUmyxX2pzUBojFkINpotw==}
+    peerDependencies:
+      '@xstate/fsm': ^2.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      xstate: ^4.31.0
+    peerDependenciesMeta:
+      '@xstate/fsm':
+        optional: true
+      xstate:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-isomorphic-layout-effect: 1.1.2_d9efaa4a57b9ddc48121b447e3437c81
+      use-sync-external-store: 1.2.0_react@18.2.0
+      xstate: 4.32.1
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
 
   /@yarnpkg/esbuild-plugin-pnp/3.0.0-rc.11_esbuild@0.14.22:
     resolution: {integrity: sha512-uwTdgbw9XIisx7oxqHrX7GFjsObxo5EhUYGjIg17TdHyAqgwZV6Ca7rqTjKZryLFoxkCFyMloxkclyze0onpQQ==}
@@ -8756,6 +8780,27 @@ packages:
       prepend-http: 2.0.0
     dev: true
 
+  /use-isomorphic-layout-effect/1.1.2_d9efaa4a57b9ddc48121b447e3437c81:
+    resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@types/react': 18.0.15
+      react: 18.2.0
+    dev: false
+
+  /use-sync-external-store/1.2.0_react@18.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /use/3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
     engines: {node: '>=0.10.0'}
@@ -8988,6 +9033,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /xstate/4.32.1:
+    resolution: {integrity: sha512-QYUd+3GkXZ8i6qdixnOn28bL3EvA++LONYL/EMWwKlFSh/hiLndJ8YTnz77FDs+JUXcwU7NZJg7qoezoRHc4GQ==}
+    dev: false
 
   /xtend/4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
