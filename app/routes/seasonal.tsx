@@ -44,7 +44,6 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
   const submit = useSubmit();
 
   const { currentPage, submitNextPage, submitPreviousPage } = usePaginationSubmit({
-    formRef,
     paging,
     limit: LIMIT,
     onSubmit: (offset?: string) => {

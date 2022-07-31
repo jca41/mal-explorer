@@ -3,16 +3,7 @@ import { getOffset, getPageNumber } from '~/utils/paging';
 
 type PageType = keyof Paging;
 
-export function usePaginationSubmit({
-  paging,
-  limit,
-  onSubmit,
-}: {
-  paging?: Paging;
-  formRef: React.RefObject<HTMLFormElement>;
-  limit: number;
-  onSubmit: (offset?: string) => void;
-}) {
+export function usePaginationSubmit({ paging, limit, onSubmit }: { paging?: Paging; limit: number; onSubmit: (offset?: string) => void }) {
   const submitPage = (type: PageType) => () => {
     const offset = getOffset(paging?.[type]);
     onSubmit(offset);
