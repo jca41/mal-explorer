@@ -1,17 +1,23 @@
-import { assign, createMachine } from 'xstate';
+import { assign, createMachine, sendParent } from 'xstate';
+
+type DContext = {
+  data: unknown;
+};
+
+export type ParentTriggerEvent = {
+  type: 'TRIGGER';
+  data: DContext['data'];
+};
 
 export const debounceMachine = createMachine(
   {
     id: 'debounce',
+    tsTypes: {} as import("./debounce.typegen").Typegen0,
     schema: {
-      context: {} as {
-        action: CallableFunction;
-        data: unknown;
-      },
-      events: {} as { type: 'CHANGE'; data?: unknown },
+      context: {} as DContext,
+      events: {} as { type: 'CHANGE' | 'TRIGGER'; data?: unknown },
     },
     context: {
-      action: () => null,
       data: null,
     },
     initial: 'idle',
@@ -32,15 +38,20 @@ export const debounceMachine = createMachine(
           },
         },
         after: {
-          DEFAULT: { target: 'idle', actions: 'callAction' },
+          DEFAULT: {
+            target: 'trigger',
+          },
         },
+      },
+      trigger: {
+        entry: sendParent<DContext, ParentTriggerEvent>((ctx) => ({ type: 'TRIGGER', data: ctx.data })),
+        always: 'idle',
       },
     },
   },
   {
     actions: {
       assignDataToContext: assign({ data: (ctx, e) => ('data' in e ? e.data : ctx.data) }),
-      callAction: (ctx) => ctx.action(ctx.data),
     },
     delays: {
       DEFAULT: 500,

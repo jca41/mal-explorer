@@ -1,17 +1,17 @@
 import { useMachine } from '@xstate/react';
+import { AnyInterpreter } from 'xstate';
 
 import { debounceMachine } from '~/machines/debounce';
 
 type SearchInputProps = {
   defaultValue: string;
-  onChange: CallableFunction;
+  // onChange: CallableFunction;
+  parentService: AnyInterpreter;
 };
 
-export function SearchInput({ defaultValue, onChange }: SearchInputProps) {
+export function SearchInput({ defaultValue, parentService }: SearchInputProps) {
   const [, send] = useMachine(debounceMachine, {
-    context: {
-      action: () => onChange(),
-    },
+    parent: parentService,
   });
 
   return (

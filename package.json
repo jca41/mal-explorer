@@ -11,6 +11,7 @@
     "dev": "run-p dev:*",
     "dev:css": "npm run generate:css -- --watch",
     "dev:remix": "remix dev",
+    "dev:xstate": "xstate typegen --watch  'app'",
     "generate:css": "tailwindcss -o ./app/styles/app.css",
     "updates": "npm-check -u --force",
     "ts-check": "tsc --noEmit"
@@ -22,6 +23,7 @@
     "@remix-run/react": "^1.6.5",
     "@remix-run/vercel": "^1.6.5",
     "@vercel/node": "^2.5.0",
+    "@xstate/cli": "0.3.0",
     "@xstate/react": "^3.0.0",
     "numeral": "^2.0.6",
     "pkce-challenge": "^3.0.0",

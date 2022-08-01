@@ -3,8 +3,13 @@ import { useMachine } from '@xstate/react';
 import { Fragment, ReactNode } from 'react';
 import { createMachine } from 'xstate';
 
-const modalMachine = createMachine<null, { type: 'TOGGLE' }, { value: 'open' | 'closed'; context: null }>({
+const modalMachine = createMachine({
   id: 'modal',
+  tsTypes: {} as import('./modal.typegen').Typegen0,
+  schema: {
+    context: null,
+    events: {} as { type: 'TOGGLE' },
+  },
   initial: 'closed',
   states: {
     closed: {
