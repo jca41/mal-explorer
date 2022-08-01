@@ -1,23 +1,40 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, ReactNode, useState } from 'react';
+import { useMachine } from '@xstate/react';
+import { Fragment, ReactNode } from 'react';
+import { createMachine } from 'xstate';
 
-export type UseModal = {
-  state: boolean;
-  close: () => void;
-  open: () => void;
-};
-export function useModal(): UseModal {
-  const [isOpen, setOpen] = useState(false);
+const modalMachine = createMachine<null, { type: 'TOGGLE' }, { value: 'open' | 'closed'; context: null }>({
+  id: 'modal',
+  initial: 'closed',
+  states: {
+    closed: {
+      on: {
+        TOGGLE: 'open',
+      },
+    },
+    open: {
+      on: {
+        TOGGLE: 'closed',
+      },
+    },
+  },
+});
+export function useModal() {
+  const [state, send] = useMachine(modalMachine);
 
   return {
-    state: isOpen,
-    close: () => setOpen(false),
-    open: () => setOpen(true),
+    state: state.matches('open'),
+    changed: state.changed,
+    toggle: () => {
+      send('TOGGLE');
+    },
   };
 }
 
+export type UseModal = ReturnType<typeof useModal>;
+
 type ModalProps = {
-  children: ReactNode;
+  children: () => ReactNode;
   controls: UseModal;
   title: string;
 };
@@ -25,7 +42,7 @@ type ModalProps = {
 export function Modal({ controls, title, children }: ModalProps) {
   return (
     <Transition appear show={controls.state} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={controls.close}>
+      <Dialog as="div" className="relative z-10" onClose={controls.toggle}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -53,7 +70,7 @@ export function Modal({ controls, title, children }: ModalProps) {
                 <Dialog.Title as="h3" className="text-xl font-semibold text-slate-700 leading-tight tracking-wide mb-4">
                   {title}
                 </Dialog.Title>
-                <div>{children}</div>
+                <div>{controls.changed && children()}</div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

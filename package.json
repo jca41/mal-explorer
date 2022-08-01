@@ -22,13 +22,15 @@
     "@remix-run/react": "^1.6.5",
     "@remix-run/vercel": "^1.6.5",
     "@vercel/node": "^2.5.0",
+    "@xstate/react": "^3.0.0",
     "numeral": "^2.0.6",
     "pkce-challenge": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-image-gallery": "^1.2.8",
     "react-player": "^2.10.1",
-    "tiny-invariant": "^1.2.0"
+    "tiny-invariant": "^1.2.0",
+    "xstate": "^4.32.1"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.6.5",

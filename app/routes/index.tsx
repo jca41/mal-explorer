@@ -1,7 +1,9 @@
 import { LoaderArgs } from '@remix-run/node';
-import { Form, useLoaderData, useSearchParams } from '@remix-run/react';
+import { Form, useLoaderData, useSearchParams, useSubmit } from '@remix-run/react';
+import { useRef } from 'react';
 
 import { List, ListItem } from '~/components/list';
+import { SearchInput } from '~/components/search-input';
 import { malService } from '~/lib/mal/api/service.server';
 
 export async function loader({ request }: LoaderArgs) {
@@ -24,22 +26,34 @@ export async function loader({ request }: LoaderArgs) {
 }
 
 export default function Index() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const submit = useSubmit();
+
   const loaderData = useLoaderData<typeof loader>();
   const [params] = useSearchParams();
 
+  const submitForm = () => {
+    const form = formRef.current ?? undefined;
+
+    const query = new FormData(form).get('q') ?? '';
+
+    if (!form || typeof query !== 'string') {
+      return;
+    }
+
+    const valid = form.checkValidity();
+
+    if (valid) {
+      submit(form, { replace: true });
+    } else {
+      form.reportValidity();
+    }
+  };
+
   return (
     <div className="flex flex-col space-y-10">
-      <Form method="get" replace action="/" className="flex flex-row justify-center space-x-2">
-        <input
-          type="text"
-          name="q"
-          placeholder="Search..."
-          required
-          defaultValue={params.get('q') ?? ''}
-          minLength={3} // min query is 3 chars
-          autoComplete="off"
-          className="rounded-lg h-12 w-full max-w-xs"
-        ></input>
+      <Form ref={formRef} method="get" action="/" className="flex flex-row justify-center space-x-2">
+        <SearchInput defaultValue={params.get('q') ?? ''} onChange={submitForm} />
       </Form>
       <List>
         {(loaderData?.data ?? []).map(({ node }) => (
