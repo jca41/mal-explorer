@@ -64,7 +64,6 @@ export default function Index() {
   const [params] = useSearchParams();
 
   const [state, , service] = useMachine(searchMachine, {
-    devTools: true,
     actions: {
       submit: () => submit(formRef.current, { replace: true }),
       reportValidity: () => {
