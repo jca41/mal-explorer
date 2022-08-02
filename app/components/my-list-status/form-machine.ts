@@ -25,7 +25,7 @@ type MEvents = {
 export const myListStatusFormMachine = createMachine(
   {
     id: 'my-list-status-form',
-    tsTypes: {} as import("./form-machine.typegen").Typegen0,
+    tsTypes: {} as import('./form-machine.typegen').Typegen0,
     schema: {
       events: {} as MEvents,
       context: {} as MContext,
