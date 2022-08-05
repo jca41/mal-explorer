@@ -12,7 +12,7 @@ export type ParentTriggerEvent = {
 export const debounceMachine = createMachine(
   {
     id: 'debounce',
-    tsTypes: {} as import("./debounce.typegen").Typegen0,
+    tsTypes: {} as import('./debounce.typegen').Typegen0,
     schema: {
       context: {} as DContext,
       events: {} as { type: 'CHANGE' | 'TRIGGER'; data?: unknown },
