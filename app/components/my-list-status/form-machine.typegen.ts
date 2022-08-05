@@ -3,8 +3,8 @@
 export interface Typegen0 {
   '@@xstate/typegen': true;
   internalEvents: {
-    'xstate.init': { type: 'xstate.init' };
     '': { type: '' };
+    'xstate.init': { type: 'xstate.init' };
   };
   invokeSrcNameMap: {};
   missingImplementations: {
@@ -14,8 +14,8 @@ export interface Typegen0 {
     delays: never;
   };
   eventsCausingActions: {
-    updateVisibleFields: 'xstate.init' | '' | 'FIELD_CHANGE';
     updateState: 'FIELD_CHANGE';
+    updateVisibleFields: '' | 'FIELD_CHANGE' | 'xstate.init';
   };
   eventsCausingServices: {};
   eventsCausingGuards: {};

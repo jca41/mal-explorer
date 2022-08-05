@@ -7,20 +7,17 @@ export interface Typegen0 {
   };
   invokeSrcNameMap: {};
   missingImplementations: {
-    actions: 'submit' | 'reportValidity';
+    actions: 'reset';
     services: never;
-    guards: 'isValid';
+    guards: never;
     delays: never;
   };
   eventsCausingActions: {
-    reportValidity: 'TRIGGER';
-    submit: 'TRIGGER';
+    reset: 'RESET';
   };
   eventsCausingServices: {};
-  eventsCausingGuards: {
-    isValid: 'TRIGGER';
-  };
+  eventsCausingGuards: {};
   eventsCausingDelays: {};
-  matchesStates: 'idle' | 'invalid' | 'valid';
+  matchesStates: 'debouncing';
   tags: never;
 }

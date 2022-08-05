@@ -21,6 +21,6 @@ export interface Typegen0 {
   eventsCausingDelays: {
     DEFAULT: 'CHANGE';
   };
-  matchesStates: 'idle' | 'debounce' | 'trigger';
+  matchesStates: 'debounce' | 'idle' | 'trigger';
   tags: never;
 }
