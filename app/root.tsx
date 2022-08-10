@@ -5,11 +5,14 @@ import { FC, PropsWithChildren } from 'react';
 import { AppLayout } from '~/layouts/app';
 import styles from '~/styles/app.css';
 
+import { LOADING_IMG_SRC, NAV_IMG_SRC } from './constants';
 import { ClientAuthState } from './contracts/auth';
 import { getAccessToken } from './lib/session.server';
 
+const PRELOADED_IMAGES = [NAV_IMG_SRC, LOADING_IMG_SRC];
+
 export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: styles }];
+  return [{ rel: 'stylesheet', href: styles }, ...PRELOADED_IMAGES.map((href) => ({ rel: 'preload', as: 'image', href }))];
 };
 
 export const meta: MetaFunction = () => ({

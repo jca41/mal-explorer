@@ -4,6 +4,7 @@ import { MenuIcon, UserCircleIcon } from '@heroicons/react/solid';
 import { NavLink, useFetcher } from '@remix-run/react';
 import { Fragment, ReactNode } from 'react';
 
+import { NAV_IMG_SRC } from '~/constants';
 import { ClientAuthState } from '~/contracts/auth';
 
 import { useRouteMatch } from './use-route-match';
@@ -65,8 +66,8 @@ export function Navigation() {
   return (
     <nav className="py-4 px-8 flex-row space-y-3 bg-gradient-to-b from-blue-800  to-blue-400 shadow-md">
       <div className="relative flex items-center justify-center">
-        <img src="/images/bleach-badge.webp" className="w-7 mr-2" />
-        <div className=" text-xl font-bold font-mono text-slate-100 drop-shadow-lg">MAL EXPLORER</div>
+        <img src={NAV_IMG_SRC} className="w-7 mr-2" />
+        <div className="text-xl font-bold font-mono text-slate-100 drop-shadow-lg">MAL EXPLORER</div>
         <AppMenu />
       </div>
       <div className="flex space-x-4 items-center justify-center overflow-x-auto">
