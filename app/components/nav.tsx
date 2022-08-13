@@ -68,7 +68,7 @@ export function Navigation() {
     <nav className="py-4 px-8 flex-row space-y-3 bg-gradient-to-b from-blue-800  to-blue-400 shadow-md">
       <div className="relative flex items-center justify-center">
         <img src={NAV_IMG_SRC} className="w-7 mr-3" />
-        <div className="text-xl font-bold tracking-tight font-mono bg-gradient-to-t from-blue-200 to-white text-transparent bg-clip-text drop-shadow-lg">
+        <div className="text-xl font-bold tracking-tight font-mono bg-gradient-to-t from-blue-100 to-white text-transparent bg-clip-text drop-shadow-lg">
           MAL EXPLORER
         </div>
         <AppMenu />
