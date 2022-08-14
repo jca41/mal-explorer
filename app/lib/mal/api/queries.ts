@@ -24,7 +24,7 @@ export const animeList = (params: AnimeList) => {
   });
 };
 
-type AnimeDetail = { id: string; accessToken?: AuthState['accessToken'] };
+type AnimeDetail = { id: Node['id']; accessToken?: AuthState['accessToken'] };
 export const animeDetail = ({ id, accessToken }: AnimeDetail) => {
   return malRequest<Node>({
     path: `/anime/${id}`,

@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const accessToken = await getAccessToken(request);
 
   return malService.query.animeDetail({
-    id: params.id,
+    id: parseInt(params.id),
     accessToken,
   });
 };
