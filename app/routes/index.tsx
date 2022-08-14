@@ -6,7 +6,7 @@ import { createMachine } from 'xstate';
 
 import { List, ListItem } from '~/components/list';
 import { SearchInput } from '~/components/search-input';
-import { malService } from '~/lib/mal/api/service.server';
+import malService from '~/lib/mal/api/service.server';
 import { ParentTriggerEvent } from '~/machines/debounce';
 
 export async function loader({ request }: LoaderArgs) {
@@ -16,15 +16,9 @@ export async function loader({ request }: LoaderArgs) {
 
   if (!q) return {};
 
-  return malService({
-    type: 'list',
-    fields: 'list',
-    input: {
-      query: {
-        q,
-        limit: 20,
-      },
-    },
+  return malService.query.animeList({
+    q,
+    limit: 20,
   });
 }
 

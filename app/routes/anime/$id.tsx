@@ -11,7 +11,7 @@ import { RelatedGrid } from '~/components/related-grid';
 import { StatIconPair, StatPair } from '~/components/stat-pair';
 import { TextClamp } from '~/components/text-clamp';
 import { Node } from '~/contracts/mal';
-import { malService } from '~/lib/mal/api/service.server';
+import malService from '~/lib/mal/api/service.server';
 import { getAccessToken } from '~/lib/session.server';
 import { shouldShowAltTitle } from '~/utils/check-data';
 import {
@@ -35,14 +35,8 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const accessToken = await getAccessToken(request);
 
-  return malService({
-    type: 'detail',
-    fields: 'detail',
-    input: {
-      params: {
-        id: params.id,
-      },
-    },
+  return malService.query.animeDetail({
+    id: params.id,
     accessToken,
   });
 };

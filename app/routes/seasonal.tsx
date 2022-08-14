@@ -8,7 +8,7 @@ import { RadioGroup, SEASONAL_SORT_RADIOS } from '~/components/radio-group';
 import { SEASONAL_SEASON_OPTIONS, SEASONAL_YEAR_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
 import { Paging, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
-import { malService } from '~/lib/mal/api/service.server';
+import malService from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
 
@@ -23,20 +23,12 @@ export async function loader({ request }: LoaderArgs) {
   const offset = url.searchParams.get('offset');
   const sort = url.searchParams.get('sort') ?? DEFAULT_SORT;
 
-  return malService({
-    type: 'seasonal',
-    fields: 'list',
-    input: {
-      query: {
-        limit: LIMIT,
-        offset: offset ? parseInt(offset) : 0,
-        sort: sort as SeasonalSortQueryParam,
-      },
-      params: {
-        year: typeof year === 'string' ? parseInt(year) : year,
-        season,
-      },
-    },
+  return malService.query.seasonalAnime({
+    limit: LIMIT,
+    offset: offset ? parseInt(offset) : 0,
+    sort: sort as SeasonalSortQueryParam,
+    year: typeof year === 'string' ? parseInt(year) : year,
+    season,
   });
 }
 

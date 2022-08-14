@@ -7,7 +7,7 @@ import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components
 import { RANKING_TYPES_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
 import { Paging, RankingTypeParam } from '~/contracts/mal';
-import { malService } from '~/lib/mal/api/service.server';
+import malService from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 
 const LIMIT = 25;
@@ -18,16 +18,10 @@ export async function loader({ request }: LoaderArgs) {
   const sort = url.searchParams.get('sort');
   const offset = url.searchParams.get('offset');
 
-  return malService({
-    type: 'top',
-    fields: 'list',
-    input: {
-      query: {
-        ranking_type: (sort || 'all') as RankingTypeParam,
-        limit: LIMIT,
-        offset: offset ? parseInt(offset) : 0,
-      },
-    },
+  return malService.query.topAnime({
+    ranking_type: (sort || 'all') as RankingTypeParam,
+    limit: LIMIT,
+    offset: offset ? parseInt(offset) : 0,
   });
 }
 
