@@ -1,5 +1,5 @@
 import { AuthState } from '~/contracts/auth';
-import { Node, NodeList, RankingTypeParam, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
+import { MyListSortQueryParam, MyListStatus, Node, NodeList, RankingTypeParam, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
 
 import { malRequest } from './request';
 type Limit = number;
@@ -53,5 +53,23 @@ export const seasonalAnime = ({ season, year, ...params }: SeasonalAnime) => {
       fields: LIST_FIELDS,
       ...params,
     },
+  });
+};
+
+type MyList = {
+  status: MyListStatus['status'];
+  accessToken: AuthState['accessToken'];
+  sort: MyListSortQueryParam;
+  limit: Limit;
+  offset?: Offset;
+};
+export const myList = ({ accessToken, ...params }: MyList) => {
+  return malRequest<NodeList>({
+    path: '/users/@me/animelist',
+    params: {
+      fields: LIST_FIELDS,
+      ...params,
+    },
+    accessToken,
   });
 };

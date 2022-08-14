@@ -2,12 +2,11 @@ import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useSearchParams, useSubmit } from '@remix-run/react';
 import { useMachine } from '@xstate/react';
 import { useRef } from 'react';
-import { createMachine } from 'xstate';
 
 import { List, ListItem } from '~/components/list';
 import { SearchInput } from '~/components/search-input';
 import malService from '~/lib/mal/api/service.server';
-import { ParentTriggerEvent } from '~/machines/debounce';
+import { searchMachine } from '~/machines/search';
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
@@ -21,34 +20,6 @@ export async function loader({ request }: LoaderArgs) {
     limit: 20,
   });
 }
-
-const searchMachine = createMachine({
-  id: 'search',
-  tsTypes: {} as import('./index.typegen').Typegen0,
-  schema: {
-    events: {} as ParentTriggerEvent,
-  },
-  initial: 'idle',
-  on: {
-    TRIGGER: [
-      {
-        target: 'valid',
-        internal: false,
-        cond: 'isValid',
-      },
-      { target: 'invalid', internal: false },
-    ],
-  },
-  states: {
-    idle: {},
-    valid: {
-      entry: 'submit',
-    },
-    invalid: {
-      entry: 'reportValidity',
-    },
-  },
-});
 
 export default function Index() {
   const formRef = useRef<HTMLFormElement>(null);

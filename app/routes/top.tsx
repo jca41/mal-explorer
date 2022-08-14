@@ -6,11 +6,10 @@ import { List, ListItem } from '~/components/list';
 import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components/pagination';
 import { RANKING_TYPES_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
+import { LIST_LIMIT } from '~/constants';
 import { Paging, RankingTypeParam } from '~/contracts/mal';
 import malService from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
-
-const LIMIT = 25;
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
@@ -20,7 +19,7 @@ export async function loader({ request }: LoaderArgs) {
 
   return malService.query.topAnime({
     ranking_type: (sort || 'all') as RankingTypeParam,
-    limit: LIMIT,
+    limit: LIST_LIMIT,
     offset: offset ? parseInt(offset) : 0,
   });
 }
@@ -30,7 +29,7 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
 
   const { currentPage, submitNextPage, submitPreviousPage } = usePaginationSubmit({
     paging,
-    limit: LIMIT,
+    limit: LIST_LIMIT,
     onSubmit: (offset?: string) => {
       const formData = getFormData(formRef.current);
 
