@@ -1,5 +1,5 @@
 import { LoaderArgs, redirect } from '@remix-run/node';
-import { useLoaderData, useParams } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 
 import { LIST_LIMIT } from '~/constants';
 import { MyListSortQueryParam, MyListStatus } from '~/contracts/mal';
@@ -28,6 +28,5 @@ export async function loader({ request, params }: LoaderArgs) {
 }
 export default function MyListStatus() {
   const data = useLoaderData<typeof loader>();
-  const params = useParams();
   return <div>{JSON.stringify(data)}</div>;
 }

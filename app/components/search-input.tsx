@@ -1,6 +1,6 @@
 import { BackspaceIcon } from '@heroicons/react/outline';
 import { useMachine } from '@xstate/react';
-import { useRef } from 'react';
+import { KeyboardEvent, useCallback, useMemo, useRef } from 'react';
 import { AnyInterpreter, createMachine, forwardTo, send, sendParent } from 'xstate';
 
 import { debounceMachine } from '~/machines/debounce';
@@ -63,11 +63,11 @@ export function SearchInput({ defaultValue, parentService }: SearchInputProps) {
         onChange={() => send({ type: 'CHANGE' })}
         minLength={3} // min query is 3 chars
         autoComplete="off"
-        className="rounded-lg w-full h-12"
+        className="input input-bordered w-full input-md"
       />
       <div className="absolute right-2 inset-y-0 flex items-center">
         <button onClick={() => send('RESET')} className="h-min">
-          <BackspaceIcon className="w-5 text-slate-600" />
+          <BackspaceIcon className="w-5 text-secondary" />
         </button>
       </div>
     </div>

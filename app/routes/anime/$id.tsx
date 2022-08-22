@@ -44,6 +44,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 const STAT_ICON = 'w-5';
 const STAT_TEXT = 'text-md tracking-tight';
 const SUBTITLE = 'text-xl tracking-wide font-bold mb-6';
+const PROSE = 'text-base-content/90 max-w-none';
 
 export default function AnimeDetails() {
   const data = useLoaderData<Node>();
@@ -84,13 +85,13 @@ export default function AnimeDetails() {
           {!!start_season?.year && <span className="font-normal">{` (${start_season.year})`}</span>}
         </div>
         {shouldShowAltTitle({ title, alt: alternative_titles.en }) && (
-          <div className="text-xl text-slate-500 font-semibold">{alternative_titles.en}</div>
+          <div className="text-xl text-base-content/60 font-semibold">{alternative_titles.en}</div>
         )}
       </h1>
       <div className="mt-12 flex flex-col space-y-10">
         <section className="flex flex-col space-y-3">
           <ul className="flex gap-y-1 justify-center flex-wrap space-x-4">
-            <StatIconPair value={mean} icon={StarIcon} iconClassname={`text-yellow-500 ${STAT_ICON}`} textClassName={STAT_TEXT} />
+            <StatIconPair value={mean} icon={StarIcon} iconClassname={`text-primary ${STAT_ICON}`} textClassName={STAT_TEXT} />
             <StatIconPair value={formatRank(rank)} icon={TrendingUpIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
             <StatIconPair value={formatPopularity(num_list_users, popularity)} icon={UsersIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
             <StatIconPair value={formatMediaType(media_type)} icon={FilmIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
@@ -113,7 +114,7 @@ export default function AnimeDetails() {
         {synopsis && (
           <section>
             <h2 className={SUBTITLE}>Synopsis</h2>
-            <TextClamp text={synopsis}>{<p className="prose prose-slate max-w-none">{synopsis}</p>}</TextClamp>
+            <TextClamp text={synopsis}>{<p className={`prose ${PROSE}`}>{synopsis}</p>}</TextClamp>
           </section>
         )}
         <section>
@@ -136,7 +137,7 @@ export default function AnimeDetails() {
         {background && (
           <section>
             <h2 className={SUBTITLE}>Background</h2>
-            <TextClamp text={background}>{<p className="prose-lg prose-slate max-w-none">{background}</p>}</TextClamp>
+            <TextClamp text={background}>{<p className={`prose-lg ${PROSE}`}>{background}</p>}</TextClamp>
           </section>
         )}
         {!!videos.length && (

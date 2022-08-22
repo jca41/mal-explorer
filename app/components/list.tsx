@@ -23,25 +23,26 @@ export function ListItem({
 }: Node) {
   return (
     <li className="max-w-lg w-full animate-fadeIn">
-      <Link
-        to={`/anime/${id}`}
-        className="rounded-md bg-blue-50 py-4 px-6 shadow-sm grid grid-cols-image-content gap-4 hover:scale-[1.05] transition-transform"
-      >
-        <div className="w-28 md:w-32">
-          {main_picture?.medium ? <img src={main_picture?.medium} alt={title} /> : <div className="bg-blue-100 w-full h-full"></div>}
-        </div>
+      <Link to={`/anime/${id}`} className="card glass card-compact card-side shadow-md py-4 px-6 hover:scale-[1.05] transition-transform">
+        <figure className=" self-start">
+          {main_picture?.medium ? (
+            <img className="w-28 md:w-32" src={main_picture?.medium} alt={title} />
+          ) : (
+            <div className="w-28 md:w-32 bg-base-200"></div>
+          )}
+        </figure>
 
-        <div className="">
-          <h2 className="text-md font-semibold tracking-wide leading-snug mb-5">
+        <div className="card-body">
+          <h2 className="text-base font-semibold tracking-wide leading-snug mb-5">
             <div>
               {title}
               {start_season?.year && <span className="font-normal">{` (${start_season?.year})`}</span>}
             </div>
-            {shouldShowAltTitle({ title, alt: alternative_titles.en }) && <div className="text-slate-500 text-sm">{alternative_titles.en}</div>}
+            {shouldShowAltTitle({ title, alt: alternative_titles.en }) && <div className="text-sm text-base-content/60">{alternative_titles.en}</div>}
           </h2>
 
           <ul className="grid grid-cols-2 grid-flow-row gap-x-4 gap-y-2">
-            <StatIconPair value={mean} icon={StarIcon} iconClassname="text-yellow-500" textClassName="font-semibold" />
+            <StatIconPair value={mean} icon={StarIcon} iconClassname="text-primary" textClassName="font-semibold" />
             <StatIconPair value={formatMediaType(media_type)} icon={FilmIcon} />
             <StatIconPair value={formatStatus(status)} icon={ClipboardListIcon} />
             <StatIconPair value={formatRank(rank)} icon={TrendingUpIcon} />

@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 const RootLayout: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="retro">
       <head>
         <Meta />
         <Links />

@@ -14,7 +14,7 @@ export function VideoGallery({ videos = [] }: Pick<Node, 'videos'>) {
 
   return (
     <div>
-      <select className="mb-4" value={selected} onChange={(e) => setSelected(e.target.value)}>
+      <select className="mb-4 select select-primary" value={selected} onChange={(e) => setSelected(e.target.value)}>
         {videos.map((v) => (
           <option key={v.id} value={v.url}>
             {v.title}

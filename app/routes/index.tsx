@@ -1,7 +1,7 @@
 import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useSearchParams, useSubmit } from '@remix-run/react';
 import { useMachine } from '@xstate/react';
-import { useRef } from 'react';
+import { KeyboardEvent, useCallback, useRef } from 'react';
 
 import { List, ListItem } from '~/components/list';
 import { SearchInput } from '~/components/search-input';
@@ -40,9 +40,17 @@ export default function Index() {
     },
   });
 
+  // input is submitting on enter as it's the only form field, this is breaking the debounced state
+  const onKeyDown = useCallback((e: KeyboardEvent<HTMLFormElement>) => {
+    if (e.key == 'Enter') {
+      e.preventDefault();
+      return false;
+    }
+  }, []);
+
   return (
     <div className="flex flex-col space-y-10">
-      <Form ref={formRef} method="get" action="/" className="flex flex-row justify-center space-x-2">
+      <Form ref={formRef} onKeyDown={onKeyDown} method="get" action="/" className="flex flex-row justify-center space-x-2">
         <SearchInput defaultValue={params.get('q') ?? ''} parentService={service} />
       </Form>
       {!state.matches('invalid') && (
