@@ -29,7 +29,7 @@ function AppMenu({ signedIn }: ClientAuthState) {
   const onAuthAction = () => fetcher.submit(null, { action: signedIn ? '/oauth/sign-out' : '/oauth/authorize', method: 'post' });
 
   return (
-    <Menu as="div" className="navbar-end">
+    <Menu as="div">
       <Menu.Button className="flex items-center">
         {signedIn ? <UserCircleIcon className={CL.menuIcon} /> : <MenuIcon className={CL.menuIcon} />}
       </Menu.Button>
@@ -57,7 +57,8 @@ function AppMenu({ signedIn }: ClientAuthState) {
   );
 }
 
-const getClassName = ({ isActive }: { isActive: boolean }) => twMerge('text-primary-content', isActive && 'text-secondary-content bg-secondary');
+const getClassName = ({ isActive }: { isActive: boolean }) =>
+  twMerge('text-primary-content whitespace-nowrap', isActive && 'text-secondary-content bg-secondary');
 
 export function Navigation() {
   const { signedIn } = useRouteMatch<{ data: ClientAuthState }>('root').data;
@@ -65,11 +66,14 @@ export function Navigation() {
   return (
     <nav className="bg-primary">
       <div className="navbar min-h-min">
-        <div className="navbar-start">
+        <div className="navbar-start flex items-center">
           <img src={NAV_IMG_SRC} className="w-7 mr-3" />
           <div className="text-xl font-bold tracking-tight font-mono text-primary-content bg-clip-text drop-shadow-lg">MAL EXPLORER</div>
         </div>
-        <AppMenu signedIn={signedIn} />
+        <div className="navbar-end space-x-1">
+          <ThemePicker />
+          <AppMenu signedIn={signedIn} />
+        </div>
       </div>
       <div className="navbar min-h-min pt-0">
         <div className="navbar-start"></div>

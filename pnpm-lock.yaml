@@ -12,6 +12,7 @@ specifiers:
   '@tailwindcss/forms': ^0.5.2
   '@tailwindcss/line-clamp': ^0.4.0
   '@tailwindcss/typography': ^0.5.4
+  '@types/js-cookie': ^3.0.2
   '@types/numeral': ^2.0.2
   '@types/react': ^18.0.15
   '@types/react-dom': ^18.0.6
@@ -21,9 +22,11 @@ specifiers:
   '@vercel/node': ^2.5.0
   '@xstate/react': ^3.0.0
   autoprefixer: ^10.4.7
+  clsx: ^1.2.1
   daisyui: ^2.24.0
   eslint: ^8.20.0
   eslint-plugin-simple-import-sort: ^7.0.0
+  js-cookie: ^3.0.1
   npm-check: ^6.0.1
   npm-run-all: ^4.1.5
   numeral: ^2.0.6
@@ -48,7 +51,9 @@ dependencies:
   '@remix-run/vercel': 1.6.5_fa786f87946a1f95a5f97921ba948855
   '@vercel/node': 2.5.0
   '@xstate/react': 3.0.0_00fbca160a99d6710ca553c901b20c9b
+  clsx: 1.2.1
   daisyui: 2.24.0_a191cbaa25c4a0a9f05cc78eac153be7
+  js-cookie: 3.0.1
   numeral: 2.0.6
   pkce-challenge: 3.0.0
   react: 18.2.0
@@ -65,6 +70,7 @@ devDependencies:
   '@tailwindcss/forms': 0.5.2_tailwindcss@3.1.6
   '@tailwindcss/line-clamp': 0.4.0_tailwindcss@3.1.6
   '@tailwindcss/typography': 0.5.4_tailwindcss@3.1.6
+  '@types/js-cookie': 3.0.2
   '@types/numeral': 2.0.2
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
@@ -1938,6 +1944,10 @@ packages:
     resolution: {integrity: sha512-SZs7ekbP8CN0txVG2xVRH6EgKmEm31BOxA07vkFaETzZz1xh+cbt8BcI0slpymvwhx5dlFnQG2rTlPVQn+iRPQ==}
     dev: true
 
+  /@types/js-cookie/3.0.2:
+    resolution: {integrity: sha512-6+0ekgfusHftJNYpihfkMu8BWdeHs9EOJuGcSofErjstGPfPGEu9yTu4t460lTzzAMl2cM5zngQJqPMHbbnvYA==}
+    dev: true
+
   /@types/json-buffer/3.0.0:
     resolution: {integrity: sha512-3YP80IxxFJB4b5tYC2SUPwkg0XQLiu0nWvhRgEatgjf+29IcWO9X1k8xRv5DGssJ/lCrjYTjQPcobJr2yWIVuQ==}
     dev: true
@@ -3012,6 +3022,11 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
     dev: true
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /co/4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -5607,6 +5622,11 @@ packages:
     resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
+    dev: false
 
   /js-tokens/3.0.2:
     resolution: {integrity: sha512-RjTcuD4xjtthQkaWH7dFlH85L+QaVtSoOyGdZ3g6HFhS9dFNDfLyqgm2NFe2X6cQpeFmt0452FJjFG5UameExg==}
