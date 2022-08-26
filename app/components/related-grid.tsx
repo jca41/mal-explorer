@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useMemo, useState } from 'react';
 
 import { RelatedAnime } from '~/contracts/mal';
@@ -24,8 +25,6 @@ function sortUniqueRelations(items: UniqueRelationsItem[]) {
   return items.sort((a, b) => SORT_ORDER.indexOf(b.value) - SORT_ORDER.indexOf(a.value));
 }
 
-const BASE_BUTTON = 'text-xs font-medium rounded-full shadow-sm py-1 px-3.5 transition-colors duration-300 whitespace-nowrap';
-
 export function RelatedGrid({ items }: { items: RelatedAnime[] }) {
   const relations = useMemo(() => {
     const unique = getUniqueRelations(items);
@@ -40,12 +39,12 @@ export function RelatedGrid({ items }: { items: RelatedAnime[] }) {
   return (
     <div className="space-y-4">
       {relations.length > 1 && (
-        <div className="flex space-x-2 overflow-x-auto">
+        <div className="flex space-x-2 overflow-x-auto overflow-y-hidden">
           {relations.map((r) => {
             const isSelected = selected === r.value;
             const clickHandler = () => setSelected(r.value);
             return (
-              <button key={r.value} onClick={clickHandler} className={`${BASE_BUTTON} ${isSelected ? 'bg-blue-400 text-white' : 'bg-slate-100'}`}>
+              <button key={r.value} onClick={clickHandler} className={clsx('btn btn-xs', { 'btn-active': isSelected, 'btn-outline': !isSelected })}>
                 {r.label}
               </button>
             );

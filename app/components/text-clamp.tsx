@@ -1,8 +1,8 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
+import clsx from 'clsx';
 import { ReactElement, useState } from 'react';
-
 const CLAMP_THRESHOLD = 400;
-const ICON = 'w-5 h-5';
+const ICON = 'w-5 h-5 text-accent-content';
 
 export function TextClamp({ children, text }: { children: ReactElement; text: string }) {
   const [expanded, setExpanded] = useState(false);
@@ -17,9 +17,14 @@ export function TextClamp({ children, text }: { children: ReactElement; text: st
           onClick={() => {
             setExpanded((e) => !e);
           }}
-          className="z-10 rounded-full p-1 bg-slate-100 shadow-lg"
+          className={clsx('swap swap-rotate z-10 rounded-full p-1 bg-accent shadow-lg', { 'swap-active': expanded })}
         >
-          {expanded ? <ChevronUpIcon className={ICON} /> : <ChevronDownIcon className={ICON} />}
+          <div className="swap-on">
+            <ChevronUpIcon className={ICON} />
+          </div>
+          <div className="swap-off">
+            <ChevronDownIcon className={ICON} />
+          </div>
         </button>
       </div>
     </div>

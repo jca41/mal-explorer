@@ -43,7 +43,7 @@ export function ThemePicker() {
 
   return (
     <div className="dropdown dropdown-left">
-      <label tabIndex={0} className="btn  btn-circle btn-xs ml-1 flex items-center">
+      <label tabIndex={0} className="btn btn-circle btn-xs ml-1 flex items-center">
         <SparklesIcon className="w-4 h-4" />
       </label>
       <ul tabIndex={0} className="dropdown-content menu menu-compact p-2 shadow-md bg-base-100 rounded-box">
