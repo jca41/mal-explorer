@@ -22,8 +22,8 @@ export function GridPreviewItem(item: RelatedAnime | Recommendation) {
                 as="div"
                 value={item.node.mean}
                 icon={StarIcon}
-                iconClassname="text-base-100"
-                textClassName="font-medium text-xs text-base-100"
+                iconClassname="text-gray-50"
+                textClassName="font-medium text-xs text-gray-50"
               />
             </div>
           </div>
