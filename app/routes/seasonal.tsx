@@ -87,11 +87,13 @@ export default function SeasonalAnime() {
       <StickyHeader>
         <Controls formRef={formRef} paging={loaderData?.paging} />
       </StickyHeader>
-      <List>
-        {(loaderData?.data ?? []).map(({ node }) => (
-          <ListItem key={node.id} {...node} />
-        ))}
-      </List>
+      <div className="mt-2">
+        <List>
+          {(loaderData?.data ?? []).map(({ node }) => (
+            <ListItem key={node.id} {...node} />
+          ))}
+        </List>
+      </div>
     </Form>
   );
 }

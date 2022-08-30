@@ -8,7 +8,7 @@ import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
 import { MyListStatusPopup } from '~/components/my-list-status/popup';
 import { RelatedGrid } from '~/components/related-grid';
-import { StatIconPair, StatPair } from '~/components/stat-pair';
+import { StatBadge, StatIconBadge, StatLabelBadge } from '~/components/stat-badge';
 import { TextClamp } from '~/components/text-clamp';
 import { Node } from '~/contracts/mal';
 import malService from '~/lib/mal/api/service.server';
@@ -41,8 +41,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   });
 };
 
-const STAT_ICON = 'w-5';
-const STAT_TEXT = 'text-md tracking-tight';
+const STAT_BASE = 'md:badge-lg badge-outline';
 const SUBTITLE = 'text-xl tracking-wide font-bold mb-6';
 const PROSE = 'text-base-content/90 max-w-none';
 
@@ -89,21 +88,21 @@ export default function AnimeDetails() {
         )}
       </h1>
       <div className="mt-12 flex flex-col space-y-10">
-        <section className="flex flex-col space-y-3">
-          <ul className="flex gap-y-1 justify-center flex-wrap space-x-4">
-            <StatIconPair value={mean} icon={StarIcon} iconClassname={`text-primary ${STAT_ICON}`} textClassName={STAT_TEXT} />
-            <StatIconPair value={formatRank(rank)} icon={TrendingUpIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatIconPair value={formatPopularity(num_list_users, popularity)} icon={UsersIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatIconPair value={formatMediaType(media_type)} icon={FilmIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatIconPair value={formatStatus(status)} icon={ClipboardListIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
-            <StatIconPair value={formatNumEpisodes(num_episodes)} icon={FolderIcon} iconClassname={STAT_ICON} textClassName={STAT_TEXT} />
+        <section className="flex flex-col space-y-5">
+          <ul className="flex justify-center flex-wrap gap-x-3 gap-y-2">
+            <StatIconBadge value={mean} icon={StarIcon} classname={STAT_BASE} iconClassname={`text-primary`} />
+            <StatIconBadge value={formatRank(rank)} icon={TrendingUpIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatPopularity(num_list_users, popularity)} classname={STAT_BASE} icon={UsersIcon} />
+            <StatIconBadge value={formatMediaType(media_type)} icon={FilmIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatStatus(status)} icon={ClipboardListIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatNumEpisodes(num_episodes)} icon={FolderIcon} classname={STAT_BASE} />
           </ul>
           {genres?.length && (
-            <div className="flex gap-y-1 justify-center flex-wrap space-x-3">
+            <ul className="flex justify-center flex-wrap gap-y-2 gap-x-2">
               {genres.map(({ name, id }) => (
-                <span key={id}>{name}</span>
+                <StatBadge key={id} value={name} classname={'badge-sm md:badge-md badge-ghost'} />
               ))}
-            </div>
+            </ul>
           )}
         </section>
         {main_picture?.large && (
@@ -120,12 +119,12 @@ export default function AnimeDetails() {
         <section>
           <h2 className={SUBTITLE}>Info</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2">
-            <StatPair label="Studios" value={studios?.map((s) => s.name).join(', ')} />
-            <StatPair label="Source" value={formatSource(source)} />
-            <StatPair label="Average ep. duration" value={formatEpisodeDuration(average_episode_duration)} />
-            <StatPair label="Start date" value={formatStartAndEndDate(start_date)} />
-            <StatPair label="End date" value={formatStartAndEndDate(end_date)} />
-            <StatPair label="Rating" value={formatSnakeCase(rating)?.toUpperCase?.()} />
+            <StatLabelBadge label="Studios" value={studios?.map((s) => s.name).join(', ')} />
+            <StatLabelBadge label="Source" value={formatSource(source)} />
+            <StatLabelBadge label="Average ep. duration" value={formatEpisodeDuration(average_episode_duration)} />
+            <StatLabelBadge label="Start date" value={formatStartAndEndDate(start_date)} />
+            <StatLabelBadge label="End date" value={formatStartAndEndDate(end_date)} />
+            <StatLabelBadge label="Rating" value={formatSnakeCase(rating)?.toUpperCase?.()} />
           </ul>
         </section>
         {!!related_anime?.length && (

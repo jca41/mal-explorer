@@ -4,8 +4,6 @@ import { ReactNode } from 'react';
 
 import { Recommendation, RelatedAnime } from '~/contracts/mal';
 
-import { StatIconPair } from './stat-pair';
-
 export function GridPreview({ children }: { children: ReactNode }) {
   return <ul className="grid grid-cols-2 sm:grid-cols-4 gap-x-2 gap-y-4">{children}</ul>;
 }
@@ -18,13 +16,10 @@ export function GridPreviewItem(item: RelatedAnime | Recommendation) {
           <img className="aspect-[3/4] w-full object-cover object-top" src={item?.node?.main_picture?.large} alt={item.node.title} loading="lazy" />
           <div className="absolute h-1/3 inset-x-0 bottom-0 bg-gradient-to-b from-transparent to-black/80">
             <div className="absolute bottom-2 right-3">
-              <StatIconPair
-                as="div"
-                value={item.node.mean}
-                icon={StarIcon}
-                iconClassname="text-gray-50"
-                textClassName="font-medium text-xs text-gray-50"
-              />
+              <div className="flex flex-row gap-0.5">
+                <StarIcon className="text-gray-50 w-4" />
+                <span className="font-medium text-xs text-gray-50">{item.node.mean}</span>
+              </div>
             </div>
           </div>
         </figure>
