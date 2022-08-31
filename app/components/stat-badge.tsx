@@ -14,7 +14,7 @@ export function StatIconBadge({ icon: Icon, classname, iconClassname, value, tex
   if (!value) return null;
 
   return (
-    <As className={twMerge('badge gap-1', classname)}>
+    <As className={twMerge('badge gap-1 whitespace-nowrap', classname)}>
       {!!Icon && <Icon className={twMerge('h-[90%]', iconClassname)} />}
       <span className={textClassName}>{value}</span>
     </As>

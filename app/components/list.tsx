@@ -1,5 +1,6 @@
 import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
 import { Link } from '@remix-run/react';
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 
 import { Node } from '~/contracts/mal';
@@ -9,6 +10,7 @@ import { formatMediaType, formatNumEpisodes, formatRank, formatStatus } from '~/
 import { StatIconBadge } from './stat-badge';
 
 const STAT_BASE = 'badge-ghost';
+const IMG_DIMENSIONS = 'w-[35%] sm:w-[30%]';
 
 type ListItemProps = Node & { children?: ReactNode };
 
@@ -28,14 +30,12 @@ export function ListItem({
 }: ListItemProps) {
   return (
     <li className="max-w-lg w-full animate-fadeIn">
-      <Link to={`/anime/${id}`} className="card glass card-compact card-side shadow-md py-4 px-6 transition-transform hover:scale-[1.05]">
-        <figure className=" self-start">
-          {main_picture?.medium ? (
-            <img className="w-28 md:w-32" src={main_picture?.medium} alt={title} />
-          ) : (
-            <div className="w-28 md:w-32 bg-base-200"></div>
-          )}
-        </figure>
+      <Link to={`/anime/${id}`} className="card glass card-compact card-side shadow-md transition-transform hover:scale-[1.05]">
+        {main_picture?.medium ? (
+          <img className={clsx(IMG_DIMENSIONS, 'object-cover')} src={main_picture?.medium} alt={title} />
+        ) : (
+          <div className={clsx(IMG_DIMENSIONS)}></div>
+        )}
 
         <div className="card-body">
           <h2 className="text-base font-semibold tracking-wide leading-snug mb-5">
