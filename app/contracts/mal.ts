@@ -106,6 +106,11 @@ export type NodeList = {
   paging?: Paging;
 };
 
+export type MyListNodeList = {
+  data?: { node: Node; list_status: Pick<MyListStatus, 'status' | 'score' | 'is_rewatching' | 'num_episodes_watched' | 'updated_at'> }[];
+  paging?: Paging;
+};
+
 export type Error = {
   error: string;
   message: string;

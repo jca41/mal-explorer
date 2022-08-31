@@ -24,7 +24,6 @@ export async function loader({ request, params }: LoaderArgs) {
   const offset = url.searchParams.get('offset');
 
   const status = (params?.status ?? 'watching') as MyListStatus['status'];
-  console.log({ sort });
 
   return malService.query.myList({
     status,
