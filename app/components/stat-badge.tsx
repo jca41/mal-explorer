@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type StatIconBadgeProps = {
   icon?: FC<{ className: string }>;
-  value: string | number;
+  value: string | number | ReactNode;
   classname?: string;
   iconClassname?: string;
   textClassName?: string;

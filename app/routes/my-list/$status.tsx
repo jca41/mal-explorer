@@ -3,6 +3,7 @@ import { Form, useLoaderData, useParams, useSubmit } from '@remix-run/react';
 import { useRef } from 'react';
 
 import { List, ListItem } from '~/components/list';
+import { CardDetail } from '~/components/my-list-status/card-detail';
 import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components/pagination';
 import { MY_LIST_SORT_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
@@ -12,6 +13,7 @@ import malService from '~/lib/mal/api/service.server';
 import { getAuthorizationUrl } from '~/lib/mal/oauth.server';
 import { getAccessToken } from '~/lib/session.server';
 import { getFormData, scrollTop } from '~/utils/html';
+
 export async function loader({ request, params }: LoaderArgs) {
   const accessToken = await getAccessToken(request);
   if (!accessToken) {
@@ -82,8 +84,10 @@ export default function MyListStatus() {
       </StickyHeader>
       <div className="mt-2">
         <List>
-          {(loaderData?.data ?? []).map(({ node }) => (
-            <ListItem key={node.id} {...node} />
+          {(loaderData?.data ?? []).map(({ node, list_status }) => (
+            <ListItem key={node.id} {...node}>
+              <CardDetail listStatus={list_status} />
+            </ListItem>
           ))}
         </List>
       </div>

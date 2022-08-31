@@ -10,6 +10,8 @@ import { StatIconBadge } from './stat-badge';
 
 const STAT_BASE = 'badge-ghost';
 
+type ListItemProps = Node & { children?: ReactNode };
+
 export function ListItem({
   id,
   title,
@@ -22,7 +24,8 @@ export function ListItem({
   status,
   media_type,
   num_episodes,
-}: Node) {
+  children = null,
+}: ListItemProps) {
   return (
     <li className="max-w-lg w-full animate-fadeIn">
       <Link to={`/anime/${id}`} className="card glass card-compact card-side shadow-md py-4 px-6 transition-transform hover:scale-[1.05]">
@@ -51,6 +54,7 @@ export function ListItem({
             <StatIconBadge value={formatRank(popularity)} icon={UsersIcon} classname={STAT_BASE} />
             <StatIconBadge value={formatNumEpisodes(num_episodes)} icon={FolderIcon} classname={STAT_BASE} />
           </ul>
+          {children}
         </div>
       </Link>
     </li>

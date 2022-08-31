@@ -51,6 +51,8 @@ export type MyListStatus = {
   num_times_rewatched: number;
 };
 
+export type ListStatus = Pick<MyListStatus, 'status' | 'score' | 'is_rewatching' | 'num_episodes_watched' | 'updated_at'>;
+
 export type Node = {
   id: number;
   title: string;
@@ -107,7 +109,7 @@ export type NodeList = {
 };
 
 export type MyListNodeList = {
-  data?: { node: Node; list_status: Pick<MyListStatus, 'status' | 'score' | 'is_rewatching' | 'num_episodes_watched' | 'updated_at'> }[];
+  data?: { node: Node; list_status: ListStatus }[];
   paging?: Paging;
 };
 
