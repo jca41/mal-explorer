@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { useMemo, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { RelatedAnime } from '~/contracts/mal';
 
@@ -39,12 +40,12 @@ export function RelatedGrid({ items }: { items: RelatedAnime[] }) {
   return (
     <div className="space-y-4">
       {relations.length > 1 && (
-        <div className="flex space-x-2 overflow-x-auto overflow-y-hidden">
+        <div className="btn-group flex-nowrap overflow-x-auto overflow-y-hidden">
           {relations.map((r) => {
             const isSelected = selected === r.value;
             const clickHandler = () => setSelected(r.value);
             return (
-              <button key={r.value} onClick={clickHandler} className={clsx('btn btn-xs', { 'btn-active': isSelected, 'btn-outline': !isSelected })}>
+              <button key={r.value} onClick={clickHandler} className={twMerge(clsx('btn btn-outline btn-xs', { 'btn-active': isSelected }))}>
                 {r.label}
               </button>
             );

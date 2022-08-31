@@ -1,4 +1,4 @@
-import { RankingTypeParam, SeasonParam } from '~/contracts/mal';
+import { MyListSortQueryParam, RankingTypeParam, SeasonParam } from '~/contracts/mal';
 
 export const RANKING_TYPES_OPTIONS: Record<RankingTypeParam, string> = {
   all: 'Rating',
@@ -27,4 +27,11 @@ export const SEASONAL_SEASON_OPTIONS: Record<SeasonParam, string> = {
   spring: 'Spring',
   summer: 'Summer',
   fall: 'Fall',
+};
+
+export const MY_LIST_SORT_OPTIONS: Record<MyListSortQueryParam, string> = {
+  anime_title: 'Title',
+  list_score: 'Score',
+  anime_start_date: 'Start date',
+  list_updated_at: 'Updated at',
 };

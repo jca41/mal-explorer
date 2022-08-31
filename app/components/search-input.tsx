@@ -1,6 +1,6 @@
 import { BackspaceIcon } from '@heroicons/react/outline';
 import { useMachine } from '@xstate/react';
-import { KeyboardEvent, useCallback, useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { AnyInterpreter, createMachine, forwardTo, send, sendParent } from 'xstate';
 
 import { debounceMachine } from '~/machines/debounce';

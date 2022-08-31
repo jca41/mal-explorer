@@ -1,5 +1,6 @@
 import { LoaderArgs, redirect } from '@remix-run/node';
 import { NavLink, Outlet } from '@remix-run/react';
+import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { MyListStatus } from '~/contracts/mal';
@@ -14,26 +15,19 @@ export async function loader({ params }: LoaderArgs) {
 }
 const LIST_STATUS: MyListStatus['status'][] = ['watching', 'plan_to_watch', 'on_hold', 'dropped', 'completed'];
 
-const getClassName = ({ isActive }: { isActive: boolean }) =>
-  twMerge(
-    'text-md font-medium bg-slate-100 rounded-full shadow-md py-2 px-5 transition-colors duration-300 whitespace-nowrap',
-    isActive && 'bg-blue-400 text-white'
-  );
+const getClassName = ({ isActive }: { isActive: boolean }) => twMerge(clsx('btn btn-outline btn-sm md:btn-md', { 'btn-active': isActive }));
 
 export default function MyListHeader() {
   return (
     <div>
-      <h1 className="text-center text-3xl tracking-wide mb-4 md:mb-8">My List</h1>
-      <ul className="flex space-x-4 items-center overflow-x-auto pt-2 pb-4">
+      <h1 className="text-center text-3xl tracking-wide mb-8 md:mb-12">My List</h1>
+      <div className="flex justify-start md:justify-center btn-group flex-nowrap overflow-x-auto overflow-y-hidden">
         {LIST_STATUS.map((s) => (
-          <li key={s}>
-            <NavLink className={getClassName} to={s}>
-              {formatSnakeCase(s)}
-            </NavLink>
-          </li>
+          <NavLink key={s} className={getClassName} to={s}>
+            {formatSnakeCase(s)}
+          </NavLink>
         ))}
-      </ul>
-
+      </div>
       <Outlet />
     </div>
   );

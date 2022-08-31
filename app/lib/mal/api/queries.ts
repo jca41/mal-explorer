@@ -29,7 +29,7 @@ export const animeDetail = ({ id, accessToken }: AnimeDetail) => {
   return malRequest<Node>({
     path: `/anime/${id}`,
     params: {
-      fields: accessToken ? `${DEFAULT_DETAIL_FIELDS}, my_list_status{priority,comments,num_times_rewatched,rewatch_value}` : DEFAULT_DETAIL_FIELDS,
+      fields: accessToken ? `${DEFAULT_DETAIL_FIELDS},my_list_status{priority,comments,num_times_rewatched,rewatch_value}` : DEFAULT_DETAIL_FIELDS,
     },
   });
 };
