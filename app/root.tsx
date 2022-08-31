@@ -7,7 +7,9 @@ import styles from '~/styles/app.css';
 
 import { LOADING_IMG_SRC, NAV_IMG_SRC } from './constants';
 import { ClientAuthState } from './contracts/auth';
+import { ThemeClientState } from './contracts/theme';
 import { getAccessToken } from './lib/session.server';
+import { getThemeCookie } from './lib/theme-cookie.server';
 
 const PRELOADED_IMAGES = [NAV_IMG_SRC, LOADING_IMG_SRC];
 
@@ -24,11 +26,14 @@ export const meta: MetaFunction = () => ({
 export const loader: LoaderFunction = async ({ request }) => {
   const accessToken = await getAccessToken(request);
 
-  const authState: ClientAuthState = {
+  const theme = await getThemeCookie(request);
+
+  const rootData: ClientAuthState & ThemeClientState = {
+    theme,
     signedIn: !!accessToken,
   };
 
-  return authState;
+  return rootData;
 };
 
 const RootLayout: FC<PropsWithChildren<unknown>> = ({ children }) => {

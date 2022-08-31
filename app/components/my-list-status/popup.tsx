@@ -31,10 +31,10 @@ export function MyListStatusPopup({ myListStatus, numEpisodes }: MyListStatusPro
   return (
     <>
       <div className="absolute right-0 flex flex-row justify-end w-32">
-        <div className="fixed z-10 bottom-6 rounded-full bg-blue-600 shadow-lg shadow-slate-500 transition-transform transform hover:scale-110">
-          <button onClick={controls.toggle} className="flex flex-row items-center px-3 py-2.5">
-            <span className="mr-2 text-sm text-white font-semibold tracking-tight">{capitalize(formatSnakeCase(status, { capitalize: false }))}</span>
-            <Icon className="w-5 h-5 stroke-white" />
+        <div className="fixed z-10 bottom-6 transition-transform transform hover:scale-110">
+          <button onClick={controls.toggle} className="btn btn-secondary rounded-full gap-2 shadow-lg shadow-secondary-content">
+            <span className="">{capitalize(formatSnakeCase(status, { capitalize: false }))}</span>
+            <Icon className="w-5 h-5" />
           </button>
         </div>
       </div>

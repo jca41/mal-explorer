@@ -24,9 +24,17 @@ type RadioProps<O> = Pick<RadioGroupProps<O>, 'name' | 'onChange'> & {
 function Radio<O extends Record<string | number, string>>({ name, label, value, onChange, defaultChecked }: RadioProps<O>) {
   const id = `${name}-${value as string}`;
   return (
-    <span className={`px-2.5 py-1.5 flex items-center bg-blue-50 bg-opacity-60`}>
-      <input className="mr-2" id={id} type="radio" name={name} value={value?.toString()} onChange={onChange} defaultChecked={defaultChecked} />
-      <label className="text-slate-600" htmlFor={id}>
+    <span className={`px-2.5 py-1.5 flex items-center bg-base-200/40 rounded-box`}>
+      <input
+        className="mr-2 radio radio-sm"
+        id={id}
+        type="radio"
+        name={name}
+        value={value?.toString()}
+        onChange={onChange}
+        defaultChecked={defaultChecked}
+      />
+      <label className="label-text cursor-pointer" htmlFor={id}>
         {label}
       </label>
     </span>

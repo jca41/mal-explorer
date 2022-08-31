@@ -1,13 +1,12 @@
 import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useSearchParams, useSubmit } from '@remix-run/react';
 import { useMachine } from '@xstate/react';
-import { useRef } from 'react';
-import { createMachine } from 'xstate';
+import { KeyboardEvent, useCallback, useRef } from 'react';
 
 import { List, ListItem } from '~/components/list';
 import { SearchInput } from '~/components/search-input';
-import { malService } from '~/lib/mal/api/service.server';
-import { ParentTriggerEvent } from '~/machines/debounce';
+import malService from '~/lib/mal/api/service.server';
+import { searchMachine } from '~/machines/search';
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
@@ -16,45 +15,11 @@ export async function loader({ request }: LoaderArgs) {
 
   if (!q) return {};
 
-  return malService({
-    type: 'list',
-    fields: 'list',
-    input: {
-      query: {
-        q,
-        limit: 20,
-      },
-    },
+  return malService.query.animeList({
+    q,
+    limit: 20,
   });
 }
-
-const searchMachine = createMachine({
-  id: 'search',
-  tsTypes: {} as import('./index.typegen').Typegen0,
-  schema: {
-    events: {} as ParentTriggerEvent,
-  },
-  initial: 'idle',
-  on: {
-    TRIGGER: [
-      {
-        target: 'valid',
-        internal: false,
-        cond: 'isValid',
-      },
-      { target: 'invalid', internal: false },
-    ],
-  },
-  states: {
-    idle: {},
-    valid: {
-      entry: 'submit',
-    },
-    invalid: {
-      entry: 'reportValidity',
-    },
-  },
-});
 
 export default function Index() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -75,9 +40,17 @@ export default function Index() {
     },
   });
 
+  // input is submitting on enter as it's the only form field, this is breaking the debounced state
+  const onKeyDown = useCallback((e: KeyboardEvent<HTMLFormElement>) => {
+    if (e.key == 'Enter') {
+      e.preventDefault();
+      return false;
+    }
+  }, []);
+
   return (
     <div className="flex flex-col space-y-10">
-      <Form ref={formRef} method="get" action="/" className="flex flex-row justify-center space-x-2">
+      <Form ref={formRef} onKeyDown={onKeyDown} method="get" action="/" className="flex flex-row justify-center space-x-2">
         <SearchInput defaultValue={params.get('q') ?? ''} parentService={service} />
       </Form>
       {!state.matches('invalid') && (

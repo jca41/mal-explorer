@@ -7,12 +7,12 @@ import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components
 import { RadioGroup, SEASONAL_SORT_RADIOS } from '~/components/radio-group';
 import { SEASONAL_SEASON_OPTIONS, SEASONAL_YEAR_OPTIONS, Select } from '~/components/select';
 import { StickyHeader } from '~/components/sticky-header';
+import { LIST_LIMIT } from '~/constants';
 import { Paging, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
-import { malService } from '~/lib/mal/api/service.server';
+import malService from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
 
-const LIMIT = 25;
 const DEFAULT_SORT = 'anime_score';
 
 export async function loader({ request }: LoaderArgs) {
@@ -23,20 +23,12 @@ export async function loader({ request }: LoaderArgs) {
   const offset = url.searchParams.get('offset');
   const sort = url.searchParams.get('sort') ?? DEFAULT_SORT;
 
-  return malService({
-    type: 'seasonal',
-    fields: 'list',
-    input: {
-      query: {
-        limit: LIMIT,
-        offset: offset ? parseInt(offset) : 0,
-        sort: sort as SeasonalSortQueryParam,
-      },
-      params: {
-        year: typeof year === 'string' ? parseInt(year) : year,
-        season,
-      },
-    },
+  return malService.query.seasonalAnime({
+    limit: LIST_LIMIT,
+    offset: offset ? parseInt(offset) : 0,
+    sort: sort as SeasonalSortQueryParam,
+    year: typeof year === 'string' ? parseInt(year) : year,
+    season,
   });
 }
 
@@ -45,7 +37,7 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
 
   const { currentPage, submitNextPage, submitPreviousPage } = usePaginationSubmit({
     paging,
-    limit: LIMIT,
+    limit: LIST_LIMIT,
     onSubmit: (offset?: string) => {
       const formData = getFormData(formRef.current);
 
@@ -95,11 +87,13 @@ export default function SeasonalAnime() {
       <StickyHeader>
         <Controls formRef={formRef} paging={loaderData?.paging} />
       </StickyHeader>
-      <List>
-        {(loaderData?.data ?? []).map(({ node }) => (
-          <ListItem key={node.id} {...node} />
-        ))}
-      </List>
+      <div className="mt-2">
+        <List>
+          {(loaderData?.data ?? []).map(({ node }) => (
+            <ListItem key={node.id} {...node} />
+          ))}
+        </List>
+      </div>
     </Form>
   );
 }

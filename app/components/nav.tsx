@@ -8,14 +8,11 @@ import { twMerge } from 'tailwind-merge';
 import { NAV_IMG_SRC } from '~/constants';
 import { ClientAuthState } from '~/contracts/auth';
 
+import { ThemePicker } from './theme-picker';
 import { useRouteMatch } from './use-route-match';
 
-const NAV_ITEM_COMMON = 'font-semibold text-base tracking-wide text-white';
 const CL = {
-  navItemCommon: NAV_ITEM_COMMON,
-  navItem: `hover:underline`,
-  navItemActive: `underline pointer-events-none`,
-  menuIcon: 'h-7 w-7 text-white transition-transform transform hover:scale-110',
+  menuIcon: 'h-7 w-7 text-primary-content transition-transform transform hover:scale-110',
   menuItemIcon: 'mr-2 h-5 w-5',
 };
 
@@ -26,14 +23,13 @@ function AppMenuItem({ children }: { children: ReactNode }) {
     </Menu.Item>
   );
 }
-function AppMenu() {
+function AppMenu({ signedIn }: ClientAuthState) {
   const fetcher = useFetcher();
-  const { signedIn } = useRouteMatch<{ data: ClientAuthState }>('root').data;
 
   const onAuthAction = () => fetcher.submit(null, { action: signedIn ? '/oauth/sign-out' : '/oauth/authorize', method: 'post' });
 
   return (
-    <Menu as="div" className="absolute right-2 top-0">
+    <Menu as="div">
       <Menu.Button className="flex items-center">
         {signedIn ? <UserCircleIcon className={CL.menuIcon} /> : <MenuIcon className={CL.menuIcon} />}
       </Menu.Button>
@@ -61,28 +57,52 @@ function AppMenu() {
   );
 }
 
-const getClassName = ({ isActive }: { isActive: boolean }) => twMerge(NAV_ITEM_COMMON, isActive ? CL.navItemActive : CL.navItem);
+const getClassName = ({ isActive }: { isActive: boolean }) =>
+  twMerge('text-primary-content whitespace-nowrap', isActive && 'text-secondary-content bg-secondary');
 
 export function Navigation() {
+  const { signedIn } = useRouteMatch<{ data: ClientAuthState }>('root').data;
+
   return (
-    <nav className="py-4 px-8 flex-row space-y-3 bg-gradient-to-b from-blue-800  to-blue-400 shadow-md">
-      <div className="relative flex items-center justify-center">
-        <img src={NAV_IMG_SRC} className="w-7 mr-3" />
-        <div className="text-xl font-bold tracking-tight font-mono bg-gradient-to-t from-blue-100 to-white text-transparent bg-clip-text drop-shadow-lg">
-          MAL EXPLORER
+    <nav className="bg-primary">
+      <div className="navbar min-h-min">
+        <div className="navbar-start flex items-center">
+          <img src={NAV_IMG_SRC} className="w-7 mr-3" />
+          <div className="text-xl font-bold tracking-tight font-mono text-primary-content bg-clip-text drop-shadow-lg">MAL EXPLORER</div>
         </div>
-        <AppMenu />
+        <div className="navbar-end space-x-1">
+          <ThemePicker />
+          <AppMenu signedIn={signedIn} />
+        </div>
       </div>
-      <div className="flex space-x-4 items-center justify-center overflow-x-auto">
-        <NavLink className={getClassName} to="/">
-          Search
-        </NavLink>
-        <NavLink className={getClassName} to="/top">
-          Top
-        </NavLink>
-        <NavLink className={getClassName} to="/seasonal">
-          Seasonal
-        </NavLink>
+      <div className="navbar min-h-min pt-0">
+        <div className="navbar-start"></div>
+        <ul className="menu menu-compact menu-horizontal">
+          <li>
+            <NavLink className={getClassName} to="/">
+              Search
+            </NavLink>
+          </li>
+
+          {signedIn && (
+            <li>
+              <NavLink className={getClassName} to="/my-list">
+                My List
+              </NavLink>
+            </li>
+          )}
+          <li>
+            <NavLink className={getClassName} to="/top">
+              Top
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className={getClassName} to="/seasonal">
+              Seasonal
+            </NavLink>
+          </li>
+        </ul>
+        <div className="navbar-end"></div>
       </div>
     </nav>
   );

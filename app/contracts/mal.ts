@@ -51,6 +51,8 @@ export type MyListStatus = {
   num_times_rewatched: number;
 };
 
+export type ListStatus = Pick<MyListStatus, 'status' | 'score' | 'is_rewatching' | 'num_episodes_watched' | 'updated_at'>;
+
 export type Node = {
   id: number;
   title: string;
@@ -106,6 +108,11 @@ export type NodeList = {
   paging?: Paging;
 };
 
+export type MyListNodeList = {
+  data?: { node: Node; list_status: ListStatus }[];
+  paging?: Paging;
+};
+
 export type Error = {
   error: string;
   message: string;
@@ -116,3 +123,4 @@ export type Error = {
 export type RankingTypeParam = 'all' | 'airing' | 'upcoming' | 'tv' | 'ova' | 'movie' | 'special' | 'bypopularity' | 'favorite';
 export type SeasonParam = 'winter' | 'spring' | 'summer' | 'fall';
 export type SeasonalSortQueryParam = 'anime_score' | 'anime_num_list_users';
+export type MyListSortQueryParam = 'list_score' | 'list_updated_at' | 'anime_title' | 'anime_start_date';

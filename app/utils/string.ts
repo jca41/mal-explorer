@@ -11,3 +11,5 @@ export const formatSnakeCase = (input = '', options?: { capitalize: boolean }) =
     }, '')
     .trim();
 };
+
+export const snakeToKebabCase = (s: string) => s.toLowerCase().replace(/_/g, '-');
