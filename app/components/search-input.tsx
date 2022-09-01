@@ -67,7 +67,7 @@ export function SearchInput({ defaultValue, parentService }: SearchInputProps) {
       />
       <div className="absolute right-2 inset-y-0 flex items-center">
         <button onClick={() => send('RESET')} className="h-min">
-          <BackspaceIcon className="w-5 text-secondary" />
+          <BackspaceIcon className="w-5 text-primary" />
         </button>
       </div>
     </div>

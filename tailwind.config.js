@@ -29,6 +29,6 @@ module.exports = {
     },
   },
   daisyui: {
-    themes: ['dracula', 'cupcake', 'business', 'winter', 'night', 'fantasy', 'aqua', 'autumn', 'valentine']
+    themes: ['dracula', 'cupcake', 'business', 'winter', 'night', 'fantasy', 'autumn', 'valentine']
   }
 }
