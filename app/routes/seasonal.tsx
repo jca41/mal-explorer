@@ -2,6 +2,7 @@ import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useSubmit } from '@remix-run/react';
 import { useMemo, useRef } from 'react';
 
+import { Heading } from '~/components/heading';
 import { List, ListItem } from '~/components/list';
 import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components/pagination';
 import { RadioGroup, SEASONAL_SORT_RADIOS } from '~/components/radio-group';
@@ -83,7 +84,7 @@ export default function SeasonalAnime() {
 
   return (
     <Form ref={formRef} method="get" replace>
-      <h1 className="text-center text-3xl tracking-wide mb-4 md:mb-8">Seasonal Anime</h1>
+      <Heading>Seasonal Anime</Heading>
       <StickyHeader>
         <Controls formRef={formRef} paging={loaderData?.paging} />
       </StickyHeader>

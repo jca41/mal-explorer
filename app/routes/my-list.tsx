@@ -3,6 +3,7 @@ import { NavLink, Outlet } from '@remix-run/react';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import { Heading } from '~/components/heading';
 import { MyListStatus } from '~/contracts/mal';
 import { formatSnakeCase } from '~/utils/string';
 
@@ -20,7 +21,7 @@ const getClassName = ({ isActive }: { isActive: boolean }) => twMerge(clsx('btn 
 export default function MyListHeader() {
   return (
     <div>
-      <h1 className="text-center text-3xl tracking-wide mb-8 md:mb-12">My List</h1>
+      <Heading className="mb-8 md:mb-12">My List</Heading>
       <div className="flex justify-start md:justify-center btn-group flex-nowrap overflow-x-auto overflow-y-hidden">
         {LIST_STATUS.map((s) => (
           <NavLink key={s} className={getClassName} to={s}>

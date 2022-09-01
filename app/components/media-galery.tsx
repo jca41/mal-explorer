@@ -37,8 +37,8 @@ export function ImageGallery({ pictures = [] }: Pick<Node, 'pictures'>) {
   return (
     <div className="carousel rounded-box w-full h-72 md:h-80 bg-base-200">
       {pictures.map((p) => (
-        <div key={p.large} className="carousel-item">
-          <img className="" src={p.large} />
+        <div key={p.large} className="carousel-item h-full flex-row">
+          <img className="h-full" src={p.large} />
         </div>
       ))}
     </div>

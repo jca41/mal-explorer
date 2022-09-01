@@ -20,7 +20,7 @@ export function TextClamp({ children, text }: { children: ReactElement; text: st
       >
         {children}
       </div>
-      <div className="absolute -bottom-8 inset-x-0 flex justify-center">
+      <div className="absolute -bottom-10 inset-x-0 flex justify-center">
         <button
           onClick={() => {
             setExpanded((e) => !e);

@@ -2,6 +2,7 @@ import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useSubmit } from '@remix-run/react';
 import { useRef } from 'react';
 
+import { Heading } from '~/components/heading';
 import { List, ListItem } from '~/components/list';
 import { CurrentPage, PaginationButton, usePaginationSubmit } from '~/components/pagination';
 import { RANKING_TYPES_OPTIONS, Select } from '~/components/select';
@@ -66,7 +67,7 @@ export default function TopAnime() {
 
   return (
     <Form ref={formRef} method="get" replace>
-      <h1 className="text-center text-3xl tracking-wide mb-4 md:mb-8">Top Anime</h1>
+      <Heading>Top Anime</Heading>
       <StickyHeader>
         <Controls formRef={formRef} paging={loaderData?.paging} />
       </StickyHeader>

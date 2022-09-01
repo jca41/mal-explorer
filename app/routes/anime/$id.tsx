@@ -37,7 +37,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 
 const STAT_BASE = 'md:badge-lg badge-outline';
-const SUBTITLE = 'text-xl tracking-wide font-bold mb-6';
+const SUBTITLE = 'text-2xl tracking-wide font-bold mb-6';
 const PROSE = 'text-base-content/90 max-w-none';
 
 export default function AnimeDetails() {
@@ -74,7 +74,7 @@ export default function AnimeDetails() {
   return (
     <div className="relative">
       <h1 className="text-2xl text-center tracking-wide">
-        <div className="text-primary">
+        <div>
           <span className="font-bold">{title}</span>
           {!!start_season?.year && <span className="font-normal">{` (${start_season.year})`}</span>}
         </div>
