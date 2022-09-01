@@ -63,7 +63,7 @@ export function SearchInput({ defaultValue, parentService }: SearchInputProps) {
         onChange={() => send({ type: 'CHANGE' })}
         minLength={3} // min query is 3 chars
         autoComplete="off"
-        className="input input-bordered w-full input-md"
+        className="input input-primary w-full input-md"
       />
       <div className="absolute right-2 inset-y-0 flex items-center">
         <button onClick={() => send('RESET')} className="h-min">

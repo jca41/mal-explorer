@@ -3,8 +3,8 @@ import { useSearchParams } from '@remix-run/react';
 import { SeasonalSortQueryParam } from '~/contracts/mal';
 
 export const SEASONAL_SORT_RADIOS: Record<SeasonalSortQueryParam, string> = {
-  anime_score: 'score',
-  anime_num_list_users: 'users',
+  anime_score: 'Score',
+  anime_num_list_users: 'Users',
 };
 
 type RadioGroupProps<O> = {
@@ -26,7 +26,7 @@ function Radio<O extends Record<string | number, string>>({ name, label, value, 
   return (
     <span className={`px-2.5 py-1.5 flex items-center bg-base-200/40 rounded-box`}>
       <input
-        className="mr-2 radio radio-sm"
+        className="mr-2 radio radio-primary radio-sm"
         id={id}
         type="radio"
         name={name}

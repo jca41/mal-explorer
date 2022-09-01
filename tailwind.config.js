@@ -1,3 +1,4 @@
+
 module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
@@ -26,6 +27,8 @@ module.exports = {
         fadeIn: 'fade 0.5s ease-in'
       }
     },
-
+  },
+  daisyui: {
+    themes: ['dracula', 'cupcake', 'business', 'winter', 'night', 'fantasy', 'aqua', 'autumn', 'valentine']
   }
 }

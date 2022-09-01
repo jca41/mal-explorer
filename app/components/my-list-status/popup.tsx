@@ -32,7 +32,7 @@ export function MyListStatusPopup({ myListStatus, numEpisodes }: MyListStatusPro
     <>
       <div className="absolute right-0 flex flex-row justify-end w-32">
         <div className="fixed z-10 bottom-6 transition-transform transform hover:scale-110">
-          <button onClick={controls.toggle} className="btn btn-secondary rounded-full gap-2 shadow-lg shadow-secondary-content">
+          <button onClick={controls.toggle} className="btn btn-secondary rounded-full gap-2 shadow-lg shadow-secondary/40">
             <span className="">{capitalize(formatSnakeCase(status, { capitalize: false }))}</span>
             <Icon className="w-5 h-5" />
           </button>

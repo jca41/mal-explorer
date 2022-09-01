@@ -1,7 +1,6 @@
 import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
-import { LinksFunction, LoaderFunction } from '@remix-run/node';
+import { LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import reactGalleryStyles from 'react-image-gallery/styles/css/image-gallery.css';
 import invariant from 'tiny-invariant';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
@@ -25,10 +24,6 @@ import {
   formatStatus,
 } from '~/utils/format-data';
 import { formatSnakeCase } from '~/utils/string';
-
-export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: reactGalleryStyles }];
-};
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   invariant(typeof params.id === 'string');
@@ -158,7 +153,7 @@ export default function AnimeDetails() {
         {!!pictures.length && (
           <section>
             <h2 className={SUBTITLE}>Images</h2>
-            <div className=" max-w-xs mx-auto lg:mx-0">
+            <div className="">
               <ImageGallery pictures={pictures} />
             </div>
           </section>

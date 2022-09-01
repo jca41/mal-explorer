@@ -12,7 +12,12 @@ export function Select<O extends Record<string | number, string>>({ onChange, na
   const [params] = useSearchParams();
 
   return (
-    <select className="select select-bordered" name={name} defaultValue={params.get(name) ?? (defaultValue as string)} onChange={() => onChange()}>
+    <select
+      className="select select-sm select-primary"
+      name={name}
+      defaultValue={params.get(name) ?? (defaultValue as string)}
+      onChange={() => onChange()}
+    >
       {(Object.keys(optionMap) as (keyof typeof optionMap)[]).map((r) => (
         <option key={r as string} value={r as string}>
           {optionMap[r]}

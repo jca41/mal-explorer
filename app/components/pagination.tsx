@@ -27,7 +27,7 @@ const BUTTON_LABEL = {
 
 export function PaginationButton({ paging, type, onClick }: { paging?: Paging; type: PageType; onClick: () => void }) {
   return paging?.[type] ? (
-    <button type="button" onClick={onClick} className="btn btn-ghost">
+    <button type="button" onClick={onClick} className="btn btn-sm btn-secondary">
       {BUTTON_LABEL[type]}
     </button>
   ) : null;

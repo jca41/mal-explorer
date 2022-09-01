@@ -70,7 +70,7 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
         </div>
       </div>
       <div className="flex justify-between items-end">
-        <RadioGroup name="sort" label="Sort By" radioMap={SEASONAL_SORT_RADIOS} onChange={onSelectChange} defaultValue={DEFAULT_SORT} />
+        <RadioGroup name="sort" label="Sort by" radioMap={SEASONAL_SORT_RADIOS} onChange={onSelectChange} defaultValue={DEFAULT_SORT} />
         <CurrentPage page={currentPage} />
       </div>
     </div>

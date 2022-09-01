@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import ReactImageGallery from 'react-image-gallery';
 import ReactPlayer from 'react-player';
 
 import { Node } from '~/contracts/mal';
@@ -35,11 +34,13 @@ export function ImageGallery({ pictures = [] }: Pick<Node, 'pictures'>) {
     return null;
   }
 
-  const mappedImages = pictures.map((p) => ({
-    original: p.large,
-    thumbnail: p.medium,
-    type: 'image',
-  }));
-
-  return <ReactImageGallery showPlayButton={false} items={mappedImages} lazyLoad />;
+  return (
+    <div className="carousel rounded-box w-full h-72 md:h-80 bg-base-200">
+      {pictures.map((p) => (
+        <div className="carousel-item">
+          <img className="" src={p.large} />
+        </div>
+      ))}
+    </div>
+  );
 }

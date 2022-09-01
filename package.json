@@ -30,7 +30,6 @@
     "pkce-challenge": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-image-gallery": "^1.2.8",
     "react-player": "^2.10.1",
     "tiny-invariant": "^1.2.0",
     "xstate": "^4.32.1"
@@ -46,7 +45,6 @@
     "@types/numeral": "^2.0.2",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
-    "@types/react-image-gallery": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "autoprefixer": "^10.4.7",

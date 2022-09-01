@@ -16,7 +16,6 @@ specifiers:
   '@types/numeral': ^2.0.2
   '@types/react': ^18.0.15
   '@types/react-dom': ^18.0.6
-  '@types/react-image-gallery': ^1.0.5
   '@typescript-eslint/eslint-plugin': ^5.30.6
   '@typescript-eslint/parser': ^5.30.6
   '@vercel/node': ^2.5.0
@@ -35,7 +34,6 @@ specifiers:
   prettier: ^2.7.1
   react: ^18.2.0
   react-dom: ^18.2.0
-  react-image-gallery: ^1.2.8
   react-player: ^2.10.1
   tailwind-merge: ^1.5.1
   tailwindcss: ^3.1.6
@@ -58,7 +56,6 @@ dependencies:
   pkce-challenge: 3.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  react-image-gallery: 1.2.8_react@18.2.0
   react-player: 2.10.1_react@18.2.0
   tiny-invariant: 1.2.0
   xstate: 4.32.1
@@ -74,7 +71,6 @@ devDependencies:
   '@types/numeral': 2.0.2
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
-  '@types/react-image-gallery': 1.0.5
   '@typescript-eslint/eslint-plugin': 5.31.0_1f73615e3c0d947651dcf7041d834fa5
   '@typescript-eslint/parser': 5.31.0_eslint@8.20.0+typescript@4.7.4
   autoprefixer: 10.4.7_postcss@8.4.14
@@ -2012,12 +2008,6 @@ packages:
 
   /@types/react-dom/18.0.6:
     resolution: {integrity: sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==}
-    dependencies:
-      '@types/react': 18.0.15
-    dev: true
-
-  /@types/react-image-gallery/1.0.5:
-    resolution: {integrity: sha512-CjIjFXmV7zGRO/FkdtPK31Rwj0ud7Xz/9e5o4DCX2Lx96jR8+0xCmKeUAQQVN3pKc6jUjOC0f/aEylhKg8vhAw==}
     dependencies:
       '@types/react': 18.0.15
     dev: true
@@ -7472,14 +7462,6 @@ packages:
 
   /react-fast-compare/3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
-    dev: false
-
-  /react-image-gallery/1.2.8_react@18.2.0:
-    resolution: {integrity: sha512-7KbWcWChUMHRGyJHA/eH3injWF9/2WTlQXjV6fym1DqwrINSVIh1hLiqmujh/XANstW+osqSu5WFKKPy2F2gbA==}
-    peerDependencies:
-      react: ^16.0.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:
