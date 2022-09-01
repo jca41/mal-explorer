@@ -45,7 +45,7 @@ export function Navigation() {
       <div className="navbar min-h-min">
         <div className="navbar-start flex items-center">
           <img src={NAV_IMG_SRC} className="w-7 mr-3" />
-          <div className="text-xl font-bold tracking-tight font-mono bg-clip-text drop-shadow-lg">MAL EXPLORER</div>
+          <div className="text-xl font-bold tracking-tight font-mono">MAL EXPLORER</div>
         </div>
         <div className="navbar-end space-x-1">
           <ThemePicker />
