@@ -74,7 +74,7 @@ export default function AnimeDetails() {
   return (
     <div className="relative">
       <h1 className="text-2xl text-center tracking-wide">
-        <div>
+        <div className="text-primary">
           <span className="font-bold">{title}</span>
           {!!start_season?.year && <span className="font-normal">{` (${start_season.year})`}</span>}
         </div>
