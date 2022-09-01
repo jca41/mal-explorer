@@ -10,7 +10,6 @@ import { ThemePicker } from './theme-picker';
 import { useRouteMatch } from './use-route-match';
 
 const CL = {
-  menuIcon: 'w-5',
   menuItemIcon: 'w-5',
 };
 
@@ -21,28 +20,22 @@ function AppMenu({ signedIn }: ClientAuthState) {
 
   return (
     <div className="dropdown dropdown-left">
-      <label tabIndex={0} className="btn btn-circle btn-sm ml-1 flex items-center">
+      <label tabIndex={0} className="btn btn-circle btn-sm ml-1">
         <MenuIcon className="w-4" />
       </label>
-      <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box w-36 border p-2 border-base-content space-y-1">
+      <ul tabIndex={0} className="dropdown-content menu menu-compact bg-base-100 p-2 shadow-md rounded-box">
         <li>
-          <button className="btn btn-sm btn-ghost p-1" onClick={onAuthAction}>
+          <button className=" whitespace-nowrap" onClick={onAuthAction}>
             {signedIn ? <LogoutIcon className={CL.menuItemIcon} /> : <LoginIcon className={CL.menuItemIcon} />}
             {signedIn ? 'Sign Out' : 'Sign In'}
           </button>
-        </li>
-        <li className="menu-title">
-          <span>Theme</span>
-        </li>
-        <li>
-          <ThemePicker />
         </li>
       </ul>
     </div>
   );
 }
 
-const getClassName = ({ isActive }: { isActive: boolean }) => twMerge('font-medium whitespace-nowrap', isActive && 'active');
+const getNavItemClassName = ({ isActive }: { isActive: boolean }) => twMerge('font-medium whitespace-nowrap', isActive && 'active');
 
 export function Navigation() {
   const { signedIn } = useRouteMatch<{ data: ClientAuthState }>('root').data;
@@ -55,6 +48,7 @@ export function Navigation() {
           <div className="text-xl font-bold tracking-tight font-mono bg-clip-text drop-shadow-lg">MAL EXPLORER</div>
         </div>
         <div className="navbar-end space-x-1">
+          <ThemePicker />
           <AppMenu signedIn={signedIn} />
         </div>
       </div>
@@ -62,25 +56,25 @@ export function Navigation() {
         <div className="navbar-start"></div>
         <ul className="menu menu-compact menu-horizontal">
           <li>
-            <NavLink className={getClassName} to="/">
+            <NavLink className={getNavItemClassName} to="/">
               Search
             </NavLink>
           </li>
 
           {signedIn && (
             <li>
-              <NavLink className={getClassName} to="/my-list">
+              <NavLink className={getNavItemClassName} to="/my-list">
                 My List
               </NavLink>
             </li>
           )}
           <li>
-            <NavLink className={getClassName} to="/top">
+            <NavLink className={getNavItemClassName} to="/top">
               Top
             </NavLink>
           </li>
           <li>
-            <NavLink className={getClassName} to="/seasonal">
+            <NavLink className={getNavItemClassName} to="/seasonal">
               Seasonal
             </NavLink>
           </li>

@@ -1,12 +1,14 @@
+import { SparklesIcon } from '@heroicons/react/solid';
+import clsx from 'clsx';
 import Cookies from 'js-cookie';
 import { createContext, useContext, useMemo, useState } from 'react';
 
-import { DEFAULT_THEME, THEME_COOKIE, THEMES } from '~/constants';
+import { THEME_COOKIE, THEMES } from '~/constants';
 import { Theme, ThemeClientState } from '~/contracts/theme';
 
 import { useRouteMatch } from './use-route-match';
 
-const ThemeContext = createContext<{ theme: Theme; setTheme: (t: Theme) => void }>({ theme: DEFAULT_THEME, setTheme: () => null });
+const ThemeContext = createContext<{ theme: Theme; setTheme: (t: Theme) => void }>({ theme: 'dracula', setTheme: () => null });
 
 function setThemeCookie(theme: Theme) {
   const date = new Date();
@@ -40,10 +42,22 @@ export function ThemePicker() {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <select value={theme} className="select" onChange={(e) => setTheme(e.target.value as Theme)}>
-      {THEMES.map((t) => (
-        <option value={t}>{t}</option>
-      ))}
-    </select>
+    <div className="dropdown dropdown-left">
+      <label tabIndex={0} className="btn btn-circle btn-sm btn-secondary ml-1 flex items-center">
+        <SparklesIcon className="w-4" />
+      </label>
+      <ul tabIndex={0} className="dropdown-content menu menu-compact bg-base-100 p-2 shadow-md rounded-box">
+        <li className="menu-title">
+          <span>Theme</span>
+        </li>
+        {THEMES.map((t) => (
+          <li key={t} className="py-0.5">
+            <button onClick={() => setTheme(t)} className={clsx({ active: theme === t })}>
+              {t}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
