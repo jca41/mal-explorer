@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { ReactElement, useState } from 'react';
 
 const CLAMP_THRESHOLD = 400;
-const ICON = 'w-5 h-5';
+const ICON = 'w-5';
 
 export function TextClamp({ children, text }: { children: ReactElement; text: string }) {
   const [expanded, setExpanded] = useState(false);

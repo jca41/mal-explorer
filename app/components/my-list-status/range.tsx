@@ -10,9 +10,10 @@ export function Range({ name, initialValue, max, disabled = false }: RangeProps)
   const [value, setValue] = useState(initialValue);
 
   return (
-    <div className="flex">
-      <div className={'mr-2 bg-blue-100 p-1 rounded-md text-xs font-mono'}>{value}</div>
+    <div className="flex flex-row items-center gap-1">
+      <div className="badge font-mono badge-ghost">{value}</div>
       <input
+        className="range"
         name={name}
         disabled={disabled}
         type="range"

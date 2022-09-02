@@ -29,7 +29,7 @@ export function ListItem({
   children = null,
 }: ListItemProps) {
   return (
-    <li className="max-w-lg w-full animate-fadeIn">
+    <li className="max-w-lg w-full animate-fade-in">
       <Link to={`/anime/${id}`} className="card glass card-compact card-side shadow-md transition-transform hover:scale-[1.05]">
         {main_picture?.medium ? (
           <img className={clsx(IMG_DIMENSIONS, 'object-cover')} src={main_picture?.medium} alt={title} />

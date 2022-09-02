@@ -16,14 +16,9 @@ type MyListStatusModalProps = MyListStatusProps & {
 };
 
 const CL = {
-  label: 'text-sm tracking-wide text-slate-700 font-medium',
-  labelSmall: 'text-xs tracking-wide text-slate-700 font-medium',
-  subcategory: 'tracking-wide text-slate-700 font-medium',
-  container: 'w-full flex flex-row items-end justify-between py-2',
-  select: 'text-sm py-1.5 pl-2.5',
-  input: 'text-sm py-1.5 px-2.5',
-  actionButton: 'rounded-md font-semibold py-1 px-2.5 shadow-md text-slate-600',
-  stackedLabelInput: 'flex flex-col',
+  container: 'w-full flex flex-row items-center justify-between',
+  select: 'select select-bordered',
+  input: 'input input-bordered',
 };
 
 const LIST_STATUS: ReadonlyArray<MyListStatus['status']> = ['plan_to_watch', 'watching', 'completed', 'dropped', 'on_hold'] as const;
@@ -53,114 +48,131 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
 
   return (
     <Form method="post">
-      <div className="divide-y divide-slate-300 divide-dashed">
-        <div className="flex flex-row justify-between py-2">
-          <div className={CL.stackedLabelInput}>
-            <label className={CL.label}>Status</label>
-            <select
-              name="status"
-              className={CL.select}
-              value={status}
-              onChange={(e) =>
-                send({
-                  type: 'FIELD_CHANGE',
-                  data: {
-                    status: e.currentTarget.value as MyListStatus['status'],
-                  },
-                })
-              }
-            >
-              {LIST_STATUS.map((v) => (
-                <option key={v} value={v}>
-                  {capitalize(formatSnakeCase(v, { capitalize: false }))}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className={CL.stackedLabelInput}>
-            <label className={CL.label}>Priority</label>
-            <select name="priority" className={CL.select} defaultValue={myListStatus?.priority}>
-              {PRIORITY_OPTIONS.map(({ l, v }) => (
-                <option key={v} value={v}>
-                  {l}
-                </option>
-              ))}
-            </select>
-          </div>
+      <div className="flex flex-row justify-between">
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Status</span>
+          </label>
+          <select
+            name="status"
+            className={CL.select}
+            value={status}
+            onChange={(e) =>
+              send({
+                type: 'FIELD_CHANGE',
+                data: {
+                  status: e.currentTarget.value as MyListStatus['status'],
+                },
+              })
+            }
+          >
+            {LIST_STATUS.map((v) => (
+              <option key={v} value={v}>
+                {capitalize(formatSnakeCase(v, { capitalize: false }))}
+              </option>
+            ))}
+          </select>
         </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Priority</span>
+          </label>
+          <select name="priority" className={CL.select} defaultValue={myListStatus?.priority}>
+            {PRIORITY_OPTIONS.map(({ l, v }) => (
+              <option key={v} value={v}>
+                {l}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="mt-4 space-y-2">
         {visibleFields.score && (
           <div className={CL.container}>
-            <label className={CL.label}>Score</label>
+            <label className="label">
+              <label className="label-text">Score</label>
+            </label>
+
             <Range name="score" initialValue={myListStatus?.score ?? 0} max={10} />
           </div>
         )}
         {visibleFields.numEpisodesWatched && (
           <div className={CL.container}>
-            <label className={CL.label}>Episodes watched</label>
+            <label className="label-text">Episodes watched</label>
             <Range name="numEpisodesWatched" initialValue={myListStatus?.num_episodes_watched ?? 0} max={numEpisodes} />
           </div>
         )}
-        <div className="py-2 space-y-2">
-          <h3 className={CL.label}>Re-watch</h3>
-          <div className="flex flex-row items-start justify-between">
-            <div className={CL.stackedLabelInput}>
-              <label className={CL.labelSmall}>Count</label>
-              <input
-                className={`${CL.input} w-20`}
-                type="number"
-                name="timesRewatching"
-                min={0}
-                defaultValue={myListStatus?.num_times_rewatched ?? 0}
-              />
-            </div>
-            <div className={CL.stackedLabelInput}>
-              <label className={CL.labelSmall}>Value</label>
-              <Range name="rewatchValue" initialValue={myListStatus?.rewatch_value ?? 0} max={5} />
-            </div>
+      </div>
+      <div className="divider">Re-watch</div>
+      <div className="flex flex-row items-start justify-between">
+        <div className="form-control">
+          <div className="label pt-0">
+            <div className="label-text">Count</div>
           </div>
+          <input
+            className="input input-sm input-bordered w-20"
+            type="number"
+            name="timesRewatching"
+            min={0}
+            defaultValue={myListStatus?.num_times_rewatched ?? 0}
+          />
         </div>
-        {visibleFields.dates && (
-          <div className="flex flex-row justify-between py-2">
-            <div className={CL.stackedLabelInput}>
-              <label className={CL.label}>Start date</label>
-              <input
-                className={CL.select}
-                name="startDate"
-                type="date"
-                value={startDate}
-                onChange={(e) =>
-                  send({
-                    type: 'FIELD_CHANGE',
-                    data: {
-                      startDate: e.currentTarget.value,
-                    },
-                  })
-                }
-              />
-            </div>
-            {visibleFields.finishDate ? (
-              <div className={CL.stackedLabelInput}>
-                <label className={CL.label}>Finish date</label>
-                <input className={CL.select} name="finishDate" type="date" min={startDate} defaultValue={myListStatus?.finish_date} />
-              </div>
-            ) : (
-              <div></div>
-            )}
+        <div className="form-control">
+          <div className="label pt-0">
+            <div className="label-text">Value</div>
           </div>
-        )}
-        <div className="flex flex-col py-2">
-          <label className={CL.label}>Comments</label>
-          <textarea className="text-sm mt-2" rows={3} name="comments" defaultValue={myListStatus?.comments}></textarea>
+          <Range name="rewatchValue" initialValue={myListStatus?.rewatch_value ?? 0} max={5} />
         </div>
       </div>
+      <div className="divider"></div>
+      {visibleFields.dates && (
+        <div className="flex flex-row justify-between">
+          <div className="form-control">
+            <div className="label">
+              <div className="label-text">Start date</div>
+            </div>
+            <input
+              className={CL.input}
+              name="startDate"
+              type="date"
+              value={startDate}
+              onChange={(e) =>
+                send({
+                  type: 'FIELD_CHANGE',
+                  data: {
+                    startDate: e.currentTarget.value,
+                  },
+                })
+              }
+            />
+          </div>
+          {visibleFields.finishDate ? (
+            <div className="form-control">
+              <div className="label">
+                <div className="label-text">Finish date</div>
+              </div>
+              <input className={CL.input} name="finishDate" type="date" min={startDate} defaultValue={myListStatus?.finish_date} />
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      )}
+      <div className="form-control">
+        <div className="label">
+          <div className="label-text">Comments</div>
+        </div>
+        <textarea className="textarea textarea-bordered" rows={2} name="comments" defaultValue={myListStatus?.comments}></textarea>
+      </div>
+
       {!!myListStatus && (
-        <div className="mt-2">
+        <div className="mt-4">
           <DeleteFlow />
         </div>
       )}
       <div className="mt-4 flex justify-between items-end">
         {updatedAt ? (
-          <div className="text-slate-500 text-xs max-w-xs">
+          <div className="text-xs max-w-xs">
             <span>Last updated on </span>
             <div>
               <span>{updatedAt.toLocaleDateString()}</span>
@@ -171,10 +183,10 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
           <div></div>
         )}
         <div className="space-x-3">
-          <button type="button" className={`${CL.actionButton} bg-slate-200`} onClick={controls.toggle}>
+          <button type="button" className="btn" onClick={controls.toggle}>
             Cancel
           </button>
-          <button className={`${CL.actionButton} bg-blue-200`} type="submit">
+          <button className="btn btn-success" type="submit">
             Save
           </button>
         </div>
