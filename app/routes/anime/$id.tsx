@@ -1,7 +1,7 @@
 import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
-import { LoaderFunction } from '@remix-run/node';
+import { ActionFunction, LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import invariant from 'tiny-invariant';
+import { z } from 'zod';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
@@ -23,17 +23,56 @@ import {
   formatStartAndEndDate,
   formatStatus,
 } from '~/utils/format-data';
-import { formatSnakeCase } from '~/utils/string';
+import { getActionFormValues, getListStatusDiff } from '~/utils/list-status.server';
+import { formatSnakeCase } from '~/utils/primitives';
+import { ParsedIntSchema } from '~/utils/zod';
 
+const IdSchema = z.string();
 export const loader: LoaderFunction = async ({ params, request }) => {
-  invariant(typeof params.id === 'string');
+  IdSchema.parse(params.id);
 
   const accessToken = await getAccessToken(request);
 
   return malService.query.animeDetail({
-    id: parseInt(params.id),
+    id: ParsedIntSchema.parse(params.id),
     accessToken,
   });
+};
+
+type ActionData = {
+  ok: boolean;
+  error?: string;
+};
+
+export const action: ActionFunction = async ({ params, request }) => {
+  const data: ActionData = { ok: true };
+  IdSchema.parse(params.id);
+
+  const accessToken = await getAccessToken(request);
+
+  const formData = await request.formData();
+
+  const { action, currentListStatus, updatedListStatus } = getActionFormValues(formData);
+
+  try {
+    switch (action) {
+      case 'delete':
+        await malService.mutate.deleteMyListEntry({ id: ParsedIntSchema.parse(params.id), accessToken });
+        return data;
+      case 'edit':
+        const diff = getListStatusDiff({ currentListStatus, updatedListStatus });
+        console.log({ currentListStatus, updatedListStatus, diff });
+
+        return {};
+      default:
+        return {};
+    }
+  } catch (e) {
+    data.ok = false;
+    data.error = (e as Error).message;
+
+    return data;
+  }
 };
 
 const STAT_BASE = 'md:badge-lg badge-outline';

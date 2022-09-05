@@ -13,6 +13,7 @@ import { Paging, SeasonalSortQueryParam, SeasonParam } from '~/contracts/mal';
 import malService from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
 import { getCurrentSeason, getCurrentYear } from '~/utils/seasonal';
+import { ParsedIntSchema } from '~/utils/zod';
 
 const DEFAULT_SORT = 'anime_score';
 
@@ -26,9 +27,9 @@ export async function loader({ request }: LoaderArgs) {
 
   return malService.query.seasonalAnime({
     limit: LIST_LIMIT,
-    offset: offset ? parseInt(offset) : 0,
+    offset: ParsedIntSchema.parse(offset ?? 0),
     sort: sort as SeasonalSortQueryParam,
-    year: typeof year === 'string' ? parseInt(year) : year,
+    year: ParsedIntSchema.parse(year),
     season,
   });
 }

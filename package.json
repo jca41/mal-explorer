@@ -30,8 +30,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-player": "^2.10.1",
-    "tiny-invariant": "^1.2.0",
-    "xstate": "^4.32.1"
+    "xstate": "^4.32.1",
+    "zod": "^3.18.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.6.5",

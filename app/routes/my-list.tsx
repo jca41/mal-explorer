@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import { Heading } from '~/components/heading';
-import { MyListStatus } from '~/contracts/mal';
-import { formatSnakeCase } from '~/utils/string';
+import { LIST_STATUS } from '~/constants';
+import { formatSnakeCase } from '~/utils/primitives';
 
 export async function loader({ params }: LoaderArgs) {
   if (!params.status) {
@@ -14,7 +14,6 @@ export async function loader({ params }: LoaderArgs) {
 
   return {};
 }
-const LIST_STATUS: MyListStatus['status'][] = ['watching', 'plan_to_watch', 'on_hold', 'dropped', 'completed'];
 
 const getClassName = ({ isActive }: { isActive: boolean }) => twMerge(clsx('btn btn-outline btn-sm md:btn-md', { 'btn-active': isActive }));
 

@@ -7,14 +7,14 @@ const CL = {
 export function DeleteFlow() {
   const [requested, setRequested] = useState(false);
   return (
-    <div className="flex justify-between h-6">
+    <div className="flex justify-between h-6 gap-1">
       <button className="btn btn-outline btn-xs btn-error" type="button" onClick={() => setRequested(true)}>
         Delete from my list
       </button>
 
       {requested ? (
         <div className="flex items-center animate-fade-in-fast">
-          <span className="text-sm font-medium">Are you sure?</span>
+          <span className="text-sm font-medium text-center">Are you sure?</span>
           <div className="flex ml-2 space-x-1">
             <button className="btn btn-xs btn-outline" type="button" onClick={() => setRequested(false)}>
               <XIcon className={CL.icon} />

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { ParsedIntSchema } from '~/utils/zod';
+
 type RangeProps = {
   name: string;
   initialValue?: number;
@@ -20,7 +22,7 @@ export function Range({ name, initialValue, max, disabled = false }: RangeProps)
         min={0}
         max={max}
         defaultValue={initialValue}
-        onChange={(e) => setValue(parseInt(e.currentTarget.value))}
+        onChange={(e) => setValue(ParsedIntSchema.parse(e.currentTarget.value))}
       ></input>
     </div>
   );

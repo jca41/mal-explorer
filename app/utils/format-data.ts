@@ -2,7 +2,7 @@ import numeral from 'numeral';
 
 import { MediaType, SimpleDateString, Source, Status } from '~/contracts/mal';
 
-import { formatSnakeCase } from './string';
+import { formatSnakeCase } from './primitives';
 
 const STATUS_MAP: Record<Status, string> = {
   finished_airing: 'Finished',

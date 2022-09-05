@@ -11,6 +11,7 @@ import { LIST_LIMIT } from '~/constants';
 import { Paging, RankingTypeParam } from '~/contracts/mal';
 import malService from '~/lib/mal/api/service.server';
 import { getFormData, scrollTop } from '~/utils/html';
+import { ParsedIntSchema } from '~/utils/zod';
 
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
@@ -21,7 +22,7 @@ export async function loader({ request }: LoaderArgs) {
   return malService.query.topAnime({
     ranking_type: (sort || 'all') as RankingTypeParam,
     limit: LIST_LIMIT,
-    offset: offset ? parseInt(offset) : 0,
+    offset: ParsedIntSchema.parse(offset ?? 0),
   });
 }
 

@@ -77,7 +77,7 @@ export const myList = ({ accessToken, ...params }: MyList) => {
   return malRequest<MyListNodeList>({
     path: '/users/@me/animelist',
     params: {
-      fields: `${LIST_FIELDS},list_status`,
+      fields: `${LIST_FIELDS},list_status{start_date,finish_date}`,
       ...params,
     },
     accessToken,

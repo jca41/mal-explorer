@@ -38,10 +38,10 @@ export type Video = {
 };
 
 export type MyListStatus = {
+  score?: number;
+  status: 'completed' | 'plan_to_watch' | 'watching' | 'on_hold' | 'dropped';
   is_rewatching: boolean; // only used to reset num_episodes_watched
   num_episodes_watched: number;
-  score: number;
-  status: 'completed' | 'plan_to_watch' | 'watching' | 'on_hold' | 'dropped';
   priority: 0 | 1 | 2;
   updated_at: string;
   start_date?: string;
@@ -51,7 +51,10 @@ export type MyListStatus = {
   num_times_rewatched: number;
 };
 
-export type ListStatus = Pick<MyListStatus, 'status' | 'score' | 'is_rewatching' | 'num_episodes_watched' | 'updated_at'>;
+export type ListStatus = Pick<
+  MyListStatus,
+  'status' | 'score' | 'is_rewatching' | 'num_episodes_watched' | 'updated_at' | 'start_date' | 'finish_date'
+>;
 
 export type Node = {
   id: number;

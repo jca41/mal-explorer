@@ -13,3 +13,8 @@ export const formatSnakeCase = (input = '', options?: { capitalize: boolean }) =
 };
 
 export const snakeToKebabCase = (s: string) => s.toLowerCase().replace(/_/g, '-');
+
+export function parseIntSafe(v: unknown) {
+  if (typeof v === 'number') return v;
+  return typeof v === 'string' && v ? parseInt(v, 10) : NaN;
+}

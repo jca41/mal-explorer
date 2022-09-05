@@ -13,6 +13,7 @@ import malService from '~/lib/mal/api/service.server';
 import { getAuthorizationUrl } from '~/lib/mal/oauth.server';
 import { getAccessToken } from '~/lib/session.server';
 import { getFormData, scrollTop } from '~/utils/html';
+import { ParsedIntSchema, StatusSchema } from '~/utils/zod';
 
 export async function loader({ request, params }: LoaderArgs) {
   const accessToken = await getAccessToken(request);
@@ -25,13 +26,13 @@ export async function loader({ request, params }: LoaderArgs) {
   const sort = url.searchParams.get('sort');
   const offset = url.searchParams.get('offset');
 
-  const status = (params?.status ?? 'watching') as MyListStatus['status'];
+  const status = StatusSchema.parse(params?.status ?? 'watching');
 
   return malService.query.myList({
     status,
     limit: LIST_LIMIT,
     sort: (sort || 'anime_title') as MyListSortQueryParam,
-    offset: offset ? parseInt(offset) : 0,
+    offset: ParsedIntSchema.parse(offset ?? 0),
     accessToken,
   });
 }

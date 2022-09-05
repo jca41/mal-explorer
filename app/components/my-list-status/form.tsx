@@ -1,13 +1,15 @@
 import { Form } from '@remix-run/react';
 import { useMachine } from '@xstate/react';
+import clsx from 'clsx';
 import { useMemo } from 'react';
 
 import { MyListStatus } from '~/contracts/mal';
-import { capitalize, formatSnakeCase } from '~/utils/string';
+import { capitalize, formatSnakeCase } from '~/utils/primitives';
 
 import { UseModal } from '../modal';
 import { MyListStatusProps } from './common';
 import { DeleteFlow } from './delete-flow';
+import { FormExtraValues } from './form-extra-values';
 import { myListStatusFormMachine } from './form-machine';
 import { Range } from './range';
 
@@ -33,21 +35,22 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
     context: {
       state: {
         status: myListStatus?.status ?? 'plan_to_watch',
-        startDate: myListStatus?.start_date,
       },
+      startDate: myListStatus?.start_date,
       numEpisodes: numEpisodes,
     },
   });
 
   const {
     visibleFields,
-    state: { status, startDate },
+    state: { status },
   } = state.context;
 
   const updatedAt = useMemo(() => (myListStatus?.updated_at ? new Date(myListStatus.updated_at) : null), [myListStatus?.updated_at]);
 
   return (
     <Form method="post">
+      <FormExtraValues myListStatus={myListStatus} numEpisodes={numEpisodes} />
       <div className="flex flex-row justify-between">
         <div className="form-control">
           <label className="label">
@@ -99,7 +102,7 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
         {visibleFields.numEpisodesWatched && (
           <div className={CL.container}>
             <label className="label-text">Episodes watched</label>
-            <Range name="numEpisodesWatched" initialValue={myListStatus?.num_episodes_watched ?? 0} max={numEpisodes} />
+            <Range name="num_episodes_watched" initialValue={myListStatus?.num_episodes_watched ?? 0} max={numEpisodes} />
           </div>
         )}
       </div>
@@ -112,7 +115,7 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
           <input
             className="input input-sm input-bordered w-20"
             type="number"
-            name="timesRewatching"
+            name="num_times_rewatched"
             min={0}
             defaultValue={myListStatus?.num_times_rewatched ?? 0}
           />
@@ -121,49 +124,36 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
           <div className="label pt-0">
             <div className="label-text">Value</div>
           </div>
-          <Range name="rewatchValue" initialValue={myListStatus?.rewatch_value ?? 0} max={5} />
+          <Range name="rewatch_value" initialValue={myListStatus?.rewatch_value ?? 0} max={5} />
         </div>
       </div>
       <div className="divider"></div>
-      {visibleFields.dates && (
-        <div className="flex flex-row justify-between">
-          <div className="form-control">
-            <div className="label">
-              <div className="label-text">Start date</div>
-            </div>
-            <input
-              className={CL.input}
-              name="startDate"
-              type="date"
-              value={startDate}
-              onChange={(e) =>
-                send({
-                  type: 'FIELD_CHANGE',
-                  data: {
-                    startDate: e.currentTarget.value,
-                  },
-                })
-              }
-            />
-          </div>
-          {visibleFields.finishDate ? (
-            <div className="form-control">
-              <div className="label">
-                <div className="label-text">Finish date</div>
-              </div>
-              <input className={CL.input} name="finishDate" type="date" min={startDate} defaultValue={myListStatus?.finish_date} />
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </div>
-      )}
       <div className="form-control">
         <div className="label">
           <div className="label-text">Comments</div>
         </div>
         <textarea className="textarea textarea-bordered" rows={2} name="comments" defaultValue={myListStatus?.comments}></textarea>
       </div>
+      {visibleFields.dates && (
+        <div className="flex flex-row justify-between">
+          <div className="form-control">
+            <div className="label">
+              <div className="label-text">Start date</div>
+            </div>
+            <input className={clsx(CL.input, 'input-sm')} disabled type="date" defaultValue={myListStatus?.start_date} />
+          </div>
+          {visibleFields.finishDate ? (
+            <div className="form-control">
+              <div className="label">
+                <div className="label-text">Finish date</div>
+              </div>
+              <input className={clsx(CL.input, 'input-sm')} disabled type="date" defaultValue={myListStatus?.finish_date} />
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      )}
 
       {!!myListStatus && (
         <div className="mt-4">
@@ -186,7 +176,7 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
           <button type="button" className="btn" onClick={controls.toggle}>
             Cancel
           </button>
-          <button className="btn btn-success" type="submit">
+          <button className="btn btn-success" name="_action" value="edit" type="submit">
             Save
           </button>
         </div>

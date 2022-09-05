@@ -3,14 +3,14 @@ import { FC } from 'react';
 
 import { ClientAuthState } from '~/contracts/auth';
 import { MyListStatus } from '~/contracts/mal';
-import { capitalize, formatSnakeCase } from '~/utils/string';
+import { capitalize, formatSnakeCase } from '~/utils/primitives';
 
 import { Modal, useModal } from '../modal';
 import { useRouteMatch } from '../use-route-match';
 import { MyListStatusProps } from './common';
 import { MyListStatusForm } from './form';
 
-const STATUS_TO_ICONS: Record<MyListStatus['status'] | 'add', FC<{ className: string }>> = {
+const STATUS_TO_ICONS: Record<NonNullable<MyListStatus['status']> | 'add', FC<{ className: string }>> = {
   completed: ClipboardCheckIcon,
   plan_to_watch: PencilAltIcon,
   dropped: PencilAltIcon,
