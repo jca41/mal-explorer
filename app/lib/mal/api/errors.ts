@@ -9,7 +9,7 @@ export async function safeHandleRequest<T>(p: Promise<T | MalError>): Promise<T 
   try {
     return p;
   } catch (e) {
-    const handled: MalError = { error: (e as Error).message };
+    const handled: MalError = { error: 'Error', message: (e as Error).message };
     return handled;
   }
 }

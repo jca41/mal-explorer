@@ -60,6 +60,8 @@ const listStatusKeys: (keyof FormListStatus)[] = [
 
 type GetListStatusDiff = Omit<GetActionFormValuesReturn, 'action'>;
 
+const formatMalDate = (date: Date) => date.toISOString().split('T')[0];
+
 function handleDates(
   key: Extract<keyof FormListStatus, 'start_date' | 'finish_date'>,
   {
@@ -81,7 +83,7 @@ function handleDates(
 
   let data: FormListStatus = {};
 
-  const now = new Date().toISOString();
+  const now = formatMalDate(new Date());
 
   const isWatching = isStatus(acc.status, 'watching');
 

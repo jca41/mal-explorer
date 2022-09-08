@@ -62,8 +62,9 @@ export default function EditMyListStatus() {
             <div className="alert alert-error animate-fade-in-fast">
               <div>
                 <ExclamationCircleIcon className="w-5" />
-                <span>{formatSnakeCase(actionData.error || actionData.message)}</span>
+                <span>{formatSnakeCase(actionData.error)}</span>
               </div>
+              <div>{actionData.message || ''}</div>
             </div>
           ) : null}
           <MyListStatusForm myListStatus={data.my_list_status} numEpisodes={data.num_episodes} />
