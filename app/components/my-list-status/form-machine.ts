@@ -4,7 +4,7 @@ import { MyListStatus } from '~/contracts/mal';
 import { isNotStatus } from '~/utils/check-data';
 
 type MContext = {
-  state: { status: MyListStatus['status'] };
+  state: { status: MyListStatus['status']; startDate: MyListStatus['start_date'] };
   visibleFields: {
     score: boolean;
     numEpisodesWatched: boolean;
@@ -12,7 +12,6 @@ type MContext = {
     finishDate: boolean;
   };
   numEpisodes: MyListStatus['num_episodes_watched'];
-  startDate: MyListStatus['start_date'];
 };
 
 type MEvents = {
@@ -53,7 +52,7 @@ export const myListStatusFormMachine = createMachine(
     actions: {
       updateState: assign({
         state: (ctx, e) => {
-          const { type: _type, ...eventData } = e;
+          const { type, ...eventData } = e;
           return {
             ...ctx.state,
             ...eventData.data,
@@ -63,8 +62,7 @@ export const myListStatusFormMachine = createMachine(
       updateVisibleFields: assign({
         visibleFields: (ctx) => {
           const {
-            state: { status },
-            startDate,
+            state: { status, startDate },
             numEpisodes,
           } = ctx;
 

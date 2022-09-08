@@ -86,7 +86,7 @@ export default function MyListStatus() {
       <div className="mt-2">
         <List>
           {(loaderData?.data ?? []).map(({ node, list_status }) => (
-            <ListItem key={node.id} {...node}>
+            <ListItem key={node.id} linkToMyList {...node}>
               <CardDetail listStatus={list_status} />
             </ListItem>
           ))}

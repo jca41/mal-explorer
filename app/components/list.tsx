@@ -12,7 +12,7 @@ import { StatIconBadge } from './stat-badge';
 const STAT_BASE = 'badge-ghost';
 const IMG_DIMENSIONS = 'w-[35%] sm:w-[30%]';
 
-type ListItemProps = Node & { children?: ReactNode };
+type ListItemProps = Node & { children?: ReactNode; linkToMyList?: boolean };
 
 export function ListItem({
   id,
@@ -27,10 +27,12 @@ export function ListItem({
   media_type,
   num_episodes,
   children = null,
+  linkToMyList,
 }: ListItemProps) {
+  const to = !linkToMyList ? `/anime/${id}` : `/anime/${id}/my-list`;
   return (
     <li className="max-w-lg w-full animate-fade-in">
-      <Link to={`/anime/${id}`} className="card glass card-compact card-side shadow-md transition-transform hover:scale-[1.05]">
+      <Link to={to} className="card glass card-compact card-side shadow-md transition-transform hover:scale-[1.05]">
         {main_picture?.medium ? (
           <img className={clsx(IMG_DIMENSIONS, 'object-cover')} src={main_picture?.medium} alt={title} />
         ) : (

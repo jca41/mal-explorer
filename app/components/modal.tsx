@@ -39,7 +39,7 @@ export function useModal() {
 export type UseModal = ReturnType<typeof useModal>;
 
 type ModalProps = {
-  children: () => ReactNode;
+  children: ReactNode;
   controls: UseModal;
   title: string;
 };
@@ -49,8 +49,12 @@ export function Modal({ controls, title, children }: ModalProps) {
     <div className={clsx('modal', { 'modal-open': controls.state })}>
       <div className="modal-box">
         <h3 className="text-xl font-semibold leading-tight tracking-wide mb-4">{title}</h3>
-        <div>{controls.changed && children()}</div>
+        <div>{children}</div>
       </div>
     </div>
   );
+}
+
+export function RouteModal(props: Omit<ModalProps, 'controls'>) {
+  return <Modal {...props} controls={{ state: true } as UseModal} />;
 }

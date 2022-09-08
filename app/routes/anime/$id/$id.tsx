@@ -1,6 +1,6 @@
 import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
 import { LoaderArgs } from '@remix-run/node';
-import { Outlet, ShouldReloadFunction, useLoaderData } from '@remix-run/react';
+import { Outlet, useLoaderData } from '@remix-run/react';
 import { z } from 'zod';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
@@ -24,10 +24,6 @@ import {
 } from '~/utils/format-data';
 import { formatSnakeCase } from '~/utils/primitives';
 import { ParsedIntSchema } from '~/utils/zod';
-
-export const unstable_shouldReload: ShouldReloadFunction = ({ submission, url, prevUrl }) => {
-  return !!submission || !prevUrl.pathname.includes(url.pathname);
-};
 
 const IdSchema = z.string();
 export async function loader({ params, request }: LoaderArgs) {

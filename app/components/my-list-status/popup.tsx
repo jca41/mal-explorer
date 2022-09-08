@@ -1,14 +1,13 @@
 import { ClipboardCheckIcon, PencilAltIcon, PlusIcon } from '@heroicons/react/outline';
+import { Link } from '@remix-run/react';
 import { FC } from 'react';
 
 import { ClientAuthState } from '~/contracts/auth';
 import { MyListStatus } from '~/contracts/mal';
 import { capitalize, formatSnakeCase } from '~/utils/primitives';
 
-import { Modal, useModal } from '../modal';
 import { useRouteMatch } from '../use-route-match';
 import { MyListStatusProps } from './common';
-import { MyListStatusForm } from './form';
 
 const STATUS_TO_ICONS: Record<NonNullable<MyListStatus['status']> | 'add', FC<{ className: string }>> = {
   completed: ClipboardCheckIcon,
@@ -19,9 +18,8 @@ const STATUS_TO_ICONS: Record<NonNullable<MyListStatus['status']> | 'add', FC<{ 
   add: PlusIcon,
 };
 
-export function MyListStatusPopup({ myListStatus, numEpisodes }: MyListStatusProps) {
+export function MyListStatusPopup({ myListStatus }: MyListStatusProps) {
   const { signedIn } = useRouteMatch<{ data: ClientAuthState }>('root').data;
-  const controls = useModal();
   if (!signedIn) return null;
 
   const status = myListStatus?.status ?? 'add';
@@ -32,15 +30,16 @@ export function MyListStatusPopup({ myListStatus, numEpisodes }: MyListStatusPro
     <>
       <div className="absolute right-0 flex flex-row justify-end w-32">
         <div className="fixed z-10 bottom-6 transition-transform transform hover:scale-110">
-          <button onClick={controls.toggle} className="btn btn-secondary rounded-full gap-2 shadow-lg whitespace-pre flex-nowrap shadow-secondary/30">
-            <span className="">{capitalize(formatSnakeCase(status, { capitalize: false }))}</span>
+          <Link
+            prefetch="intent"
+            to="./my-list"
+            className="btn btn-secondary rounded-full gap-2 shadow-lg whitespace-pre flex-nowrap shadow-secondary/30"
+          >
+            <span className="my-list">{capitalize(formatSnakeCase(status, { capitalize: false }))}</span>
             <Icon className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
       </div>
-      <Modal title="My List" controls={controls}>
-        {() => <MyListStatusForm myListStatus={myListStatus} numEpisodes={numEpisodes} controls={controls} />}
-      </Modal>
     </>
   );
 }

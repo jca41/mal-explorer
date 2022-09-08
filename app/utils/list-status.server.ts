@@ -1,10 +1,9 @@
 import { z } from 'zod';
 
-import { MyListStatus, Node } from '~/contracts/mal';
+import { FormListStatus, MyListStatus, Node } from '~/contracts/mal';
 
+import { isNotStatus, isStatus } from './check-data';
 import { getParsedIntSchema, StatusSchema } from './zod';
-
-type FormListStatus = Partial<Omit<MyListStatus, 'updated_at' | 'is_rewatching' | 'start_date' | 'finish_date'>>;
 
 const ParsedIntSchema = getParsedIntSchema();
 
@@ -12,7 +11,7 @@ const FormListStatusSchema = z
   .object({
     score: ParsedIntSchema,
     status: StatusSchema,
-    num_episodes_watched: ParsedIntSchema,
+    num_watched_episodes: ParsedIntSchema,
     priority: getParsedIntSchema(z.union([z.literal(0), z.literal(1), z.literal(2)])),
     start_date: z.string(),
     finish_date: z.string(),
@@ -50,25 +49,79 @@ export function getActionFormValues(formData: FormData): GetActionFormValuesRetu
 const listStatusKeys: (keyof FormListStatus)[] = [
   'score',
   'status',
-  'num_episodes_watched',
+  'num_watched_episodes',
   'priority',
   'comments',
   'rewatch_value',
   'num_times_rewatched',
+  'start_date',
+  'finish_date',
 ];
 
-export function getListStatusDiff({ currentListStatus, updatedListStatus }: Exclude<GetActionFormValuesReturn, 'action'>) {
+type GetListStatusDiff = Omit<GetActionFormValuesReturn, 'action'>;
+
+function handleDates(
+  key: Extract<keyof FormListStatus, 'start_date' | 'finish_date'>,
+  {
+    acc,
+    hasChanges,
+    currentListStatus,
+    updatedListStatus,
+  }: { acc: FormListStatus; hasChanges: boolean } & Pick<GetListStatusDiff, 'currentListStatus' | 'updatedListStatus'>
+): FormListStatus {
+  const currentValue = currentListStatus[key];
+  const updatedValue = updatedListStatus[key];
+
+  if (hasChanges && updatedValue !== '') {
+    return { [key]: updatedValue };
+  }
+  if (!acc.status || !!currentValue) {
+    return {};
+  }
+
+  let data: FormListStatus = {};
+
+  const now = new Date().toISOString();
+
+  const isWatching = isStatus(acc.status, 'watching');
+
+  switch (key) {
+    case 'start_date':
+      if (isWatching && currentListStatus.status && isNotStatus(currentListStatus.status, 'on_hold')) {
+        data = { start_date: now };
+      }
+      break;
+    case 'finish_date':
+      if (isStatus(acc.status, ['completed', 'dropped'])) {
+        data = { finish_date: now };
+      } else if (isWatching) {
+        data = { finish_date: '' };
+      }
+      break;
+  }
+
+  return data;
+}
+
+export function getListStatusDiff({ currentListStatus, updatedListStatus }: GetListStatusDiff) {
   return listStatusKeys.reduce<FormListStatus>((acc, key) => {
     const currentValue = currentListStatus[key];
     const updatedValue = updatedListStatus[key];
 
-    if (currentValue === updatedValue || updatedValue === undefined || acc[key]) {
-      return acc;
+    const hasChanges = currentValue !== updatedValue && updatedValue !== undefined;
+
+    let data: FormListStatus = hasChanges ? { [key]: updatedValue } : {};
+
+    switch (key) {
+      case 'finish_date':
+      case 'start_date':
+        data = handleDates(key, { acc, hasChanges, currentListStatus, updatedListStatus });
+        break;
     }
 
     return {
       ...acc,
-      [key]: updatedValue,
+      ...data,
     };
   }, {});
 }

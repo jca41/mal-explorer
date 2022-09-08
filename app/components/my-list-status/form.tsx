@@ -1,4 +1,4 @@
-import { Form } from '@remix-run/react';
+import { Form, Link, useNavigate } from '@remix-run/react';
 import { useMachine } from '@xstate/react';
 import clsx from 'clsx';
 import { useMemo } from 'react';
@@ -6,16 +6,11 @@ import { useMemo } from 'react';
 import { MyListStatus } from '~/contracts/mal';
 import { capitalize, formatSnakeCase } from '~/utils/primitives';
 
-import { UseModal } from '../modal';
 import { MyListStatusProps } from './common';
 import { DeleteFlow } from './delete-flow';
 import { FormExtraValues } from './form-extra-values';
 import { myListStatusFormMachine } from './form-machine';
 import { Range } from './range';
-
-type MyListStatusModalProps = MyListStatusProps & {
-  controls: UseModal;
-};
 
 const CL = {
   container: 'w-full flex flex-row items-center justify-between',
@@ -30,27 +25,31 @@ const PRIORITY_OPTIONS: ReadonlyArray<{ l: string; v: MyListStatus['priority'] }
   { l: 'High', v: 2 },
 ];
 
-export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyListStatusModalProps) {
+export function MyListStatusForm(props: MyListStatusProps) {
+  const { myListStatus, numEpisodes } = props;
+
+  const navigate = useNavigate();
+
   const [state, send] = useMachine(myListStatusFormMachine, {
     context: {
       state: {
         status: myListStatus?.status ?? 'plan_to_watch',
+        startDate: myListStatus?.start_date,
       },
-      startDate: myListStatus?.start_date,
       numEpisodes: numEpisodes,
     },
   });
 
   const {
     visibleFields,
-    state: { status },
+    state: { status, startDate },
   } = state.context;
 
   const updatedAt = useMemo(() => (myListStatus?.updated_at ? new Date(myListStatus.updated_at) : null), [myListStatus?.updated_at]);
 
   return (
-    <Form method="post">
-      <FormExtraValues myListStatus={myListStatus} numEpisodes={numEpisodes} />
+    <Form method="post" replace>
+      <FormExtraValues {...props} />
       <div className="flex flex-row justify-between">
         <div className="form-control">
           <label className="label">
@@ -102,7 +101,7 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
         {visibleFields.numEpisodesWatched && (
           <div className={CL.container}>
             <label className="label-text">Episodes watched</label>
-            <Range name="num_episodes_watched" initialValue={myListStatus?.num_episodes_watched ?? 0} max={numEpisodes} />
+            <Range name="num_watched_episodes" initialValue={myListStatus?.num_episodes_watched ?? 0} max={numEpisodes} />
           </div>
         )}
       </div>
@@ -140,14 +139,27 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
             <div className="label">
               <div className="label-text">Start date</div>
             </div>
-            <input className={clsx(CL.input, 'input-sm')} disabled type="date" defaultValue={myListStatus?.start_date} />
+            <input
+              className={clsx(CL.input, 'input-sm')}
+              type="date"
+              name="start_date"
+              value={startDate}
+              onChange={(e) =>
+                send({
+                  type: 'FIELD_CHANGE',
+                  data: {
+                    startDate: e.currentTarget.value,
+                  },
+                })
+              }
+            />
           </div>
           {visibleFields.finishDate ? (
             <div className="form-control">
               <div className="label">
                 <div className="label-text">Finish date</div>
               </div>
-              <input className={clsx(CL.input, 'input-sm')} disabled type="date" defaultValue={myListStatus?.finish_date} />
+              <input className={clsx(CL.input, 'input-sm')} name="finish_date" type="date" defaultValue={myListStatus?.finish_date} />
             </div>
           ) : (
             <div></div>
@@ -173,9 +185,9 @@ export function MyListStatusForm({ myListStatus, numEpisodes, controls }: MyList
           <div></div>
         )}
         <div className="space-x-3">
-          <button type="button" className="btn" onClick={controls.toggle}>
+          <Link replace to={'..'} type="button" className="btn">
             Cancel
-          </button>
+          </Link>
           <button className="btn btn-success" name="_action" value="edit" type="submit">
             Save
           </button>

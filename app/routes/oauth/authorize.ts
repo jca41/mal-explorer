@@ -1,6 +1,6 @@
-import { ActionFunction, redirect } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 
 import { getAuthorizationUrl } from '~/lib/mal/oauth.server';
-export const action: ActionFunction = async () => {
+export const action = async () => {
   return redirect(getAuthorizationUrl());
 };

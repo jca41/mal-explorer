@@ -127,3 +127,4 @@ export type RankingTypeParam = 'all' | 'airing' | 'upcoming' | 'tv' | 'ova' | 'm
 export type SeasonParam = 'winter' | 'spring' | 'summer' | 'fall';
 export type SeasonalSortQueryParam = 'anime_score' | 'anime_num_list_users';
 export type MyListSortQueryParam = 'list_score' | 'list_updated_at' | 'anime_title' | 'anime_start_date';
+export type FormListStatus = Partial<Omit<MyListStatus, 'updated_at' | 'is_rewatching' | 'num_episodes_watched'>> & { num_watched_episodes?: number };
