@@ -47,7 +47,7 @@ type ModalProps = {
 export function Modal({ controls, title, children }: ModalProps) {
   return (
     <div className={clsx('modal', { 'modal-open': controls.state })}>
-      <div className="modal-box border border-primary">
+      <div className="modal-box">
         <h3 className="text-xl font-semibold leading-tight tracking-wide mb-4">{title}</h3>
         <div>{children}</div>
       </div>
