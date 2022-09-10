@@ -2,7 +2,7 @@ import { useTransition } from '@remix-run/react';
 
 import { LOADING_IMG_SRC } from '~/constants';
 
-export function LoadingIndication() {
+export function Loading() {
   const transition = useTransition();
 
   return transition.state !== 'idle' ? (

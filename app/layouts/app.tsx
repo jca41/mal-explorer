@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { LoadingIndication } from '~/components/loading';
+import { Loading } from '~/components/loading';
 import { Navigation } from '~/components/nav';
 import { ThemeProvider } from '~/components/theme-picker';
 
@@ -12,10 +12,10 @@ export function AppLayout({ children }: AppLayout) {
     <ThemeProvider>
       <div className="min-h-screen bg-base-100">
         <Navigation />
-        <div className="py-8 md:py-10 px-6 lg:px-0">
-          <div className="max-w-screen-md mx-auto">{children}</div>
+        <div className="py-8 px-6 md:py-10 lg:px-0">
+          <div className="mx-auto max-w-screen-md">{children}</div>
         </div>
-        <LoadingIndication />
+        <Loading />
       </div>
     </ThemeProvider>
   );
