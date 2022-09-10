@@ -46,9 +46,9 @@ type ModalProps = {
 
 export function Modal({ controls, title, children }: ModalProps) {
   return (
-    <div className={clsx('modal', { 'modal-open': controls.state })}>
+    <div className={clsx('modal z-40', { 'modal-open': controls.state })}>
       <div className="modal-box">
-        <h3 className="text-xl font-semibold leading-tight tracking-wide mb-4">{title}</h3>
+        <h3 className="mb-4 text-xl font-semibold leading-tight tracking-wide">{title}</h3>
         <div>{children}</div>
       </div>
     </div>

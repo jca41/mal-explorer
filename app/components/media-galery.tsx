@@ -13,7 +13,7 @@ export function VideoGallery({ videos = [] }: Pick<Node, 'videos'>) {
 
   return (
     <div>
-      <select className="mb-4 select select-bordered" value={selected} onChange={(e) => setSelected(e.target.value)}>
+      <select className="select select-bordered mb-4" value={selected} onChange={(e) => setSelected(e.target.value)}>
         {videos.map((v) => (
           <option key={v.id} value={v.url}>
             {v.title}
@@ -35,7 +35,7 @@ export function ImageGallery({ pictures = [] }: Pick<Node, 'pictures'>) {
   }
 
   return (
-    <div className="carousel rounded-box w-full h-72 md:h-80 bg-base-200">
+    <div className="carousel rounded-box h-72 w-full bg-base-200 md:h-80">
       {pictures.map((p) => (
         <div key={p.large} className="carousel-item h-full flex-row">
           <img className="h-full" src={p.large} />

@@ -23,7 +23,7 @@ function AppMenu({ signedIn }: ClientAuthState) {
       <label tabIndex={0} className="btn btn-circle btn-sm ml-1">
         <MenuIcon className="w-4" />
       </label>
-      <ul tabIndex={0} className="dropdown-content menu menu-compact bg-base-100 p-2 shadow-md rounded-box">
+      <ul tabIndex={0} className="dropdown-content menu rounded-box menu-compact bg-base-100 p-2 shadow-md">
         <li>
           <button className=" whitespace-nowrap" onClick={onAuthAction}>
             {signedIn ? <LogoutIcon className={CL.menuItemIcon} /> : <LoginIcon className={CL.menuItemIcon} />}
@@ -44,8 +44,8 @@ export function Navigation() {
     <nav className="bg-base-300">
       <div className="navbar min-h-min">
         <div className="navbar-start flex items-center">
-          <img src={NAV_IMG_SRC} className="w-7 mr-3" />
-          <div className="text-xl font-bold tracking-tight font-mono">MAL EXPLORER</div>
+          <img src={NAV_IMG_SRC} className="mr-3 w-7" />
+          <div className="font-mono text-xl font-bold tracking-tight">MAL EXPLORER</div>
         </div>
         <div className="navbar-end space-x-1">
           <ThemePicker />
@@ -54,7 +54,7 @@ export function Navigation() {
       </div>
       <div className="navbar min-h-min pt-0">
         <div className="navbar-start"></div>
-        <ul className="menu menu-compact menu-horizontal">
+        <ul className="menu menu-horizontal menu-compact">
           <li>
             <NavLink className={getNavItemClassName} to="/">
               Search

@@ -63,9 +63,9 @@ export function SearchInput({ defaultValue, parentService }: SearchInputProps) {
         onChange={() => send({ type: 'CHANGE' })}
         minLength={3} // min query is 3 chars
         autoComplete="off"
-        className="input input-primary w-full input-md"
+        className="input input-primary input-md w-full"
       />
-      <div className="absolute right-2 inset-y-0 flex items-center">
+      <div className="absolute inset-y-0 right-2 flex items-center">
         <button onClick={() => send('RESET')} className="h-min">
           <BackspaceIcon className="w-5 text-primary" />
         </button>

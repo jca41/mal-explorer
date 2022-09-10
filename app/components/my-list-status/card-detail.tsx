@@ -1,4 +1,4 @@
-import { ClockIcon, StarIcon } from '@heroicons/react/solid';
+import { StarIcon } from '@heroicons/react/solid';
 
 import { ListStatus } from '~/contracts/mal';
 
@@ -11,11 +11,9 @@ export function CardDetail({ listStatus }: CardDetailsProps) {
 
   return (
     <div>
-      <h3 className="divider my-2 uppercase font-semibold">My list</h3>
-      <div className="flex gap-2 flex-wrap">
+      <h3 className="divider my-2 font-semibold uppercase">My list</h3>
+      <div className="flex flex-wrap gap-2">
         <StatIconBadge as="div" value={score} icon={StarIcon} classname="badge-ghost" iconClassname={`text-primary`} />
-        {/* {listStatus?.start_date && <StatIconBadge value={`Started: ${listStatus.start_date}`} icon={ClockIcon} classname="badge-ghost" />}
-        {listStatus?.finish_date && <StatIconBadge value={`Finished: ${listStatus.finish_date}`} icon={ClockIcon} classname="badge-ghost" />} */}
       </div>
     </div>
   );

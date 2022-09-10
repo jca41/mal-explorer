@@ -13,7 +13,7 @@ export function Select<O extends Record<string | number, string>>({ onChange, na
 
   return (
     <select
-      className="select select-sm select-primary z-30"
+      className="select select-primary select-sm z-30"
       name={name}
       defaultValue={params.get(name) ?? (defaultValue as string)}
       onChange={() => onChange()}

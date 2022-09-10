@@ -112,7 +112,7 @@ export function MyListStatusForm(props: MyListStatusProps) {
             <div className="label-text">Count</div>
           </div>
           <input
-            className="input input-sm input-bordered w-20"
+            className="input input-bordered input-sm w-20"
             type="number"
             name="num_times_rewatched"
             min={0}
@@ -172,9 +172,9 @@ export function MyListStatusForm(props: MyListStatusProps) {
           <DeleteFlow />
         </div>
       )}
-      <div className="mt-4 flex justify-between items-end">
+      <div className="mt-4 flex items-end justify-between">
         {updatedAt ? (
-          <div className="text-xs max-w-xs">
+          <div className="max-w-xs text-xs">
             <span>Last updated on </span>
             <div>
               <span>{updatedAt.toLocaleDateString()}</span>

@@ -42,11 +42,11 @@ export function ThemePicker() {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <div className="dropdown dropdown-left">
+    <div className="dropdown-left dropdown">
       <label tabIndex={0} className="btn btn-circle btn-sm ml-1 flex items-center">
         <SparklesIcon className="w-4" />
       </label>
-      <ul tabIndex={0} className="dropdown-content menu menu-compact bg-base-100 p-2 shadow-md rounded-box">
+      <ul tabIndex={0} className="dropdown-content menu rounded-box menu-compact bg-base-100 p-2 shadow-md">
         <li className="menu-title">
           <span>Theme</span>
         </li>

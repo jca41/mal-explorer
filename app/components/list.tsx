@@ -31,8 +31,8 @@ export function ListItem({
 }: ListItemProps) {
   const to = !linkToMyList ? `/anime/${id}` : `/anime/${id}/my-list`;
   return (
-    <li className="max-w-lg w-full animate-fade-in">
-      <Link to={to} className="card glass card-compact card-side shadow-md transition-transform hover:scale-[1.05]">
+    <li className="w-full max-w-lg animate-fade-in">
+      <Link to={to} className="card glass card-side card-compact shadow-md transition-transform hover:scale-[1.05]">
         {main_picture?.medium ? (
           <img className={clsx(IMG_DIMENSIONS, 'object-cover')} src={main_picture?.medium} alt={title} />
         ) : (
@@ -40,7 +40,7 @@ export function ListItem({
         )}
 
         <div className="card-body">
-          <h2 className="text-base font-semibold tracking-wide leading-snug mb-5">
+          <h2 className="mb-5 text-base font-semibold leading-snug tracking-wide">
             <div>
               {title}
               {start_season?.year && <span className="font-normal">{` (${start_season?.year})`}</span>}
@@ -64,5 +64,5 @@ export function ListItem({
 }
 
 export function List({ children }: { children: ReactNode }) {
-  return <ul className="flex flex-col space-y-4 items-center">{children}</ul>;
+  return <ul className="flex flex-col items-center space-y-4">{children}</ul>;
 }

@@ -24,9 +24,9 @@ type RadioProps<O> = Pick<RadioGroupProps<O>, 'name' | 'onChange'> & {
 function Radio<O extends Record<string | number, string>>({ name, label, value, onChange, defaultChecked }: RadioProps<O>) {
   const id = `${name}-${value as string}`;
   return (
-    <span className={`px-2.5 py-1.5 flex items-center bg-base-200/40 rounded-box`}>
+    <span className={`rounded-box flex items-center bg-base-200/40 px-2.5 py-1.5`}>
       <input
-        className="mr-2 radio radio-primary radio-sm"
+        className="radio radio-primary radio-sm mr-2"
         id={id}
         type="radio"
         name={name}
@@ -46,7 +46,7 @@ export function RadioGroup<O extends Record<string | number, string>>({ label, n
   const defaultCheckedValue = params.get(name) ?? defaultValue;
 
   return (
-    <div className="space-x-3 flex items-center">
+    <div className="flex items-center space-x-3">
       <span className="font-semibold">{label}</span>
       <div className="inline-flex space-x-2">
         {(Object.keys(radioMap) as (keyof typeof radioMap)[]).map((r) => (

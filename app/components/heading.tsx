@@ -8,5 +8,5 @@ type HeadingProps = {
 };
 
 export function Heading({ as: As = 'h1', children, className }: HeadingProps) {
-  return <As className={twMerge('text-center text-3xl tracking-wide font-bold mb-4 md:mb-8', className)}>{children}</As>;
+  return <As className={twMerge('mb-4 text-center text-3xl font-bold tracking-wide md:mb-8', className)}>{children}</As>;
 }

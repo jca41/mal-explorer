@@ -13,7 +13,7 @@ export function Range({ name, initialValue, max, disabled = false }: RangeProps)
 
   return (
     <div className="flex flex-row items-center gap-1">
-      <div className="badge font-mono badge-ghost">{value}</div>
+      <div className="badge badge-ghost font-mono">{value}</div>
       <input
         className="range"
         name={name}

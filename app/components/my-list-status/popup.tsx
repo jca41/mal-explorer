@@ -28,15 +28,15 @@ export function MyListStatusPopup({ myListStatus }: MyListStatusProps) {
 
   return (
     <>
-      <div className="absolute right-0 flex flex-row justify-end w-32">
-        <div className="fixed z-10 bottom-6 transition-transform transform hover:scale-110">
+      <div className="absolute right-0 flex w-32 flex-row justify-end">
+        <div className="fixed bottom-6 z-10 transform transition-transform hover:scale-110">
           <Link
             prefetch="intent"
             to="./my-list"
-            className="btn btn-secondary rounded-full gap-2 shadow-lg whitespace-pre flex-nowrap shadow-secondary/30"
+            className="btn btn-secondary flex-nowrap gap-2 whitespace-pre rounded-full shadow-lg shadow-secondary/30"
           >
             <span className="my-list">{capitalize(formatSnakeCase(status, { capitalize: false }))}</span>
-            <Icon className="w-5 h-5" />
+            <Icon className="h-5 w-5" />
           </Link>
         </div>
       </div>

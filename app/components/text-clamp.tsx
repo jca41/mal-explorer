@@ -20,12 +20,12 @@ export function TextClamp({ children, text }: { children: ReactElement; text: st
       >
         {children}
       </div>
-      <div className="absolute -bottom-10 inset-x-0 flex justify-center">
+      <div className="absolute inset-x-0 -bottom-10 flex justify-center">
         <button
           onClick={() => {
             setExpanded((e) => !e);
           }}
-          className={clsx('btn btn-sm btn-circle swap swap-rotate z-10', { 'swap-active': expanded })}
+          className={clsx('btn swap btn-circle btn-sm swap-rotate z-10', { 'swap-active': expanded })}
         >
           <div className="swap-on">
             <ChevronUpIcon className={ICON} />

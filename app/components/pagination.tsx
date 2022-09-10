@@ -17,7 +17,7 @@ export function usePaginationSubmit({ paging, limit, onSubmit }: { paging?: Pagi
 }
 
 export function CurrentPage({ page }: { page: number }) {
-  return <span className="h-min text-base-content font-semibold text-sm sm:text-base">Page {page}</span>;
+  return <span className="h-min text-sm font-semibold text-base-content sm:text-base">Page {page}</span>;
 }
 
 const BUTTON_LABEL = {
@@ -27,7 +27,7 @@ const BUTTON_LABEL = {
 
 export function PaginationButton({ paging, type, onClick }: { paging?: Paging; type: PageType; onClick: () => void }) {
   return paging?.[type] ? (
-    <button type="button" onClick={onClick} className="btn btn-sm btn-secondary">
+    <button type="button" onClick={onClick} className="btn btn-secondary btn-sm">
       {BUTTON_LABEL[type]}
     </button>
   ) : null;
