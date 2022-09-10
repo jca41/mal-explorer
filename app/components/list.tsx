@@ -10,7 +10,7 @@ import { formatMediaType, formatNumEpisodes, formatRank, formatStatus } from '~/
 import { StatIconBadge } from './stat-badge';
 
 const STAT_BASE = 'badge-ghost';
-const IMG_DIMENSIONS = 'w-[35%] sm:w-[30%]';
+const IMG_DIMENSIONS = 'w-36  sm:w-40';
 
 type ListItemProps = Node & { children?: ReactNode; linkToMyList?: boolean };
 
