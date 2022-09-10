@@ -1,6 +1,6 @@
 import numeral from 'numeral';
 
-import { MediaType, SimpleDateString, Source, Status } from '~/contracts/mal';
+import { MediaType, SimpleDateString, Status } from '~/contracts/mal';
 
 import { formatSnakeCase } from './primitives';
 
@@ -37,10 +37,6 @@ export function formatNumEpisodes(numEpisodes: number) {
 export function formatPopularity(numListUsers: number, popularity: number) {
   const formattedNumListUsers = numListUsers > 100 ? numeral(numListUsers).format('0.0a') : '<100';
   return popularity ? `${formatRank(popularity)} (${formattedNumListUsers})` : '';
-}
-
-export function formatSource(source: Source) {
-  return formatSnakeCase(source);
 }
 
 export function formatEpisodeDuration(durationInSeconds: number | undefined) {

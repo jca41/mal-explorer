@@ -1,13 +1,14 @@
 import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
 import { LoaderArgs } from '@remix-run/node';
 import { Outlet, ShouldReloadFunction, useLoaderData } from '@remix-run/react';
+import { useMemo } from 'react';
 import { z } from 'zod';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
 import { MyListStatusPopup } from '~/components/my-list-status/popup';
 import { RelatedGrid } from '~/components/related-grid';
-import { StatBadge, StatIconBadge, StatLabelBadge } from '~/components/stat-badge';
+import { StatBadge, StatIconBadge } from '~/components/stat-badge';
 import { TextClamp } from '~/components/text-clamp';
 import malService from '~/lib/mal/api/service.server';
 import { getAccessToken } from '~/lib/session.server';
@@ -18,7 +19,6 @@ import {
   formatNumEpisodes,
   formatPopularity,
   formatRank,
-  formatSource,
   formatStartAndEndDate,
   formatStatus,
 } from '~/utils/format-data';
@@ -77,20 +77,31 @@ export default function AnimeDetails() {
     my_list_status,
   } = data;
 
+  const infoData = useMemo(() => {
+    return [
+      ['Studios', studios?.map((s) => s.name).join(', ')],
+      ['Source', formatSnakeCase(source)],
+      ['Average ep. duration', formatEpisodeDuration(average_episode_duration)],
+      ['Start date', formatStartAndEndDate(start_date)],
+      ['End date', formatStartAndEndDate(end_date)],
+      ['Rating', formatSnakeCase(rating)?.toUpperCase?.()],
+    ];
+  }, [data]);
+
   return (
     <div className="relative">
-      <h1 className="text-2xl text-center tracking-wide">
+      <h1 className="text-center text-2xl tracking-wide">
         <div>
           <span className="font-bold">{title}</span>
           {!!start_season?.year && <span className="font-normal">{` (${start_season.year})`}</span>}
         </div>
         {shouldShowAltTitle({ title, alt: alternative_titles.en }) && (
-          <div className="text-xl text-base-content/60 font-semibold">{alternative_titles.en}</div>
+          <div className="text-xl font-semibold text-base-content/60">{alternative_titles.en}</div>
         )}
       </h1>
       <div className="mt-12 flex flex-col space-y-10">
         <section className="flex flex-col space-y-5">
-          <ul className="flex justify-center flex-wrap gap-x-3 gap-y-2">
+          <ul className="flex flex-wrap justify-center gap-x-3 gap-y-2">
             <StatIconBadge value={mean} icon={StarIcon} classname={STAT_BASE} iconClassname={`text-primary`} />
             <StatIconBadge value={formatRank(rank)} icon={TrendingUpIcon} classname={STAT_BASE} />
             <StatIconBadge value={formatPopularity(num_list_users, popularity)} classname={STAT_BASE} icon={UsersIcon} />
@@ -99,7 +110,7 @@ export default function AnimeDetails() {
             <StatIconBadge value={formatNumEpisodes(num_episodes)} icon={FolderIcon} classname={STAT_BASE} />
           </ul>
           {genres?.length && (
-            <ul className="flex justify-center flex-wrap gap-y-2 gap-x-2">
+            <ul className="flex flex-wrap justify-center gap-y-2 gap-x-2">
               {genres.map(({ name, id }) => (
                 <StatBadge key={id} value={name} classname={'badge-sm md:badge-md badge-ghost'} />
               ))}
@@ -119,14 +130,18 @@ export default function AnimeDetails() {
         )}
         <section>
           <h2 className={SUBTITLE}>Info</h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2">
-            <StatLabelBadge label="Studios" value={studios?.map((s) => s.name).join(', ')} />
-            <StatLabelBadge label="Source" value={formatSource(source)} />
-            <StatLabelBadge label="Average ep. duration" value={formatEpisodeDuration(average_episode_duration)} />
-            <StatLabelBadge label="Start date" value={formatStartAndEndDate(start_date)} />
-            <StatLabelBadge label="End date" value={formatStartAndEndDate(end_date)} />
-            <StatLabelBadge label="Rating" value={formatSnakeCase(rating)?.toUpperCase?.()} />
-          </ul>
+          <table className="table-zebra table-compact table w-full">
+            <tbody className="">
+              {infoData.map(([key, value]) =>
+                value ? (
+                  <tr>
+                    <th>{key}</th>
+                    <td>{value}</td>
+                  </tr>
+                ) : null
+              )}
+            </tbody>
+          </table>
         </section>
         {!!related_anime?.length && (
           <section>
