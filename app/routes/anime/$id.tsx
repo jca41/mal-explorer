@@ -1,9 +1,9 @@
 import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
 import { LoaderArgs } from '@remix-run/node';
 import { Outlet, ShouldReloadFunction, useLoaderData } from '@remix-run/react';
-import { useMemo } from 'react';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
+import { InfoTable } from '~/components/info-table';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
 import { MyListStatusPopup } from '~/components/my-list-status/popup';
 import { RelatedGrid } from '~/components/related-grid';
@@ -12,16 +12,7 @@ import { TextClamp } from '~/components/text-clamp';
 import malService from '~/lib/mal/api/service.server';
 import { getAccessToken } from '~/lib/session.server';
 import { shouldShowAltTitle } from '~/utils/check-data';
-import {
-  formatEpisodeDuration,
-  formatMediaType,
-  formatNumEpisodes,
-  formatPopularity,
-  formatRank,
-  formatStartAndEndDate,
-  formatStatus,
-} from '~/utils/format-data';
-import { formatSnakeCase } from '~/utils/primitives';
+import { formatMediaType, formatNumEpisodes, formatPopularity, formatRank, formatStatus } from '~/utils/format-data';
 import { ParsedIntSchema } from '~/utils/zod';
 
 export const unstable_shouldReload: ShouldReloadFunction = ({ submission, url, prevUrl }) => {
@@ -62,29 +53,12 @@ export default function AnimeDetails() {
     background,
     num_episodes,
     genres,
-    studios,
-    source,
     related_anime,
     recommendations,
     videos,
     pictures,
-    start_date,
-    end_date,
-    rating,
-    average_episode_duration,
     my_list_status,
   } = data;
-
-  const infoData = useMemo(() => {
-    return [
-      ['Studios', studios?.map((s) => s.name).join(', ')],
-      ['Source', formatSnakeCase(source)],
-      ['Average ep. duration', formatEpisodeDuration(average_episode_duration)],
-      ['Start date', formatStartAndEndDate(start_date)],
-      ['End date', formatStartAndEndDate(end_date)],
-      ['Rating', formatSnakeCase(rating)?.toUpperCase?.()],
-    ];
-  }, [data]);
 
   return (
     <div className="relative">
@@ -128,18 +102,7 @@ export default function AnimeDetails() {
         )}
         <section>
           <h2 className={SUBTITLE}>Info</h2>
-          <table className="table-zebra table-compact table w-full">
-            <tbody className="">
-              {infoData.map(([key, value]) =>
-                value ? (
-                  <tr>
-                    <th>{key}</th>
-                    <td>{value}</td>
-                  </tr>
-                ) : null
-              )}
-            </tbody>
-          </table>
+          <InfoTable {...data} />
         </section>
         {!!related_anime?.length && (
           <section>

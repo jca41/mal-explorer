@@ -83,3 +83,15 @@ export const myList = ({ accessToken, ...params }: MyList) => {
     accessToken,
   });
 };
+
+type SuggestedAnime = { limit: Limit; offset?: Offset; accessToken: AuthState['accessToken'] };
+export const suggestedAnime = ({ accessToken, ...params }: SuggestedAnime) => {
+  return malRequest<NodeList>({
+    path: `/anime/suggestions`,
+    params: {
+      fields: LIST_FIELDS,
+      ...params,
+    },
+    accessToken,
+  });
+};

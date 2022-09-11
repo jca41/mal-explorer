@@ -19,7 +19,7 @@ function AppMenu({ signedIn }: ClientAuthState) {
   const onAuthAction = () => fetcher.submit(null, { action: signedIn ? '/oauth/sign-out' : '/oauth/authorize', method: 'post' });
 
   return (
-    <div className="dropdown dropdown-left">
+    <div className="dropdown-left dropdown">
       <label tabIndex={0} className="btn btn-circle btn-sm ml-1">
         <MenuIcon className="w-4" />
       </label>
@@ -78,6 +78,13 @@ export function Navigation() {
               Seasonal
             </NavLink>
           </li>
+          {signedIn && (
+            <li>
+              <NavLink className={getNavItemClassName} to="/suggestions">
+                Suggestions
+              </NavLink>
+            </li>
+          )}
         </ul>
         <div className="navbar-end"></div>
       </div>
