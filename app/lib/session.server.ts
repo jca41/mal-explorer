@@ -1,6 +1,8 @@
-import { CookieOptions, createCookie } from '@remix-run/node';
+import { CookieOptions, createCookie, redirect } from '@remix-run/node';
 
 import { AuthState } from '~/contracts/auth';
+
+import { getAuthorizationUrl } from './mal/oauth.server';
 
 const cookieOptions: CookieOptions = {
   httpOnly: true,
@@ -31,4 +33,13 @@ export async function clearAccessTokenCookieHeader() {
 
 export async function getNewRefreshTokenCookieHeader({ refreshToken }: AuthState) {
   return refreshTokenCookie.serialize(refreshToken);
+}
+
+export async function getAccessTokenOrRedirect(request: Request) {
+  const accessToken = await getAccessToken(request);
+  if (!accessToken) {
+    throw redirect(getAuthorizationUrl());
+  }
+
+  return accessToken;
 }

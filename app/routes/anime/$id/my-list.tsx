@@ -1,5 +1,5 @@
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
-import { ActionArgs, redirect } from '@remix-run/node';
+import { ActionArgs } from '@remix-run/node';
 import { useActionData, useNavigate, useTransition } from '@remix-run/react';
 import { useEffect } from 'react';
 
@@ -10,18 +10,13 @@ import { MyListStatus, Node } from '~/contracts/mal';
 import { isMalError, MalError } from '~/lib/mal/api/errors';
 import { editMyListEntry } from '~/lib/mal/api/mutations';
 import malService from '~/lib/mal/api/service.server';
-import { getAuthorizationUrl } from '~/lib/mal/oauth.server';
-import { getAccessToken } from '~/lib/session.server';
+import { getAccessTokenOrRedirect } from '~/lib/session.server';
 import { getActionFormValues, getListStatusDiff } from '~/utils/list-status.server';
 import { formatSnakeCase } from '~/utils/primitives';
 import { ParsedIntSchema } from '~/utils/zod';
 
 export async function action({ params, request }: ActionArgs) {
-  const accessToken = await getAccessToken(request);
-  if (!accessToken) {
-    redirect(getAuthorizationUrl());
-    return;
-  }
+  const accessToken = await getAccessTokenOrRedirect(request);
 
   const formData = await request.formData();
 

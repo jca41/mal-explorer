@@ -5,16 +5,11 @@ import { twMerge } from 'tailwind-merge';
 
 import { Heading } from '~/components/heading';
 import { LIST_STATUS } from '~/constants';
-import { getAuthorizationUrl } from '~/lib/mal/oauth.server';
-import { getAccessToken } from '~/lib/session.server';
+import { getAccessTokenOrRedirect } from '~/lib/session.server';
 import { formatSnakeCase } from '~/utils/primitives';
 
 export async function loader({ params, request }: LoaderArgs) {
-  const accessToken = await getAccessToken(request);
-  if (!accessToken) {
-    redirect(getAuthorizationUrl());
-    return;
-  }
+  await getAccessTokenOrRedirect(request);
 
   if (!params.status) {
     return redirect('/my-list/watching', { status: 301 });

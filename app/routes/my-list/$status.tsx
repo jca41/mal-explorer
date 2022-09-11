@@ -1,4 +1,4 @@
-import { LoaderArgs, redirect } from '@remix-run/node';
+import { LoaderArgs } from '@remix-run/node';
 import { Form, useLoaderData, useParams, useSubmit } from '@remix-run/react';
 import { useRef } from 'react';
 
@@ -10,17 +10,12 @@ import { StickyHeader } from '~/components/sticky-header';
 import { LIST_LIMIT } from '~/constants';
 import { MyListSortQueryParam, MyListStatus, Paging } from '~/contracts/mal';
 import malService from '~/lib/mal/api/service.server';
-import { getAuthorizationUrl } from '~/lib/mal/oauth.server';
-import { getAccessToken } from '~/lib/session.server';
+import { getAccessTokenOrRedirect } from '~/lib/session.server';
 import { getFormData, scrollTop } from '~/utils/html';
 import { ParsedIntSchema, StatusSchema } from '~/utils/zod';
 
 export async function loader({ request, params }: LoaderArgs) {
-  const accessToken = await getAccessToken(request);
-  if (!accessToken) {
-    redirect(getAuthorizationUrl());
-    return;
-  }
+  const accessToken = await getAccessTokenOrRedirect(request);
 
   const url = new URL(request.url);
   const sort = url.searchParams.get('sort');
@@ -62,7 +57,7 @@ function Controls({ paging, formRef }: { paging?: Paging; formRef: React.RefObje
   };
 
   return (
-    <div className="mx-auto max-w-lg flex items-end justify-between">
+    <div className="mx-auto flex max-w-lg items-end justify-between">
       <div className="flex gap-x-2">
         <Select name="sort" optionMap={MY_LIST_SORT_OPTIONS} onChange={onSelectChange} defaultValue="anime_title" />
         <PaginationButton paging={paging} type="next" onClick={submitNextPage} />
