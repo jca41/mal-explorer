@@ -5,9 +5,17 @@ import { twMerge } from 'tailwind-merge';
 
 import { Heading } from '~/components/heading';
 import { LIST_STATUS } from '~/constants';
+import { getAuthorizationUrl } from '~/lib/mal/oauth.server';
+import { getAccessToken } from '~/lib/session.server';
 import { formatSnakeCase } from '~/utils/primitives';
 
-export async function loader({ params }: LoaderArgs) {
+export async function loader({ params, request }: LoaderArgs) {
+  const accessToken = await getAccessToken(request);
+  if (!accessToken) {
+    redirect(getAuthorizationUrl());
+    return;
+  }
+
   if (!params.status) {
     return redirect('/my-list/watching', { status: 301 });
   }
@@ -21,7 +29,7 @@ export default function MyListHeader() {
   return (
     <div>
       <Heading className="mb-8 md:mb-12">My List</Heading>
-      <div className="flex justify-start md:justify-center btn-group flex-nowrap overflow-x-auto overflow-y-hidden">
+      <div className="btn-group flex flex-nowrap justify-start overflow-x-auto overflow-y-hidden md:justify-center">
         {LIST_STATUS.map((s) => (
           <NavLink key={s} className={getClassName} to={s}>
             {formatSnakeCase(s)}
