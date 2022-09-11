@@ -23,7 +23,7 @@ const getClassName = ({ isActive }: { isActive: boolean }) => twMerge(clsx('btn 
 export default function MyListHeader() {
   return (
     <div>
-      <Heading className="mb-8 md:mb-12">My List</Heading>
+      <Heading className="mb-8 md:mb-12">My Anime List</Heading>
       <div className="btn-group flex flex-nowrap justify-start overflow-x-auto overflow-y-hidden md:justify-center">
         {LIST_STATUS.map((s) => (
           <NavLink key={s} className={getClassName} to={s}>

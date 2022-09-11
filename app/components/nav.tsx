@@ -52,9 +52,8 @@ export function Navigation() {
           <AppMenu signedIn={signedIn} />
         </div>
       </div>
-      <div className="navbar min-h-min pt-0">
-        <div className="navbar-start"></div>
-        <ul className="menu menu-horizontal menu-compact">
+      <div className="navbar min-h-min justify-center pt-0">
+        <ul className="menu menu-horizontal menu-compact flex-wrap justify-center">
           <li>
             <NavLink className={getNavItemClassName} to="/">
               Search
@@ -86,7 +85,6 @@ export function Navigation() {
             </li>
           )}
         </ul>
-        <div className="navbar-end"></div>
       </div>
     </nav>
   );
