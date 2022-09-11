@@ -1,8 +1,7 @@
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
-import { ActionArgs } from '@remix-run/node';
+import { ActionArgs, redirect } from '@remix-run/node';
 import { useActionData, useNavigate, useTransition } from '@remix-run/react';
 import { useEffect } from 'react';
-import { z } from 'zod';
 
 import { RouteModal } from '~/components/modal';
 import { MyListStatusForm } from '~/components/my-list-status/form';
@@ -11,17 +10,18 @@ import { MyListStatus, Node } from '~/contracts/mal';
 import { isMalError, MalError } from '~/lib/mal/api/errors';
 import { editMyListEntry } from '~/lib/mal/api/mutations';
 import malService from '~/lib/mal/api/service.server';
+import { getAuthorizationUrl } from '~/lib/mal/oauth.server';
 import { getAccessToken } from '~/lib/session.server';
 import { getActionFormValues, getListStatusDiff } from '~/utils/list-status.server';
 import { formatSnakeCase } from '~/utils/primitives';
 import { ParsedIntSchema } from '~/utils/zod';
 
-const IdSchema = z.string();
-
 export async function action({ params, request }: ActionArgs) {
-  IdSchema.parse(params.id);
-
   const accessToken = await getAccessToken(request);
+  if (!accessToken) {
+    redirect(getAuthorizationUrl());
+    return;
+  }
 
   const formData = await request.formData();
 

@@ -2,7 +2,6 @@ import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, User
 import { LoaderArgs } from '@remix-run/node';
 import { Outlet, ShouldReloadFunction, useLoaderData } from '@remix-run/react';
 import { useMemo } from 'react';
-import { z } from 'zod';
 
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
@@ -29,14 +28,13 @@ export const unstable_shouldReload: ShouldReloadFunction = ({ submission, url, p
   return !!submission || !prevUrl.pathname.includes(url.pathname);
 };
 
-const IdSchema = z.string();
 export async function loader({ params, request }: LoaderArgs) {
-  IdSchema.parse(params.id);
+  const id = ParsedIntSchema.parse(params.id);
 
   const accessToken = await getAccessToken(request);
 
   return malService.query.animeDetail({
-    id: ParsedIntSchema.parse(params.id),
+    id,
     accessToken,
   });
 }
