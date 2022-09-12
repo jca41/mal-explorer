@@ -60,8 +60,6 @@ export default function SuggestedAnime() {
   const loaderData = useLoaderData<typeof loader>();
   const formRef = useRef<HTMLFormElement>(null);
 
-  console.log(loaderData);
-
   return (
     <Form ref={formRef} method="get" replace>
       <Heading>My Anime Suggestions</Heading>
