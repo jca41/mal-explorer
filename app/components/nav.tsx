@@ -1,5 +1,5 @@
 import { LoginIcon, LogoutIcon } from '@heroicons/react/outline';
-import { MenuIcon } from '@heroicons/react/solid';
+import { MenuIcon, SearchIcon } from '@heroicons/react/solid';
 import { NavLink, useFetcher } from '@remix-run/react';
 import { twMerge } from 'tailwind-merge';
 
@@ -13,6 +13,37 @@ const CL = {
   menuItemIcon: 'w-5',
 };
 
+function AppLinks({ signedIn }: ClientAuthState) {
+  return (
+    <>
+      <li>
+        <NavLink className={getNavItemClassName} to="/top">
+          Top
+        </NavLink>
+      </li>
+      <li>
+        <NavLink className={getNavItemClassName} to="/seasonal">
+          Seasonal
+        </NavLink>
+      </li>
+      {signedIn && (
+        <li>
+          <NavLink className={getNavItemClassName} to="/my-list">
+            My List
+          </NavLink>
+        </li>
+      )}
+      {signedIn && (
+        <li>
+          <NavLink className={getNavItemClassName} to="/suggestions">
+            Suggestions
+          </NavLink>
+        </li>
+      )}
+    </>
+  );
+}
+
 function AppMenu({ signedIn }: ClientAuthState) {
   const fetcher = useFetcher();
 
@@ -23,11 +54,15 @@ function AppMenu({ signedIn }: ClientAuthState) {
       <label tabIndex={0} className="btn btn-circle btn-sm ml-1">
         <MenuIcon className="w-4" />
       </label>
-      <ul tabIndex={0} className="dropdown-content menu rounded-box menu-compact bg-base-100 p-2 shadow-md">
+      <ul tabIndex={0} className="dropdown-content menu rounded-box menu-compact space-y-2 bg-base-100 p-2 shadow-md">
+        <li className="menu-title">
+          <span>Menu</span>
+        </li>
+        <AppLinks signedIn={signedIn} />
         <li>
           <button className=" whitespace-nowrap" onClick={onAuthAction}>
-            {signedIn ? <LogoutIcon className={CL.menuItemIcon} /> : <LoginIcon className={CL.menuItemIcon} />}
             {signedIn ? 'Sign Out' : 'Sign In'}
+            {signedIn ? <LogoutIcon className={CL.menuItemIcon} /> : <LoginIcon className={CL.menuItemIcon} />}
           </button>
         </li>
       </ul>
@@ -42,49 +77,18 @@ export function Navigation() {
 
   return (
     <nav className="bg-base-300">
-      <div className="navbar min-h-min">
+      <div className="navbar mx-auto min-h-min max-w-screen-lg">
         <div className="navbar-start flex items-center">
           <img src={NAV_IMG_SRC} className="mr-3 w-7" />
           <div className="font-mono text-xl font-bold tracking-tight">MAL EXPLORER</div>
         </div>
-        <div className="navbar-end space-x-1">
+        <div className="navbar-end space-x-2">
+          <NavLink to="/" className={({ isActive }) => twMerge('btn btn-circle btn-sm', isActive && 'btn-primary')}>
+            <SearchIcon className="w-4" />
+          </NavLink>
           <ThemePicker />
           <AppMenu signedIn={signedIn} />
         </div>
-      </div>
-      <div className="navbar min-h-min justify-center pt-0">
-        <ul className="menu menu-horizontal menu-compact flex-wrap justify-center">
-          <li>
-            <NavLink className={getNavItemClassName} to="/">
-              Search
-            </NavLink>
-          </li>
-
-          {signedIn && (
-            <li>
-              <NavLink className={getNavItemClassName} to="/my-list">
-                My List
-              </NavLink>
-            </li>
-          )}
-          <li>
-            <NavLink className={getNavItemClassName} to="/top">
-              Top
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className={getNavItemClassName} to="/seasonal">
-              Seasonal
-            </NavLink>
-          </li>
-          {signedIn && (
-            <li>
-              <NavLink className={getNavItemClassName} to="/suggestions">
-                Suggestions
-              </NavLink>
-            </li>
-          )}
-        </ul>
       </div>
     </nav>
   );
