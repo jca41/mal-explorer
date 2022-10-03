@@ -31,7 +31,7 @@ export const SEASONAL_SEASON_OPTIONS: Record<SeasonParam, string> = {
 
 export const MY_LIST_SORT_OPTIONS: Record<MyListSortQueryParam, string> = {
   anime_title: 'Title',
-  list_score: 'Your score',
   list_updated_at: 'Last updated',
+  list_score: 'Your score',
   anime_start_date: 'Start date',
 };
