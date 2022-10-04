@@ -42,16 +42,16 @@ export function ThemePicker() {
   const { theme, setTheme } = useContext(ThemeContext);
 
   return (
-    <div className="dropdown-left dropdown">
-      <label tabIndex={0} className="btn btn-circle btn-sm ml-1 flex items-center">
-        <SparklesIcon className="w-4" />
+    <div className="dropdown-end dropdown">
+      <label tabIndex={0} className="btn btn-ghost btn-circle btn-sm flex items-center">
+        <SparklesIcon className="w-5" />
       </label>
-      <ul tabIndex={0} className="dropdown-content menu rounded-box menu-compact bg-base-100 p-2 shadow-md">
+      <ul tabIndex={0} className="dropdown-content menu rounded-box menu-compact mt-3 space-y-1.5 bg-base-300 p-2 shadow">
         <li className="menu-title">
           <span>Theme</span>
         </li>
         {THEMES.map((t) => (
-          <li key={t} className="py-0.5">
+          <li key={t}>
             <button onClick={() => setTheme(t)} className={clsx({ active: theme === t })}>
               {t}
             </button>

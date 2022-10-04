@@ -13,6 +13,8 @@ const CL = {
   menuItemIcon: 'w-5',
 };
 
+const getNavItemClassName = ({ isActive }: { isActive: boolean }) => twMerge('font-medium whitespace-nowrap', isActive && 'active');
+
 function AppLinks({ signedIn }: ClientAuthState) {
   return (
     <>
@@ -50,11 +52,11 @@ function AppMenu({ signedIn }: ClientAuthState) {
   const onAuthAction = () => fetcher.submit(null, { action: signedIn ? '/oauth/sign-out' : '/oauth/authorize', method: 'post' });
 
   return (
-    <div className="dropdown-left dropdown">
-      <label tabIndex={0} className="btn btn-circle btn-sm ml-1">
-        <MenuIcon className="w-4" />
+    <div className="dropdown-end dropdown">
+      <label tabIndex={0} className="btn btn-ghost btn-circle btn-sm">
+        <MenuIcon className="w-5" />
       </label>
-      <ul tabIndex={0} className="dropdown-content menu rounded-box menu-compact space-y-2 bg-base-100 p-2 shadow-md">
+      <ul tabIndex={0} className="dropdown-content menu rounded-box menu-compact mt-3 space-y-1.5 bg-base-300 p-2 shadow">
         <li className="menu-title">
           <span>Menu</span>
         </li>
@@ -70,8 +72,6 @@ function AppMenu({ signedIn }: ClientAuthState) {
   );
 }
 
-const getNavItemClassName = ({ isActive }: { isActive: boolean }) => twMerge('font-medium whitespace-nowrap', isActive && 'active');
-
 export function Navigation() {
   const { signedIn } = useRouteMatch<{ data: ClientAuthState }>('root').data;
 
@@ -82,9 +82,9 @@ export function Navigation() {
           <img src={NAV_IMG_SRC} className="mr-3 w-7" />
           <div className="font-mono text-xl font-bold tracking-tight">MAL EXPLORER</div>
         </div>
-        <div className="navbar-end space-x-2">
-          <NavLink to="/" className={({ isActive }) => twMerge('btn btn-circle btn-sm', isActive && 'btn-primary')}>
-            <SearchIcon className="w-4" />
+        <div className="navbar-end space-x-1">
+          <NavLink to="/" className={({ isActive }) => twMerge('btn btn-ghost btn-circle btn-sm', isActive && 'btn-active')}>
+            <SearchIcon className="w-5" />
           </NavLink>
           <ThemePicker />
           <AppMenu signedIn={signedIn} />

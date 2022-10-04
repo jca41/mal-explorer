@@ -29,7 +29,7 @@ export function MyListStatusPopup({ myListStatus }: MyListStatusProps) {
   return (
     <>
       <div className="absolute right-0 flex w-32 flex-row justify-end">
-        <div className="fixed bottom-6 z-10 transform transition-transform hover:scale-110">
+        <div className="fixed bottom-6 z-20 transform transition-transform hover:scale-110">
           <Link
             prefetch="intent"
             to="./my-list"
