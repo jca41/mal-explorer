@@ -1,10 +1,10 @@
 import { memo } from 'react';
 
 import { Node } from '~/contracts/mal';
-import { formatEpisodeDuration, formatStartAndEndDate } from '~/utils/format-data';
+import { formatBroadcast, formatEpisodeDuration, formatStartAndEndDate } from '~/utils/format-data';
 import { formatSnakeCase } from '~/utils/primitives';
 
-function InfoTableInt({ studios, source, start_date, end_date, rating, average_episode_duration, num_episodes }: Node) {
+function InfoTableInt({ studios, source, start_date, end_date, rating, average_episode_duration, num_episodes, broadcast }: Node) {
   const dates = [];
   if (start_date !== end_date) {
     dates.push(['Start date', formatStartAndEndDate(start_date)], ['End date', formatStartAndEndDate(end_date)]);
@@ -18,6 +18,7 @@ function InfoTableInt({ studios, source, start_date, end_date, rating, average_e
     ['Studios', studios?.map((s) => s.name).join(', ')],
     ['Source', formatSnakeCase(source)],
     duration,
+    ['Broadcast', formatBroadcast(broadcast)],
     ...dates,
     ['Rating', formatSnakeCase(rating)?.toUpperCase?.()],
   ];

@@ -1,8 +1,8 @@
 import numeral from 'numeral';
 
-import { MediaType, SimpleDateString, Status } from '~/contracts/mal';
+import { Broadcast, MediaType, SimpleDateString, Status } from '~/contracts/mal';
 
-import { formatSnakeCase } from './primitives';
+import { capitalize, formatSnakeCase } from './primitives';
 
 const STATUS_MAP: Record<Status, string> = {
   finished_airing: 'Finished',
@@ -48,4 +48,10 @@ export function formatEpisodeDuration(durationInSeconds: number | undefined) {
 export function formatStartAndEndDate(date?: SimpleDateString) {
   if (!date) return null;
   return date.split('-').reverse().join('/');
+}
+
+export function formatBroadcast(broadcast?: Broadcast) {
+  if (!broadcast?.day_of_the_week) return null;
+
+  return `${capitalize(broadcast.day_of_the_week)} - ${broadcast.start_time}`;
 }

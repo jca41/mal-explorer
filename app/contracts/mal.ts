@@ -17,6 +17,10 @@ export type Recommendation = {
   node: Pick<Node, 'id' | 'title' | 'main_picture' | 'mean'>;
   num_recommendations: number;
 };
+export type Broadcast = {
+  day_of_the_week: string;
+  start_time: string;
+};
 export type Statistics = {
   status: {
     watching: string;
@@ -88,10 +92,7 @@ export type Node = {
   average_episode_duration: number;
   rating: Rating;
   studios: { id: number; name: string }[];
-  broadcast: {
-    day_of_the_week: string;
-    start_time: string;
-  };
+  broadcast?: Broadcast;
   pictures: Picture[];
   background: string;
   related_anime: RelatedAnime[];
