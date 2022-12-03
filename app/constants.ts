@@ -10,5 +10,5 @@ export const LIST_LIMIT = 25;
 
 export const THEME_COOKIE = 'theme';
 
-export const THEMES = ['dracula', 'cupcake', 'business', 'winter', 'night', 'fantasy', 'autumn', 'valentine', 'black', 'halloween', 'forest'] as const;
+export const THEMES = ['dracula', 'cupcake', 'business', 'winter', 'night', 'fantasy', 'autumn', 'valentine', 'black', 'halloween', 'dark'] as const;
 export const DEFAULT_THEME: typeof THEMES[number] = 'dracula';
