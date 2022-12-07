@@ -1,4 +1,4 @@
-import { ClipboardListIcon, FilmIcon, FolderIcon, StarIcon, TrendingUpIcon, UsersIcon } from '@heroicons/react/solid';
+import { ClipboardListIcon, FilmIcon, FolderIcon, HashtagIcon, StarIcon, UsersIcon } from '@heroicons/react/solid';
 import { LoaderArgs } from '@remix-run/node';
 import { Outlet, ShouldReloadFunction, useLoaderData } from '@remix-run/react';
 
@@ -74,12 +74,12 @@ export default function AnimeDetails() {
       <div className="mt-12 flex flex-col space-y-10">
         <section className="flex flex-col space-y-5">
           <ul className="flex flex-wrap justify-center gap-x-3 gap-y-2">
-            <StatIconBadge value={mean} icon={StarIcon} classname={STAT_BASE} iconClassname={`text-primary`} />
-            <StatIconBadge value={formatRank(rank)} icon={TrendingUpIcon} classname={STAT_BASE} />
-            <StatIconBadge value={formatPopularity(num_list_users, popularity)} classname={STAT_BASE} icon={UsersIcon} />
-            <StatIconBadge value={formatMediaType(media_type)} icon={FilmIcon} classname={STAT_BASE} />
-            <StatIconBadge value={formatStatus(status)} icon={ClipboardListIcon} classname={STAT_BASE} />
-            <StatIconBadge value={formatNumEpisodes(num_episodes)} icon={FolderIcon} classname={STAT_BASE} />
+            <StatIconBadge value={mean} tooltip="Score" icon={StarIcon} classname={STAT_BASE} iconClassname={'text-primary'} />
+            <StatIconBadge value={formatRank(rank)} tooltip="Rank" icon={HashtagIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatPopularity(num_list_users, popularity)} tooltip="Popularity" icon={UsersIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatMediaType(media_type)} tooltip="Media type" icon={FilmIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatStatus(status)} icon={ClipboardListIcon} tooltip="Status" classname={STAT_BASE} />
+            <StatIconBadge value={formatNumEpisodes(num_episodes)} tooltip="Episodes" icon={FolderIcon} classname={STAT_BASE} />
           </ul>
           {genres?.length && (
             <ul className="flex flex-wrap justify-center gap-y-2 gap-x-2">

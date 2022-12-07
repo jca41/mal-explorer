@@ -1,4 +1,4 @@
-import { ClipboardListIcon, FilmIcon, FolderIcon, HashtagIcon, StarIcon, TrendingUpIcon } from '@heroicons/react/solid';
+import { ClipboardListIcon, FilmIcon, FolderIcon, HashtagIcon, StarIcon, UsersIcon } from '@heroicons/react/solid';
 import { Link } from '@remix-run/react';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
@@ -8,7 +8,6 @@ import { shouldShowAltTitle } from '~/utils/check-data';
 import { formatMediaType, formatNumEpisodes, formatRank, formatStatus } from '~/utils/format-data';
 
 import { StatIconBadge } from './stat-badge';
-import { Tooltip } from './tooltip';
 
 const STAT_BASE = 'badge-ghost';
 const IMG_DIMENSIONS = 'w-36  sm:w-40';
@@ -50,30 +49,19 @@ export function ListItem({
           </h2>
 
           <ul className="flex flex-row flex-wrap gap-x-4 gap-y-3">
-            <Tooltip text="Score">
-              <StatIconBadge value={mean} icon={StarIcon} iconClassname="text-primary" textClassName="font-semibold" classname={STAT_BASE} />
-            </Tooltip>
-            <Tooltip text="Rank">
-              <StatIconBadge
-                value={formatRank(rank)}
-                icon={HashtagIcon}
-                iconClassname="text-primary"
-                textClassName="font-semibold"
-                classname={STAT_BASE}
-              />
-            </Tooltip>
-            <Tooltip text="Media type">
-              <StatIconBadge value={formatMediaType(media_type)} icon={FilmIcon} classname={STAT_BASE} />
-            </Tooltip>
-            <Tooltip text="Status">
-              <StatIconBadge value={formatStatus(status)} icon={ClipboardListIcon} classname={STAT_BASE} />
-            </Tooltip>
-            <Tooltip text="Popularity">
-              <StatIconBadge value={formatRank(popularity)} icon={TrendingUpIcon} classname={STAT_BASE} />
-            </Tooltip>
-            <Tooltip text="Episodes">
-              <StatIconBadge value={formatNumEpisodes(num_episodes)} icon={FolderIcon} classname={STAT_BASE} />
-            </Tooltip>
+            <StatIconBadge
+              value={mean}
+              tooltip="Score"
+              icon={StarIcon}
+              iconClassname="text-primary"
+              textClassName="font-semibold"
+              classname={STAT_BASE}
+            />
+            <StatIconBadge value={formatRank(rank)} tooltip="Rank" icon={HashtagIcon} textClassName="font-semibold" classname={STAT_BASE} />
+            <StatIconBadge value={formatMediaType(media_type)} tooltip="Media type" icon={FilmIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatStatus(status)} tooltip="Status" icon={ClipboardListIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatRank(popularity)} tooltip="Popularity" icon={UsersIcon} classname={STAT_BASE} />
+            <StatIconBadge value={formatNumEpisodes(num_episodes)} tooltip="Episodes" icon={FolderIcon} classname={STAT_BASE} />
           </ul>
           {children}
         </div>

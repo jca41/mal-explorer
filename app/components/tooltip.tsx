@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
-export function Tooltip({ children, text }: { text: string; children: ReactNode }) {
+export function Tooltip({ children, text, as: As = 'div' }: { text: string; children: ReactNode; as?: 'div' | 'li' }) {
   return (
-    <div className="tooltip" data-tip={text}>
+    <As className="tooltip" data-tip={text}>
       {children}
-    </div>
+    </As>
   );
 }

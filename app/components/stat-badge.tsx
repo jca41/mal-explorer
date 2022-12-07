@@ -1,5 +1,8 @@
+import clsx from 'clsx';
 import { FC, ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+
+import { Tooltip } from './tooltip';
 
 type StatIconBadgeProps = {
   icon?: FC<{ className: string }>;
@@ -8,16 +11,26 @@ type StatIconBadgeProps = {
   iconClassname?: string;
   textClassName?: string;
   as?: 'div' | 'li';
+  tooltip?: string;
 };
 
-export function StatIconBadge({ icon: Icon, classname, iconClassname, value, textClassName, as: As = 'li' }: StatIconBadgeProps) {
+export function StatIconBadge({ icon: Icon, classname, iconClassname, value, textClassName, as = 'li', tooltip }: StatIconBadgeProps) {
   if (!value) return null;
 
-  return (
-    <As className={twMerge('badge gap-1 whitespace-nowrap', classname)}>
+  const ComponentAs: NonNullable<StatIconBadgeProps['as']> = tooltip ? 'div' : as;
+
+  const content = (
+    <ComponentAs className={twMerge(clsx('badge gap-1 whitespace-nowrap', classname))}>
       {!!Icon && <Icon className={twMerge('h-[90%]', iconClassname)} />}
       <span className={textClassName}>{value}</span>
-    </As>
+    </ComponentAs>
+  );
+  return tooltip ? (
+    <Tooltip text={tooltip} as={as}>
+      {content}
+    </Tooltip>
+  ) : (
+    content
   );
 }
 
