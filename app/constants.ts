@@ -8,7 +8,10 @@ export const LIST_STATUS: ReadonlyArray<NonNullable<MyListStatus['status']>> = U
 
 export const LIST_LIMIT = 25;
 
+// Theming
+
 export const THEME_COOKIE = 'theme';
 
-export const THEMES = ['dracula', 'cupcake', 'business', 'winter', 'night', 'fantasy', 'autumn', 'valentine', 'black', 'halloween', 'dark'] as const;
-export const DEFAULT_THEME: typeof THEMES[number] = 'dracula';
+export const LIGHT_THEMES = ['cupcake', 'winter', 'valentine', 'fantasy', 'autumn'] as const;
+export const DARK_THEMES = ['dracula', 'business', 'night', 'black', 'halloween', 'dark'] as const;
+export const DEFAULT_THEME: typeof LIGHT_THEMES[number] | typeof DARK_THEMES[number] = 'dracula';
