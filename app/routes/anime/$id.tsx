@@ -143,8 +143,11 @@ export default function AnimeDetails() {
           </section>
         )}
         {updated_at && (
-          <section className="text-lg font-semibold">
-            Last updated on <DateTime date={updated_at} />
+          <section className="font-semibold">
+            <span>Last updated on </span>
+            <span className="block sm:inline-block">
+              <DateTime date={updated_at} />
+            </span>
           </section>
         )}
       </div>
