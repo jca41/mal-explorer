@@ -19,7 +19,7 @@ function setThemeCookie(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const { theme: defaultTheme } = useRouteMatch<{ data: ThemeClientState }>('root').data;
+  const { data: { theme: defaultTheme } = {} } = useRouteMatch<{ data?: ThemeClientState }>('root');
 
   const [theme, setTheme] = useState<Theme>(defaultTheme);
   const contextValue = useMemo(

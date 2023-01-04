@@ -3,9 +3,9 @@ import { Form, useLoaderData, useSearchParams, useSubmit } from '@remix-run/reac
 import { useMachine } from '@xstate/react';
 import { KeyboardEvent, useCallback, useRef } from 'react';
 
+import { router } from '~/backend/router.server';
 import { List, ListItem } from '~/components/list';
 import { SearchInput } from '~/components/search-input';
-import malService from '~/lib/mal/api/service.server';
 import { searchMachine } from '~/machines/search';
 
 export async function loader({ request }: LoaderArgs) {
@@ -15,10 +15,9 @@ export async function loader({ request }: LoaderArgs) {
 
   if (!q) return {};
 
-  return malService.query.animeList({
-    q,
-    limit: 20,
-  });
+  const be = router.createCaller({});
+
+  return be.animeList({ q, limit: 20 });
 }
 
 export default function Index() {

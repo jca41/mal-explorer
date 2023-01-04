@@ -73,7 +73,7 @@ function AppMenu({ signedIn }: ClientAuthState) {
 }
 
 export function Navigation() {
-  const { signedIn } = useRouteMatch<{ data: ClientAuthState }>('root').data;
+  const { data: { signedIn } = {} } = useRouteMatch<{ data: ClientAuthState }>('root');
 
   return (
     <nav className="bg-base-300">
@@ -87,7 +87,7 @@ export function Navigation() {
             <SearchIcon className="w-5" />
           </NavLink>
           <ThemePicker />
-          <AppMenu signedIn={signedIn} />
+          <AppMenu signedIn={!!signedIn} />
         </div>
       </div>
     </nav>
