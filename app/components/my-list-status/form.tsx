@@ -1,4 +1,4 @@
-import { Form, Link, useNavigate } from '@remix-run/react';
+import { Form, Link } from '@remix-run/react';
 import { useMachine } from '@xstate/react';
 import clsx from 'clsx';
 import { useMemo } from 'react';
@@ -27,8 +27,6 @@ const PRIORITY_OPTIONS: ReadonlyArray<{ l: string; v: MyListStatus['priority'] }
 
 export function MyListStatusForm(props: MyListStatusProps) {
   const { myListStatus, numEpisodes } = props;
-
-  const navigate = useNavigate();
 
   const [state, send] = useMachine(myListStatusFormMachine, {
     context: {

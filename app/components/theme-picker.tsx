@@ -64,13 +64,13 @@ export function ThemePicker() {
         </li>
 
         {DARK_THEMES.map((t) => (
-          <ThemeItem theme={t} active={t === theme} onClick={onThemeChange} />
+          <ThemeItem key={t} theme={t} active={t === theme} onClick={onThemeChange} />
         ))}
         <li className="menu-title">
           <span>Light</span>
         </li>
         {LIGHT_THEMES.map((t) => (
-          <ThemeItem theme={t} active={t === theme} onClick={onThemeChange} />
+          <ThemeItem key={t} theme={t} active={t === theme} onClick={onThemeChange} />
         ))}
       </ul>
     </div>
