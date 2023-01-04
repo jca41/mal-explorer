@@ -19,7 +19,7 @@ const STATUS_TO_ICONS: Record<NonNullable<MyListStatus['status']> | 'add', FC<{ 
 };
 
 export function MyListStatusPopup({ myListStatus }: MyListStatusProps) {
-  const { signedIn } = useRouteMatch<{ data: ClientAuthState }>('root').data;
+  const { data: { signedIn } = {} } = useRouteMatch<{ data: ClientAuthState }>('root');
   if (!signedIn) return null;
 
   const status = myListStatus?.status ?? 'add';
