@@ -1,11 +1,11 @@
 import { Form, Link } from '@remix-run/react';
 import { useMachine } from '@xstate/react';
 import clsx from 'clsx';
-import { useMemo } from 'react';
 
 import { MyListStatus } from '~/contracts/mal';
 import { capitalize, formatSnakeCase } from '~/utils/primitives';
 
+import { DateTime } from '../date-time';
 import { MyListStatusProps } from './common';
 import { DeleteFlow } from './delete-flow';
 import { FormExtraValues } from './form-extra-values';
@@ -42,8 +42,6 @@ export function MyListStatusForm(props: MyListStatusProps) {
     visibleFields,
     state: { status, startDate },
   } = state.context;
-
-  const updatedAt = useMemo(() => (myListStatus?.updated_at ? new Date(myListStatus.updated_at) : null), [myListStatus?.updated_at]);
 
   return (
     <Form method="post" replace>
@@ -171,12 +169,11 @@ export function MyListStatusForm(props: MyListStatusProps) {
         </div>
       )}
       <div className="mt-4 flex items-end justify-between">
-        {updatedAt ? (
+        {myListStatus?.updated_at ? (
           <div className="max-w-xs text-xs">
             <span>Last updated on </span>
             <div>
-              <span>{updatedAt.toLocaleDateString()}</span>
-              <span>{`, ${updatedAt.toLocaleTimeString()}`}</span>
+              <DateTime date={myListStatus.updated_at} />
             </div>
           </div>
         ) : (

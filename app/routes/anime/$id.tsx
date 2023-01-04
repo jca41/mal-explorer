@@ -2,6 +2,7 @@ import { ClipboardListIcon, FilmIcon, FolderIcon, HashtagIcon, StarIcon, UsersIc
 import { LoaderArgs } from '@remix-run/node';
 import { Outlet, ShouldReloadFunction, useLoaderData } from '@remix-run/react';
 
+import { DateTime } from '~/components/date-time';
 import { GridPreview, GridPreviewItem } from '~/components/grid-preview';
 import { InfoTable } from '~/components/info-table';
 import { ImageGallery, VideoGallery } from '~/components/media-galery';
@@ -58,6 +59,7 @@ export default function AnimeDetails() {
     videos,
     pictures,
     my_list_status,
+    updated_at,
   } = data;
 
   return (
@@ -138,6 +140,11 @@ export default function AnimeDetails() {
             <div className="">
               <ImageGallery pictures={pictures} />
             </div>
+          </section>
+        )}
+        {updated_at && (
+          <section className="text-lg font-semibold">
+            Last updated on <DateTime date={updated_at} />
           </section>
         )}
       </div>
