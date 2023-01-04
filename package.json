@@ -11,7 +11,7 @@
     "dev": "run-p dev:*",
     "dev:css": "npm run generate:css -- --watch",
     "dev:remix": "remix dev",
-    "generate:css": "tailwindcss -o ./app/styles/app.css",
+    "generate:css": "tailwindcss -i ./app/styles/base.css -o ./app/styles/app.css",
     "updates": "npm-check -u --force",
     "ts-check": "tsc --noEmit"
   },
