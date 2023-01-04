@@ -64,11 +64,11 @@ export default function App() {
 export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
   return (
     <RootLayout>
-      <div className=" my-4 mx-auto max-w-lg rounded-md bg-red-300 bg-opacity-40 p-4 shadow-lg">
-        <h1 className="mb-6 text-center text-3xl font-bold text-red-700">{error.name}</h1>
+      <div className=" my-4 mx-auto max-w-screen-lg rounded-md bg-error bg-opacity-40 p-4 shadow-lg">
+        <h1 className="mb-6 text-center text-3xl font-bold text-error">{error.name}</h1>
         <div className="space-y-4">
           <code className="text-lg">{error.message}</code>
-          <code className="block text-xs text-slate-600">{error.stack}</code>
+          <code className="block whitespace-pre-wrap text-xs text-error-content">{error.stack}</code>
         </div>
       </div>
     </RootLayout>
